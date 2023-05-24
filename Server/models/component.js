@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 
 const componentSchema = mongoose.Schema(
     {
+        serial_num: String,
+        image: String,
         component: String,
         level: Number,
-        subComponents: Array
+        subComponents: Array,
     }
 )
 
