@@ -21,6 +21,7 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
         app.listen(PORT, () => {
             console.log("Server up")
             console.log("Basti can also connect to the application")
+            console.log("Laura has also connected to the application, thanks to Basti! :D")
         })
     })
     .catch((error) => console.log(error.message))
