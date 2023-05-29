@@ -1,26 +1,23 @@
 import styles from "./sidebar.module.css"
-import { NavLink } from "react-router-dom";
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { navData } from "../../icons/sidebar";
 import { useState } from "react";
+import logo from "../../images/logo.png";
+import Col from "react-bootstrap/esm/Col";
 
 export default function Sidenav() {
     const [open, setopen] = useState(true)
     const toggleOpen = () => {
         setopen(!open)
     }
-  return (
-    <div className={open?styles.sidenav:styles.sidenavClosed}>
-        <button className={styles.menuBtn} onClick={toggleOpen}>
-            {open? <KeyboardDoubleArrowLeftIcon />: <KeyboardDoubleArrowRightIcon />}
-        </button>
-        {navData.map(item =>{
-            return <div key={item.id} className={styles.sideitem} to={item.link}>
-            {item.icon}
-            <span className={styles.linkText}>{item.text}</span>
+    return (
+        <div className={open ? styles.sidenav : styles.sidenavClosed}>
+            <img src={logo} alt="webasto" className={ styles.logo } onClick={toggleOpen} />
+            {navData.map(item => {
+                return <div key={item.id} className={styles.sideitem} to={item.link}>
+                    {item.icon}
+                    <span className={open ? styles.linkText : styles.linkTextClosed}>{item.text}</span>
+                </div>
+            })}
         </div>
-        })}
-    </div>
-  )
+    )
 }
