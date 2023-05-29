@@ -7,16 +7,21 @@ import Sidebar from "../src/components/HomeScreen/SideBar.jsx"
 const App = () => {
     return (
         <div>
-            <p>Home</p>
-            <BrowserRouter>
-            <Link to="/data-analytics">Data Analytics</Link>
-                <Switch>
-                    <Route path={"/home"} exact component={Dashboard}>
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-            <Sidebar></Sidebar>
+            <div>
+                <Sidebar/>
+            </div>
+            <div>
+                <BrowserRouter>
+                    <p>Home</p>
+                    <Link to="/data-analytics">Data Analytics</Link>
+                    <Switch>
+                        <Route path={"/home"} exact component={Dashboard}>
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+            </div>
         </div>
+
     )
 }
 
