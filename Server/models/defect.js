@@ -1,18 +1,16 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const defectSchema = mongoose.Schema(
-    {
-        error_num: Number,
-        serial_num: String,
-        description: String,
-        action_type: String,
-        category: String,
-        spot: Array,
-        component_level: Number,
-        component_name: String,
-        station_name: String,
-        product_type: String
-    }
-)
- const Defect = mongoose.model("Defect", defectSchema);
- export default Defect;
+const defectSchema = new mongoose.Schema({
+  error_num: Number,
+  serial_num: { type: String, ref: 'Product' },
+  personal_id: { type: String, ref: 'User' },
+  description: String,
+  action_type: String,
+  category: String,
+  spots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
+  component: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Component' }],
+});
+
+const Defect = mongoose.model('Defect', defectSchema);
+
+export default Defect;

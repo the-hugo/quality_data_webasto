@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 const componentSchema = new mongoose.Schema({
-  serial_num: String,
+  component_num: String,
+  serial_num: { type: String, ref: 'Product' },
   image: String,
   component: String,
   level: Number,
