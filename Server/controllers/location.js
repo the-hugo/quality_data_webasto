@@ -1,24 +1,20 @@
 import Location from "../models/location.js";
 
 export const createLocation = async (req, res) => {
-  const { error_num, x, y } = req.body;
-
   try {
-    const newLocation = new Location({ error_num, coordinates: { x, y } });
-    await newLocation.save();
-
-    res.status(201).json(newLocation);
+    const { error_num, x, y } = req.body;
+    const newLocation = new Location({ error_num, x, y });
+    const savedLocation = await newLocation.save();
+    res.status(201).json(savedLocation);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
 export const deleteLocation = async (req, res) => {
-  const { id } = req.params;
-
   try {
-    await Location.findByIdAndRemove(id);
-
+    const { id } = req.params;
+    await Location.findByIdAndDelete(id);
     res.json({ message: "Location deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -26,10 +22,9 @@ export const deleteLocation = async (req, res) => {
 };
 
 export const editLocation = async (req, res) => {
-  const { id } = req.params;
-  const { error_num, x, y } = req.body;
-
   try {
+    const { id } = req.params;
+    const { error_num, x, y } = req.body;
     const location = await Location.findById(id);
 
     if (!location) {
@@ -41,11 +36,11 @@ export const editLocation = async (req, res) => {
     }
 
     if (x) {
-      location.coordinates.x = x;
+      location.x = x;
     }
 
     if (y) {
-      location.coordinates.y = y;
+      location.y = y;
     }
 
     await location.save();

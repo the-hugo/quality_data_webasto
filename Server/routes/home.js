@@ -4,8 +4,8 @@ import {
   createDefect,
   deleteDefect,
   editDefect
-} from "../controllers/defects.js";
-import { getComps } from "../controllers/components.js";
+} from "../controllers/defect.js";
+import { getComps, editComp, deleteComp, createComp} from "../controllers/components.js";
 import {
   createUser,
   deleteUser,
@@ -16,17 +16,20 @@ import {
   createProduct,
   deleteProduct,
   editProduct
-} from "../controllers/products.js";
+} from "../controllers/product.js";
 import {
   createLocation,
   deleteLocation,
   editLocation
-} from "../controllers/locations.js";
+} from "../controllers/location.js";
 
 const router = express.Router();
 
 // Component routes
 router.get("/comps", getComps);
+router.post("/comps", createComp);
+router.put("/comps/:id", editComp);
+router.delete("/comps/:id", deleteComp);
 
 // Defect routes
 router.get("/defects", getDefects);

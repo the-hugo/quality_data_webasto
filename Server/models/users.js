@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema(
     {
         personal_id: {
             type: String,
+            unique: true,
             required: true,
             minlength: 4,
             maxlength: 4,

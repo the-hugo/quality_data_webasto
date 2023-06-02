@@ -7,10 +7,12 @@ const defectSchema = new mongoose.Schema({
   description: String,
   action_type: String,
   category: String,
-  spots: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
-  component: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Component' }],
+  spots: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }], default: [] },
+  component: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Component' }], default: [] },
 });
 
 const Defect = mongoose.model('Defect', defectSchema);
 
 export default Defect;
+
+

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
-  coordinates: {
+  error_num: { type: Number, ref: 'Defect' },
+
     x: Number,
     y: Number,
-  },
 });
 
 const Location = mongoose.model('Location', locationSchema);
