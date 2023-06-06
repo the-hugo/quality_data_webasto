@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Sidenav from './SideBar';
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import graph from '../DataAnalytics/Dashboard';
+import ImageMap from "./ImageMap";
 
 export default function LandingPage() {
     return (
@@ -16,10 +17,11 @@ export default function LandingPage() {
                 <Col>
                     <BrowserRouter>
                         <p>Home</p>
-                        <Link to="/data-analytics">Data Analytics</Link>
+                        <Link to="/data-analytics">Data Analytics</Link> <p></p>
+                        <Link to="/image-map">Image Map</Link>
                         <Switch>
-                            <Route path={"/home"} exact component={graph}>
-                            </Route>
+                            <Route path="/data-analytics" exact component={graph} />
+                            <Route path="/image-map" exact component={ImageMap} />
                         </Switch>
                     </BrowserRouter>
                 </Col>
