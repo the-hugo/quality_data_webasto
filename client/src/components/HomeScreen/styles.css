@@ -1,0 +1,51 @@
+/* MainContent.css */
+.main-content {
+    padding: 20px;
+}
+
+.right-content {
+    display: flex;
+    align-items: center;
+}
+
+.date-time {
+    text-align: right;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.close-button {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
