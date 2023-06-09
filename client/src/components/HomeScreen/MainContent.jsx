@@ -1,5 +1,8 @@
 import React from 'react';
 
+// CODE FOR THE TOP PORTION OF THE MAIN SCREEN.
+// INCLUDING THE TITLES, DATE & TIME
+
 const MainContent = () => {
     return (
         <div className="main-content">
