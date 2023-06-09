@@ -2,7 +2,7 @@ import styles from "./sidebar.module.css"
 import { navData } from "../../icons/sidebar";
 import { useState } from "react";
 import logo from "../../images/logo.png";
-import Col from "react-bootstrap/esm/Col";
+// import Col from "react-bootstrap/esm/Col";
 
 export default function Sidenav() {
     const [open, setopen] = useState(true)

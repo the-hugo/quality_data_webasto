@@ -3,6 +3,7 @@ import { FaTimes, FaMapMarkerAlt  } from 'react-icons/fa';
 import ImageMap from "./ImageMap";
 
 
+
 const Popup = ({ onClose }) => {
     const [showPopup1, setShowPopup1] = useState(false);
     const [showPopup2, setShowPopup2] = useState(false);
@@ -56,17 +57,17 @@ const Popup = ({ onClose }) => {
                 <div className="circle-button" onClick={handleOpenMapPopup}>
                     <FaMapMarkerAlt style={{ color: 'azure' }} />
                 </div>
-
                 <input type="text" placeholder="Enter text" />
                 <div className="button-container">
                     <button onClick={handleOpenPopup1}>Button 1</button>
                     <button onClick={handleOpenPopup2}>Button 2</button>
                     <button onClick={handleOpenPopup3}>Button 3</button>
                 </div>
-                <button className="close-button" onClick={handleClosePopup}>
-                    <FaTimes style={{ fontSize: '1.3em' }}/>
-                </button>
             </div>
+
+            <button className="close-button" onClick={handleClosePopup}>
+                <FaTimes style={{ fontSize: '1.3em' }}/>
+            </button>
 
             {/* Render additional pop-ups conditionally */}
             {showPopup1 && (
@@ -107,7 +108,7 @@ const Popup = ({ onClose }) => {
                             {/* Add your image map component here */}
                             <ImageMap />
                         </div>
-                        <button className="close-button" onClick={handleCloseMapPopup}>
+                        <button className="map-close" onClick={handleCloseMapPopup}>
                             <FaTimes />
                         </button>
                     </div>
