@@ -27,6 +27,8 @@
 }
 
 .popup-content {
+    position: relative;
+    padding: 20px;
     text-align: center;
 }
 
@@ -35,6 +37,19 @@
     padding: 10px;
     margin-bottom: 20px;
 }
+.circle-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid azure;
+    background-color: darkblue;
+    margin-bottom: 20px;
+    margin-left: auto;
+}
+
 
 .button-container {
     display: flex;
@@ -87,14 +102,7 @@
     border: 1px solid white;
 }
 
-.close-button {
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 
 
 .container-overlay {
@@ -175,4 +183,39 @@
 
 .popup3-message {
     font-size: 24px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.map-popup-content {
+    width: 500px;
+    height: 500px;
+    background-color: azure;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.image-map {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: azure; /* Set the background color to azure */
+    z-index: 2;
 }

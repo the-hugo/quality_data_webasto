@@ -220,7 +220,7 @@ const ImageMap = () => {
                 ref={containerRef}
                 style={{
                     position: 'relative',
-                    left: '100px',
+                    left: "auto",
                     width: '500px',
                     height: '300px',
                     border: '1px black solid',
