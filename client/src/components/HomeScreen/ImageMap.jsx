@@ -86,6 +86,10 @@ const ImageMap = () => {
                 console.log(JSON.stringify(result, null, 2));
             }
 
+            logDropLocation() {
+                this.log();
+            }
+
             setPinLocation(dropLocation) {
                 this.adjX = dropLocation[0] + this.x_lb;
                 this.adjY = dropLocation[1] + this.y_lb;
@@ -173,6 +177,38 @@ const ImageMap = () => {
         });
     }, []);
 
+    const handleLogDropLocation = async () => {
+        if (window.pinner) {
+          const { dropLocation } = window.pinner;
+      
+          const errorNum = 1; // Replace with your custom error number
+      
+          const data = {
+            error_num: errorNum,
+            dropLocation,
+          };
+      
+          try {
+            const response = await fetch('http://localhost:8080/home/locations', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+      
+            if (response.ok) {
+              console.log('Location created successfully');
+            } else {
+              console.error('Failed to create location');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+      };
+
+
     return (
         <>
             <p>
@@ -216,6 +252,7 @@ const ImageMap = () => {
                     }}
                 ></div>
             </div>
+            <button onClick={handleLogDropLocation}>SEND LOCATION TO BACKEND</button>
         </>
     );
 };
