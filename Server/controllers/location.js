@@ -2,8 +2,8 @@ import Location from "../models/location.js";
 
 export const createLocation = async (req, res) => {
   try {
-    const { error_num, x, y } = req.body;
-    const newLocation = new Location({ error_num, x, y });
+    const { error_num, dropLocation } = req.body;
+    const newLocation = new Location({ error_num, dropLocation });
     const savedLocation = await newLocation.save();
     res.status(201).json(savedLocation);
   } catch (error) {
@@ -24,7 +24,7 @@ export const deleteLocation = async (req, res) => {
 export const editLocation = async (req, res) => {
   try {
     const { id } = req.params;
-    const { error_num, x, y } = req.body;
+    const { error_num, dropLocation } = req.body;
     const location = await Location.findById(id);
 
     if (!location) {
@@ -35,12 +35,8 @@ export const editLocation = async (req, res) => {
       location.error_num = error_num;
     }
 
-    if (x) {
-      location.x = x;
-    }
-
-    if (y) {
-      location.y = y;
+    if (dropLocation) {
+      location.dropLocation = dropLocation;
     }
 
     await location.save();

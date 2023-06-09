@@ -2,9 +2,7 @@ import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
   error_num: { type: Number, ref: 'Defect' },
-
-    x: Number,
-    y: Number,
+  dropLocation: [Number] // Array of Numbers
 });
 
 const Location = mongoose.model('Location', locationSchema);
