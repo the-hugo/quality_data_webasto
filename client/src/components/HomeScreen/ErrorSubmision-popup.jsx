@@ -46,7 +46,9 @@ const Popup = ({ onClose }) => {
                     <button onClick={handleOpenPopup2}>Button 2</button>
                     <button onClick={handleOpenPopup3}>Button 3</button>
                 </div>
-                <button className="close-button" onClick={handleClosePopup}>Close</button>
+                <button onClick={handleClosePopup} style={{ background: 'transparent', border: 'none', cursor: 'pointer', position: 'absolute', top: '10px', right: '10px' }}>
+                    <FaTimes style={{ fontSize: '1.3em' }}/>
+                </button>
             </div>
 
             {/* Render additional pop-ups conditionally */}
