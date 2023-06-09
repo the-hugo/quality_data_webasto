@@ -119,3 +119,69 @@
     background-color: rgba(128, 128, 128, 0.5);
     z-index: 1;
 }
+
+.popup button:nth-child(2) {
+    background-color: lightblue;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.popup2 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: lightgoldenrodyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.popup2-content {
+    text-align: center;
+}
+
+.popup2-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.popup2-message {
+    font-size: 24px;
+}
+
+.popup3 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-color: indianred;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.popup3-content {
+    text-align: center;
+}
+
+.popup3-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.popup3-message {
+    font-size: 24px;
+}

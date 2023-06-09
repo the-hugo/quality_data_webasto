@@ -29,6 +29,14 @@ const Popup = ({ onClose }) => {
         onClose();
     };
 
+    const handleClosePopup2 = () => {
+        setShowPopup2(false);
+    };
+
+    const handleClosePopup3 = () => {
+        setShowPopup3(false);
+    };
+
     return (
         <div className="popup">
             <div className="popup-content">
@@ -52,8 +60,26 @@ const Popup = ({ onClose }) => {
                     </div>
                 </div>
             )}
-            {showPopup2 && <Popup onClose={handleClosePopup} />}
-            {showPopup3 && <Popup onClose={handleClosePopup} />}
+            {showPopup2 && (
+                <div className="popup2">
+                    <div className="popup2-content">
+                        <div className="popup2-close" onClick={handleClosePopup2}>
+                            <FaTimes />
+                        </div>
+                        <div className="popup2-message">Successfully Submitted</div>
+                    </div>
+                </div>
+            )}
+            {showPopup3 && (
+                <div className="popup3">
+                    <div className="popup3-content">
+                        <div className="popup3-close" onClick={handleClosePopup3}>
+                            <FaTimes />
+                        </div>
+                        <div className="popup3-message">Successfully Submitted</div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
