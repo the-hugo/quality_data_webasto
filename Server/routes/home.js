@@ -15,7 +15,8 @@ import {
 import {
   createProduct,
   deleteProduct,
-  editProduct
+  editProduct,
+  findProductBySerialNumber
 } from "../controllers/product.js";
 import {
   createLocation,
@@ -47,10 +48,12 @@ router.post("/login", loginUser);
 router.post("/products", createProduct);
 router.put("/products/:id", editProduct);
 router.delete("/products/:id", deleteProduct);
+router.get('/products/:serialNumber', findProductBySerialNumber);
 
 // Location routes
 router.post("/locations", createLocation);
 router.put("/locations/:id", editLocation);
 router.delete("/locations/:id", deleteLocation);
+
 
 export default router;
