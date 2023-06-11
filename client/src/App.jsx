@@ -5,7 +5,7 @@ import LandingPage from "./components/HomeScreen/LandingPage";
 const App = () => {
     return (
         <>
-            <LandingPage/>
+        <LandingPage/>
         </>
 
     )

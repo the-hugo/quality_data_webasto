@@ -1,4 +1,13 @@
 /* MainContent.css */
+.container-new {
+    max-width: 100vw;
+    margin-right: 1% !important;
+}
+
+.between {
+    margin-bottom: 6%;
+}
+
 .main-content {
     padding: 20px;
 }

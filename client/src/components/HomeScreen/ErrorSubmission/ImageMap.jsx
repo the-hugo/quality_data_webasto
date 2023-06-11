@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import roof from "../../images/roof.png";
+import roof from "../../../images/roof.png";
 
 const ImageMap = () => {
     const containerRef = useRef(null);
