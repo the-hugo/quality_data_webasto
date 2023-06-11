@@ -1,63 +1,68 @@
 .sidenav {
-    width: 150px;
+    width: 140px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
-    background-color: rgb(10,25,41);
+    background-color: #ffffff;
     padding-top: 28px;
+    /* border-top-right-radius: 6%;
+    border-bottom-left-radius: 6%;
+    border-top-width: 3px; */
+    border-inline-end-width: 2px;
+    border-radius: 15px;
+    box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.1);
 }
- 
+
 .sidenavClosed {
     composes: sidenav;
     transition: width 0.3s ease-in-out;
     width: 60px
 }
- 
+
 .sideitem {
     display: flex;
     align-items: center;
     padding: 10px 20px;
     cursor: pointer;
-    color: #B2BAC2;
+    color: #333399;
     text-decoration: none;
 }
- 
+
 .linkText {
     padding-left: 16px;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.5s ease-in;
-  }
-  
-  .linkTextClosed {
+}
+
+.linkTextClosed {
     composes: linkText;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease;
-  }
- 
+}
+
 .sideitem:hover {
     background-color: #648fbe33;
-
 }
- 
+
 .logo {
-    display: flex;
-    align-items: center;
+
     cursor: pointer;
     color: #B2BAC2;
     text-decoration: none;
     padding: 10px;
+    transition: transform 0.3s ease-in-out;
 }
- 
-.logo:hover {
-    background-color: #244f7d1c;
 
+.logo:hover {
+    transform: scale(1.1);
 }
 
 .open {
-    max-width: 170px !important;
+    max-width: 160px !important;
     transition: max-width 0.5s ease;
 }
+
 .closed {
     max-width: 70px !important;
     transition: max-width 0.5s ease;

@@ -1,10 +1,18 @@
-.stack {
+/* .stack {
     margin-top: 6%;
-}
+} */
 .font {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: #4077c5;
+    font-family: 'Roboto';
+    color: #333399;
 }
+
 .light-blue {
-    color: #e4f2ff;
+    color: #4949b3;
+}
+
+.pagination {
+    color: #f0a952;
+    /* margin-top: ; */
+    border-top-width: 2px;
+    border-color: #333399;
 }
