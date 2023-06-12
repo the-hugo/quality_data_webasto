@@ -5,6 +5,7 @@ import {
     ArrowCircleLeftOutlined,
     ArrowCircleRightOutlined,
     ArrowCircleUpOutlined,
+    DomainVerificationOutlined,
 } from '@mui/icons-material';
 
 
@@ -277,13 +278,12 @@ const ImageMap = () => {
                 Click anywhere in the map area below to see the red square move to the
                 position of your click.
             </p>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div
                     id="container"
                     ref={containerRef}
                     style={{
                         position: 'relative',
-                        left: "auto",
                         width: '500px',
                         height: '300px',
                         border: '1px black solid',
@@ -315,36 +315,52 @@ const ImageMap = () => {
                         }}
                     ></div>
                 </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginTop: '16px',
-                    }}
-                >
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                        <div style={{ display: 'grid', gridTemplateRows: '1fr auto 1fr', gap: '8px' }}>
-                            <button onClick={handleMoveUp}>
-                                <ArrowCircleUpOutlined />
+                <div style={{ marginLeft: '16px' }}>
+                    <div style={{ display: 'grid', gridTemplateRows: '1fr auto 1fr', gap: '8px' }}>
+                        <button onClick={handleMoveUp}>
+                            <ArrowCircleUpOutlined />
+                        </button>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <button onClick={handleMoveLeft}>
+                                <ArrowCircleLeftOutlined />
                             </button>
-                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <button onClick={handleMoveLeft}>
-                                    <ArrowCircleLeftOutlined />
-                                </button>
-                                <button onClick={handleMoveRight}>
-                                    <ArrowCircleRightOutlined />
-                                </button>
-                            </div>
-                            <button onClick={handleMoveDown}>
-                                <ArrowCircleDownOutlined />
+                            <button onClick={handleMoveRight}>
+                                <ArrowCircleRightOutlined />
                             </button>
                         </div>
+                        <button onClick={handleMoveDown}>
+                            <ArrowCircleDownOutlined />
+                        </button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        <button
+                            style={{
+                                background: '#0069eb',
+                                borderRadius: '30px',
+                                border: 'none',
+                                color: '#fff',
+                                fontSize: '16px',
+                                padding: '15px 30px',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}
+                            onClick={handleLogDropLocation}
+                        >
+                            Submit
+                            <span
+                                style={{
+                                    width: '1px',
+                                    borderRight: '1px solid #fff',
+                                    height: '16px',
+                                    margin: '0 0 0 10px',
+                                }}
+                            ></span>
+                            <DomainVerificationOutlined style={{ fontSize: '20px', marginLeft: '10px' }} />
+                        </button>
                     </div>
                 </div>
-
-                </div>
-            <button onClick={handleLogDropLocation}>SEND LOCATION TO BACKEND</button>
+            </div>
         </>
     );
 };
