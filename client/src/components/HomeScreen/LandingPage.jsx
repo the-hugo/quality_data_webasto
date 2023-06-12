@@ -3,28 +3,53 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Sidenav from './StructuringElements/SideBar';
-import ImageMap from "./ErrorSubmission/ImageMap";
 import Popup from './ErrorSubmission/ErrorSubmision-popup';
-import { Button } from 'react-bootstrap';
 import Header from './StructuringElements/Header';
 import Clock from './StructuringElements/Clock';
 import Footer from './StructuringElements/Footer';
 import ArrowRight from './StructuringElements/ArrowRight';
 import ArrowLeft from './StructuringElements/ArrowLeft';
 import CustomError from './ErrorSelection/CustomErrors';
+import { useEffect } from 'react';
+import axios from 'axios';
 import './styles.css'
 
 
 
 
 export default function LandingPage() {
+    const [data, setData] = useState([]);
+    const [pagination, setPagination] = useState([0, 3, 6, 9]);
     const [showOverlay, setShowOverlay] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [isOpen, setBool] = useState(false)
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
-        setShowOverlay(true);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/home/defects');
+                setData(response.data);
+            } catch (error) {
+                // Handle error here
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const back = () => {
+        setPagination([0, 3, 6, 9]);
+        console.log(pagination[2]);
+    }
+
+    const forward = () => {
+        setPagination([9, 12, 15, 18]);
+        console.log(pagination[2]);
+    }
+
+    const handleOpenPopup = (isOpen) => {
+        setShowPopup(isOpen);
+        setShowOverlay(isOpen);
     };
 
     const handleClosePopup = () => {
@@ -51,30 +76,55 @@ export default function LandingPage() {
                         <div style={{ paddingLeft: 0, marginTop: "24.81%" }}>
                         </div>
                         <Col className="d-flex flex-column justify-content-center align-items-center" style={{ paddingRight: 0 }}>
-                            <ArrowLeft />
+                            <div onClick={back}>
+                                <ArrowLeft />
+                            </div>
                         </Col>
                     </Row>
                 </Col>
                 <Col className={isOpen ? "d-flex flex-column align-items-stretch flex-shrink-2 col-9" : "d-flex flex-column align-items-stretch flex-shrink-2 col-8"}>
-                    <Row className='flex-grow-1'>
+                    <Row>
                         {/* Header returns two cols */}
-                        <Header />
+                        <Header pagination={pagination} />
                     </Row>
                     {/* Errors Here */}
                     <Row className='flex-grow-1 justify-content-center'>
                         <Col className=''>
-                            <div onClick={handleOpenPopup}>
-                                <CustomError />
-                            </div>
+                            <Row className='gap-1 justify-content-evenly'>
+                                {
+                                    data.slice(pagination[0], pagination[1]).map((error) => (
+                                        <CustomError key={error.error_num} error={error} togglePopup={handleOpenPopup} />
+                                    ))}
+                            </Row>
+                            <Row className='gap-1 justify-content-evenly'>
+                                {data.slice(pagination[1], pagination[2]).map((error) => (
+                                    <CustomError key={error.error_num} error={error} togglePopup={handleOpenPopup} />
+                                ))}
+                            </Row>
+                            <Row className='gap-1 justify-content-evenly'>
+                                {data.slice(pagination[2], pagination[3]).map((error) => (
+                                    <CustomError key={error.error_num} error={error} togglePopup={handleOpenPopup} />
+                                ))}
+                            </Row>
                             {/* <ImageMap /> */}
-                            {/* Button to open the pop-up */}
                             {/* Render the pop-up conditionally */}
                             {showPopup && (
                                 <>
                                     <div className="overlay" onClick={handleClosePopup}></div>
                                     <Popup onClose={handleClosePopup} />
                                 </>
-                            )}</Col>
+                            )}
+                            <Row>
+                                <Col>
+                                    <Row style={{ marginTop: "3%" }}>
+                                        <Col><span className="font">FREQUENT EVENTS</span></Col>
+                                        <Col style={{ display: 'flex', justifyContent: 'flex-end' }}><span className="pagination">{ pagination[0] === 0 ? "01 / 02" : "02 / 02"}</span></Col>
+                                    </Row>
+                                    <Row className='d-flex align-items-center justify-content-center'></Row>
+                                    <Row className='d-flex align-items-center justify-content-center'>no items yet</Row>
+                                </Col>
+                            </Row>
+                        </Col>
                     </Row>
                     <Row className='gap-3 flex-grow-1 footer d-flex justify-content-center' style={{ marginLeft: 20, marginRight: 20, maxHeight: 120 }}>
                         {/* Footer returns two columns */}
@@ -87,7 +137,9 @@ export default function LandingPage() {
                             <Clock />
                         </div>
                         <Col className="d-flex flex-column justify-content-center align-items-center" style={{ paddingRight: 0 }}>
-                            <ArrowRight />
+                            <div onClick={forward}>
+                                <ArrowRight />
+                            </div>
                         </Col>
                     </Row>
                 </Col>

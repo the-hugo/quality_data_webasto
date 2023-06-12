@@ -9,12 +9,12 @@
 
 .switch span {
     position: relative;
-    top: 0px;
+    top: 3px;
 }
 
 .switch:hover span {
     transition: all 0.3s ease-out;
-    top: -20px;
+    top: -16px;
     color: transparent;
 }
 

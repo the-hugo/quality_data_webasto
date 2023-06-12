@@ -19,13 +19,13 @@ export default function Footer() {
             <Col className="col-5 d-flex align-self-center justify-content-center">
                 <div className={`${styles.switch} ${styles.pointer} d-flex w-100 d-flex align-self-center justify-content-center`} style={clickable}>
                     <ContentPasteSearchIcon></ContentPasteSearchIcon>
-                    <span title="PRODUCT PROFILE" style={{ paddingLeft: 6, fontSize: 14 }}>PRODUCT PROFILE</span>
+                    <span title="PRODUCT PROFILE" style={{ paddingLeft: 6, fontSize: 12, textAlign: "center" }}>PRODUCT PROFILE</span>
                 </div>
             </Col>
             <Col className="col-5 d-flex align-self-center justify-content-center">
                 <div className={`${styles.switch} ${styles.pointer} d-flex w-100 d-flex align-self-center justify-content-center`} style={clickable}>
                     <AddCircleOutlineIcon></AddCircleOutlineIcon>
-                    <span title="NEW EVENT" style={{ paddingLeft: 6, fontSize: 14 }}>NEW EVENT</span>
+                    <span title="NEW EVENT" style={{ paddingLeft: 6, fontSize: 12, textAlign: "center" }}>NEW EVENT</span>
                 </div>
             </Col>
             <Col className="col-1 d-flex align-self-center justify-content-center">

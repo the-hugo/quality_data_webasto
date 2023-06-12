@@ -18,7 +18,7 @@ const Popup = ({ onClose }) => {
             action_type: 'Anomaly',
             category: 'Scratch',
           };
-
+      // const url = window.location.origin;
       const response = await fetch('http://localhost:8080/home/defects', {
         method: 'POST',
         headers: {

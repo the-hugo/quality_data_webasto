@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { Stack } from "react-bootstrap";
 import styles from "./header.module.css"
 
-export default function Header() {
+export default function Header({ pagination}) {
     return (
         <>
             <Col>
@@ -29,7 +29,7 @@ export default function Header() {
                     <Col></Col>
                     <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>                            
                     {/* Number of pages */}
-                    <span className={styles.pagination}>01 / 02</span></Col>
+                    <span className={styles.pagination}>{ pagination[0] === 0 ? "01 / 02" : "02 / 02"}</span></Col>
                 </Row>
             </Col>
         </>

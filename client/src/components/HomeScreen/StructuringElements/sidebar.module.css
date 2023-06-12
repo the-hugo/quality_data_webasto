@@ -1,5 +1,5 @@
 .sidenav {
-    width: 140px;
+    width: 120px;
     transition: width 0.4s ease-in-out;
     height: 100vh;
     background-color: #ffffff;
@@ -29,10 +29,11 @@
 }
 
 .linkText {
-    padding-left: 16px;
+    padding-left: 8px;
     opacity: 1;
     visibility: visible;
     transition: opacity 1s ease-in;
+    font-size: 10pt;
 }
 
 .linkTextClosed {
@@ -40,6 +41,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease;
+    /* font-size: 12pt; */
 }
 
 .sideitem:hover {

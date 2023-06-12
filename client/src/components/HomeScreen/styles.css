@@ -3,6 +3,15 @@ body {
     font-family: "Roboto" !important;
 }
 
+.font {
+    font-family: 'Roboto';
+    color: #333399;
+}
+
+.pagination {
+    color: #f0a952;
+}
+
 .footer {
     height: 40px !important;
     border-top-width: 2px;
