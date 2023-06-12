@@ -10,7 +10,7 @@ export default function CustomError() {
                 <Row className={`${styles.outer} d-flex align-items-end`}>
                     <Col>
                         <Row className="" style={{ marginTop: -35 }}>
-                            <div style={{ fontSize: 12 }} className="text-center"><b>Defamination</b></div>
+                            <div style={{ fontSize: 12 }} className="text-center"><b>Delamination</b></div>
                         </Row>
                         <Row>
                             <div style={{ fontSize: 8, color: "#333399" }} className="text-end">Damage</div>
