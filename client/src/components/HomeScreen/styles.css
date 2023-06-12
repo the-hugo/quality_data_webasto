@@ -9,11 +9,11 @@ body {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
-    transition: height 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .footer:hover{
-    height: 60px !important;
+    transform: translateY(-0.25em);
 }
 
 .container-new {

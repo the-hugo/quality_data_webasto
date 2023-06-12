@@ -37,7 +37,7 @@ export default function LandingPage() {
 
     return (
         <Container fluid>
-            <Row className=''>
+            <Row className='d-flex w-100'>
                 {/* Overlay */}
                 {showOverlay && <div className="overlay"></div>}
 
@@ -62,7 +62,7 @@ export default function LandingPage() {
                     {/* Errors Here */}
                     <Row className='flex-grow-1 justify-content-center'>
                         <Col className=''>
-                            <ImageMap />
+                            {/* <ImageMap /> */}
                             {/* Button to open the pop-up */}
                             <Button style={{ maxWidth: 150 }} onClick={handleOpenPopup}>
                                 Open Popup
@@ -75,17 +75,17 @@ export default function LandingPage() {
                                 </>
                             )}</Col>
                     </Row>
-                    <Row className='flex-grow-1 footer'>
+                    <Row className='flex-grow-1 footer d-flex justify-content-center' style={{ marginLeft: 20, marginRight: 20, maxHeight: 120 }}>
                         {/* Footer returns two columns */}
                         <Footer />
                     </Row>
                 </Col>
                 <Col className='col-1'>
                     <Row className='h-100 flex-column'>
-                        <div style={{ marginTop: 6, textAlign: "right", paddingLeft: 0 }}>
+                        <div style={{ marginTop: 6, textAlign: "right", paddingLeft: 0, paddingRight:0 }}>
                             <Clock />
                         </div>
-                        <Col className="d-flex flex-column justify-content-center align-items-center">
+                        <Col className="d-flex flex-column justify-content-center align-items-center" style= {{ paddingRight: 0 }}>
                             <ArrowRight />
                         </Col>
                     </Row>
