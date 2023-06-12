@@ -1,10 +1,62 @@
 import React, { useEffect, useRef } from 'react';
 import roof from "../../../images/roof.png";
+import {
+    ArrowCircleDownOutlined,
+    ArrowCircleLeftOutlined,
+    ArrowCircleRightOutlined,
+    ArrowCircleUpOutlined,
+} from '@mui/icons-material';
+
 
 const ImageMap = () => {
     const containerRef = useRef(null);
     const pinRef = useRef(null);
     const imgRef = useRef(null);
+
+    const handleMoveUp = () => {
+        const minY = window.pinner.y_lb;
+        const newY = window.pinner.adjY - 5;
+
+        if (newY >= minY) {
+            window.pinner.movePointer(0, -5);
+        } else {
+            window.pinner.movePointer(0, minY - window.pinner.adjY);
+        }
+    };
+
+    const handleMoveDown = () => {
+        const maxY = window.pinner.y_ub;
+        const newY = window.pinner.adjY + 5;
+
+        if (newY <= maxY) {
+            window.pinner.movePointer(0, 5);
+        } else {
+            window.pinner.movePointer(0, maxY - window.pinner.adjY);
+        }
+    };
+
+    const handleMoveLeft = () => {
+        const minX = window.pinner.x_lb;
+        const newX = window.pinner.adjX - 5;
+
+        if (newX >= minX) {
+            window.pinner.movePointer(-5, 0);
+        } else {
+            window.pinner.movePointer(minX - window.pinner.adjX, 0);
+        }
+    };
+
+    const handleMoveRight = () => {
+        const maxX = window.pinner.x_ub;
+        const newX = window.pinner.adjX + 5;
+
+        if (newX <= maxX) {
+            window.pinner.movePointer(5, 0);
+        } else {
+            window.pinner.movePointer(maxX - window.pinner.adjX, 0);
+        }
+    };
+
 
     useEffect(() => {
         class Pinner {
@@ -93,6 +145,16 @@ const ImageMap = () => {
             setPinLocation(dropLocation) {
                 this.adjX = dropLocation[0] + this.x_lb;
                 this.adjY = dropLocation[1] + this.y_lb;
+            }
+
+            movePointer(dx, dy) {
+                this.adjX += dx;
+                this.adjY += dy;
+                this.renderPin();
+                this.diX = this.adjX - this.x_lb;
+                this.diY = this.adjY - this.y_lb;
+                this.dropLocation = [this.diX / this.diWidth, this.diY / this.diHeight];
+                this.log();
             }
 
             renderPin() {
@@ -215,43 +277,73 @@ const ImageMap = () => {
                 Click anywhere in the map area below to see the red square move to the
                 position of your click.
             </p>
-            <div
-                id="container"
-                ref={containerRef}
-                style={{
-                    position: 'relative',
-                    left: "auto",
-                    width: '500px',
-                    height: '300px',
-                    border: '1px black solid',
-                    overflow: 'hidden',
-                    backgroundColor: '#eee',
-                    cursor: 'pointer',
-                }}
-            >
-                <img
-                    id="img"
-                    ref={imgRef}
-                    alt=""
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                    }}
-                />
+            <div style={{ display: 'flex' }}>
                 <div
-                    id="pin"
-                    ref={pinRef}
+                    id="container"
+                    ref={containerRef}
                     style={{
-                        position: 'absolute',
-                        width: '8px',
-                        height: '8px',
-                        backgroundColor: 'red',
-                        transition: 'all 0.5s',
-                        transform: 'translate(-50%, -50%)',
+                        position: 'relative',
+                        left: "auto",
+                        width: '500px',
+                        height: '300px',
+                        border: '1px black solid',
+                        overflow: 'hidden',
+                        backgroundColor: '#eee',
+                        cursor: 'pointer',
                     }}
-                ></div>
-            </div>
+                >
+                    <img
+                        id="img"
+                        ref={imgRef}
+                        alt=""
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                        }}
+                    />
+                    <div
+                        id="pin"
+                        ref={pinRef}
+                        style={{
+                            position: 'absolute',
+                            width: '8px',
+                            height: '8px',
+                            backgroundColor: 'red',
+                            transition: 'all 0.5s',
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    ></div>
+                </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: '16px',
+                    }}
+                >
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                        <div style={{ display: 'grid', gridTemplateRows: '1fr auto 1fr', gap: '8px' }}>
+                            <button onClick={handleMoveUp}>
+                                <ArrowCircleUpOutlined />
+                            </button>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <button onClick={handleMoveLeft}>
+                                    <ArrowCircleLeftOutlined />
+                                </button>
+                                <button onClick={handleMoveRight}>
+                                    <ArrowCircleRightOutlined />
+                                </button>
+                            </div>
+                            <button onClick={handleMoveDown}>
+                                <ArrowCircleDownOutlined />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
             <button onClick={handleLogDropLocation}>SEND LOCATION TO BACKEND</button>
         </>
     );
