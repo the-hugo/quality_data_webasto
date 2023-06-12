@@ -53,17 +53,27 @@ const Popup = ({ onClose }) => {
     return (
         <div className="popup">
             <div className="popup-content">
-
+                <div className={"title-container"}>
+                <h3 className="popup-title">SELECTED</h3>
                 <div className="circle-button" onClick={handleOpenMapPopup}>
                     <FaMapMarkerAlt style={{ color: 'azure' }} />
                 </div>
-                <input type="text" placeholder="Enter text" />
+                </div>
+                {/*<input type="text" placeholder="Enter text" />*/}
+                <div className={"issue-element-display"}>
+                    <p className={"issue-location"}>Class A Surface</p>
+                    <div className={"issue-definition-area"}>
+                        <p className={"issue-name"}>Delamination</p>
+                        <p className={"issue-type"}>Surface / Finish</p>
+                    </div>
+                </div>
                 <div className="button-container">
                     <button onClick={handleOpenPopup1}>Button 1</button>
                     <button onClick={handleOpenPopup2}>Button 2</button>
                     <button onClick={handleOpenPopup3}>Button 3</button>
                 </div>
             </div>
+
 
             <button className="close-button" onClick={handleClosePopup}>
                 <FaTimes style={{ fontSize: '1.3em' }}/>
