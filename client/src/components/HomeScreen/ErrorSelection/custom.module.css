@@ -1,0 +1,25 @@
+.outer {
+    /* border-width: 1px; */
+    height: 60px;
+    border-radius: 15px;
+    box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.1);
+}
+.decorator {
+    position: relative;
+    top: 12px;
+    left: -12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    color: white;
+    width: 65%;
+    height: 25px;
+    border-radius: 10px;
+    background-color: #3E78C6;
+}
+
+.equal-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

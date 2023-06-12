@@ -11,6 +11,7 @@ import Clock from './StructuringElements/Clock';
 import Footer from './StructuringElements/Footer';
 import ArrowRight from './StructuringElements/ArrowRight';
 import ArrowLeft from './StructuringElements/ArrowLeft';
+import CustomError from './ErrorSelection/CustomErrors';
 import './styles.css'
 
 
@@ -62,11 +63,11 @@ export default function LandingPage() {
                     {/* Errors Here */}
                     <Row className='flex-grow-1 justify-content-center'>
                         <Col className=''>
+                            <div onClick={handleOpenPopup}>
+                                <CustomError />
+                            </div>
                             {/* <ImageMap /> */}
                             {/* Button to open the pop-up */}
-                            <Button style={{ maxWidth: 150 }} onClick={handleOpenPopup}>
-                                Open Popup
-                            </Button>
                             {/* Render the pop-up conditionally */}
                             {showPopup && (
                                 <>
@@ -82,10 +83,10 @@ export default function LandingPage() {
                 </Col>
                 <Col className='col-1'>
                     <Row className='h-100 flex-column'>
-                        <div style={{ marginTop: 6, textAlign: "right", paddingLeft: 0, paddingRight:0 }}>
+                        <div style={{ marginTop: 6, textAlign: "right", paddingLeft: 0, paddingRight: 0 }}>
                             <Clock />
                         </div>
-                        <Col className="d-flex flex-column justify-content-center align-items-center" style= {{ paddingRight: 0 }}>
+                        <Col className="d-flex flex-column justify-content-center align-items-center" style={{ paddingRight: 0 }}>
                             <ArrowRight />
                         </Col>
                     </Row>
