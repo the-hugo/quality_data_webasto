@@ -41,3 +41,19 @@ export const editProduct = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const findProductBySerialNumber = async (req, res) => {
+  const { serialNumber } = req.params;
+
+  try {
+    const product = await Product.findOne({ serial_num: serialNumber });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
