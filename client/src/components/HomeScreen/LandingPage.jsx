@@ -75,7 +75,7 @@ export default function LandingPage() {
                                 </>
                             )}</Col>
                     </Row>
-                    <Row className='flex-grow-1 footer d-flex justify-content-center' style={{ marginLeft: 20, marginRight: 20, maxHeight: 120 }}>
+                    <Row className='gap-3 flex-grow-1 footer d-flex justify-content-center' style={{ marginLeft: 20, marginRight: 20, maxHeight: 120 }}>
                         {/* Footer returns two columns */}
                         <Footer />
                     </Row>

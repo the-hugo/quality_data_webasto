@@ -1,3 +1,7 @@
+.pointer {
+    cursor: pointer;
+}
+
 .switch {
     position: relative;
     overflow: hidden;
@@ -10,7 +14,7 @@
 
 .switch:hover span {
     transition: all 0.3s ease-out;
-    top: -25px;
+    top: -20px;
     color: transparent;
 }
 
@@ -26,4 +30,14 @@
     transition: opacity 0.3s ease-in;
     content: attr(title);
     color: #333399;
+}
+
+.icon {
+    background-color: #d0e4ff7a !important;
+}
+
+.icon:hover {
+    background-color: #5ca3ff7a !important;
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
