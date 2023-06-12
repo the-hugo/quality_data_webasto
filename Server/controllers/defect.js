@@ -11,16 +11,20 @@ export const getDefects = async (req, res) => {
 }
 
 export const createDefect = async (req, res) => {
-    const defect = req.body;
-    const newDefect = new Defect(defect);
-    console.log(defect)
     try {
-        await newDefect.save();
-        res.status(201).json(newDefect);
+      const count = await Defect.countDocuments({});
+      const defect = req.body;
+      defect.error_num = count + 1;
+  
+      const newDefect = new Defect(defect);
+      console.log(defect);
+  
+      await newDefect.save();
+      res.status(201).json(newDefect);
     } catch (error) {
-        res.status(409).json({ message: error.message })
+      res.status(409).json({ message: error.message });
     }
-}
+  };
 
 export const editDefect = async (req, res) => {
     const { id } = req.params;
