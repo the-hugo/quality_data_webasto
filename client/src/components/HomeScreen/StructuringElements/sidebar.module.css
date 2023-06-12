@@ -1,6 +1,6 @@
 .sidenav {
     width: 140px;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.4s ease-in-out;
     height: 100vh;
     background-color: #ffffff;
     padding-top: 28px;
@@ -14,7 +14,7 @@
 
 .sidenavClosed {
     composes: sidenav;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.4s ease-in-out;
     width: 60px
 }
 
@@ -24,6 +24,7 @@
     padding: 10px 20px;
     cursor: pointer;
     color: #333399;
+    /* color: #90c0ff; */
     text-decoration: none;
 }
 
@@ -31,7 +32,7 @@
     padding-left: 16px;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.5s ease-in;
+    transition: opacity 1s ease-in;
 }
 
 .linkTextClosed {

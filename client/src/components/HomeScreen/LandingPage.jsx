@@ -8,6 +8,9 @@ import Popup from './ErrorSubmission/ErrorSubmision-popup';
 import { Button } from 'react-bootstrap';
 import Header from './StructuringElements/Header';
 import Clock from './StructuringElements/Clock';
+import Footer from './StructuringElements/Footer';
+import ArrowRight from './StructuringElements/ArrowRight';
+import ArrowLeft from './StructuringElements/ArrowLeft';
 import './styles.css'
 
 
@@ -16,6 +19,7 @@ import './styles.css'
 export default function LandingPage() {
     const [showOverlay, setShowOverlay] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
+    const [isOpen, setBool] = useState(false)
 
     const handleOpenPopup = () => {
         setShowPopup(true);
@@ -27,27 +31,37 @@ export default function LandingPage() {
         setShowOverlay(false);
     };
 
+    const handleChildStateChange = (currentBool) => {
+        setBool(currentBool)
+    }
 
     return (
         <Container fluid>
-            <Row>
+            <Row className=''>
                 {/* Overlay */}
                 {showOverlay && <div className="overlay"></div>}
 
                 {/* SideNav is wrapped in a Col */}
-                <Sidenav />
+                <Sidenav onChildStateChange={handleChildStateChange} />
+
                 {/* Left arrow */}
-                <Col className="align-self-center"style={{ marginTop: "2%"  }}>
-                    Left arrow
+                <Col className='col-1'>
+                    <Row className='h-100 flex-column'>
+                        <div style={{ paddingLeft: 0, marginTop: "24.81%" }}>
+                        </div>
+                        <Col className="d-flex flex-column justify-content-center align-items-center" style={{ paddingRight: 0 }}>
+                            <ArrowLeft />
+                        </Col>
+                    </Row>
                 </Col>
-                <Col className="d-flex flex-column align-items-stretch">
+                <Col className={isOpen ? "d-flex flex-column align-items-stretch flex-shrink-2 col-9" : "d-flex flex-column align-items-stretch flex-shrink-2 col-8"}>
                     <Row className='flex-grow-1'>
                         {/* Header returns two cols */}
                         <Header />
                     </Row>
                     {/* Errors Here */}
-                    <Row className='flex-grow-1'>
-                        <Col>
+                    <Row className='flex-grow-1 justify-content-center'>
+                        <Col className=''>
                             <ImageMap />
                             {/* Button to open the pop-up */}
                             <Button style={{ maxWidth: 150 }} onClick={handleOpenPopup}>
@@ -61,19 +75,18 @@ export default function LandingPage() {
                                 </>
                             )}</Col>
                     </Row>
-                    <Row className='flex-grow-1'>
-                        <Col>
-                            Footer
-                        </Col>
+                    <Row className='flex-grow-1 footer'>
+                        {/* Footer returns two columns */}
+                        <Footer />
                     </Row>
                 </Col>
-                <Col className="d-flex align-items-start justify-content-center">
-                    <Row className='h-100'>
-                        <Col className="text-center" style={{ marginTop: "5%"  }}>
+                <Col className='col-1'>
+                    <Row className='h-100 flex-column'>
+                        <div style={{ marginTop: 6, textAlign: "right", paddingLeft: 0 }}>
                             <Clock />
-                        </Col>
-                        <Col className="">
-                            <p>Right Arrow</p>
+                        </div>
+                        <Col className="d-flex flex-column justify-content-center align-items-center">
+                            <ArrowRight />
                         </Col>
                     </Row>
                 </Col>

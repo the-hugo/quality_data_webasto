@@ -14,7 +14,7 @@ const Clock = () => {
   }, []);
 
   return (
-    <div style={{ fontSize: 12 }}>
+    <div style={{ fontSize: 10 }}>
       {currentTime.toLocaleTimeString()}
     </div>
   );

@@ -4,13 +4,14 @@ import { useState } from "react";
 import logo from "../../../images/logo.png";
 import Col from "react-bootstrap/esm/Col";
 
-export default function Sidenav() {
+export default function Sidenav({ onChildStateChange }) {
     const [open, setopen] = useState(false)
     const toggleOpen = () => {
-        setopen(!open)
+        setopen(!open);
+        onChildStateChange(open);
     }
     return (
-        <Col className={open ? styles.open : styles.closed} style={{ paddingLeft: 0 }}>
+        <Col className={ open ? "col-2" : "col-1"}  style={{ paddingLeft: 0, transition: 'width 0.3s ease-in'}}>
             <div className={open ? styles.sidenav : styles.sidenavClosed}>
                 <img src={logo} alt="webasto" className={styles.logo} onClick={toggleOpen} />
                 {navData.map(item => {
