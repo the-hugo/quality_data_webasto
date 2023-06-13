@@ -99,9 +99,9 @@ const Popup = ({ onClose, popupData }) => {
   </div>
 </div>
         <div className="button-container">
-          <button onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
-          <button onClick={() => handleButtonClick('Rework')}>Rework</button>
-          <button onClick={() => handleButtonClick('Scrap')}>Scrap</button>
+          <button className={'anomaly-button'} onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
+          <button className={'rework-button'} onClick={() => handleButtonClick('Rework')}>Rework</button>
+          <button className={'scrap-button'} onClick={() => handleButtonClick('Scrap')}>Scrap</button>
         </div>
       </div>
 

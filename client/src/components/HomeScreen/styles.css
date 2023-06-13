@@ -186,16 +186,41 @@ body {
     font-size: 24px;
 }
 
+
 .button1 {
     background-color: lightblue;
     border-radius: 8px;
     padding: 10px;
     border: 1px solid white;
 }
-
+{/*
 .button-container button {
     margin-right: 10px;
     background-color: lightblue;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid white;
+}
+*/}
+
+.anomaly-button {
+    margin-right: 10px;
+    background-color: lightgreen;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid white;
+}
+.rework-button {
+    margin-right: 10px;
+    background-color: lightgoldenrodyellow;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.scrap-button {
+    margin-right: 10px;
+    background-color: indianred;
     border-radius: 8px;
     padding: 10px;
     border: 1px solid white;
