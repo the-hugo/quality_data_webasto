@@ -45,14 +45,17 @@ export const editProduct = async (req, res) => {
 export const findProductBySerialNumber = async (req, res) => {
   const { serialNumber } = req.params;
 
-  try {
-    const product = await Product.findOne({ serial_num: serialNumber });
+  console.log(`Searching for serial number: ${serialNumber}`); // Add this line
 
-    if (!product) {
+  try {
+    const regex = new RegExp(serialNumber, "i");
+    const products = await Product.find({ serial_num: regex });
+
+    if (products.length === 0) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    res.json(product);
+    res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
