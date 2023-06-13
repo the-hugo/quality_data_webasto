@@ -53,7 +53,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 700px;
     height: 500px;
     background-color: #ffffff;
     display: flex;
@@ -82,16 +82,18 @@ body {
 
 .popup-title {
     text-align: Left;
+    color: #2B77D1;
 }
 
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: lightblue;
-    border: none;
+    top: 15px;
+    right: 15px;
+    border: 1px solid #004689;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 0;
+    color: #004689;
+    padding: 3px;
 }
 
 .popup-content input {
@@ -122,8 +124,9 @@ body {
     color: white;
     padding: 10px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 16px;
     z-index: 2;
+    width: 150px;
 }
 
 .issue-name{
@@ -134,19 +137,23 @@ body {
     padding-top: 10px;
     margin-left: -20px;
     z-index: 1;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 16px;
+    width: 400px;
 }
 
 .issue-type{
     text-align: right;
     font-size: smaller;
+    color: #004689;
+    font-weight: normal;
     background: #F2F4F5;
-    padding-left: 45px;
-    padding-right: 100px;
-    padding-top: 5px;
+    padding-left: 65px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 5px;
     margin-top: -20px;
     margin-left: -20px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 16px;
     z-index: 1;
 }
 
@@ -161,7 +168,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 700px;
     height: 500px;
     background-color: lightgreen;
     display: flex;
@@ -176,10 +183,14 @@ body {
 
 .popup1-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
+    top: 15px;
+    right: 15px;
+    border: 1px solid #004689;
+    border-radius: 50%;
     cursor: pointer;
+    color: #004689;
+    padding: 3px;
+    font-size: 22px;
 }
 
 .popup1-message {
@@ -205,25 +216,31 @@ body {
 
 .anomaly-button {
     margin-right: 10px;
-    background-color: lightgreen;
-    border-radius: 8px;
+    background-color: #7DDE86;
+    border-radius: 12px;
     padding: 10px;
-    border: 1px solid white;
+    border: 1px solid #104931;
+    width: 100px;
+    color: #104931;
 }
 .rework-button {
     margin-right: 10px;
-    background-color: lightgoldenrodyellow;
-    border-radius: 8px;
+    background-color: #FFD188;
+    border-radius: 12px;
     padding: 10px;
-    border: 1px solid white;
+    border: 1px solid #A05E03;
+    width: 100px;
+    color: #A05E03;
 }
 
 .scrap-button {
     margin-right: 10px;
-    background-color: indianred;
-    border-radius: 8px;
+    background-color: #FF6D6D;
+    border-radius: 12px;
     padding: 10px;
-    border: 1px solid white;
+    border: 1px solid #C00015;
+    width: 100px;
+    color: #711711;
 }
 
 
@@ -246,7 +263,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 700px;
     height: 500px;
     background-color: lightgoldenrodyellow;
     display: flex;
@@ -261,10 +278,14 @@ body {
 
 .popup2-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
+    top: 15px;
+    right: 15px;
+    border: 1px solid #004689;
+    border-radius: 50%;
     cursor: pointer;
+    color: #004689;
+    padding: 3px;
+    font-size: 22px;
 }
 
 .popup2-message {
@@ -276,7 +297,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 700px;
     height: 500px;
     background-color: indianred;
     display: flex;
@@ -291,10 +312,14 @@ body {
 
 .popup3-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
+    top: 15px;
+    right: 15px;
+    border: 1px solid #004689;
+    border-radius: 50%;
     cursor: pointer;
+    color: #004689;
+    padding: 3px;
+    font-size: 22px;
 }
 
 .popup3-message {
