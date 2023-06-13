@@ -29,7 +29,7 @@ export default function LandingPage() {
           'http://localhost:8080/home/defectlist'
         );
         const filteredData = response.data.filter(
-          (item) => item.product_id === 'CC Front RH Panel'
+          (item) => item.product_id === 'CC RC Roof Panel Rem Lid 3dr'
         );
         console.log('Filtered data:', filteredData); // Check the filtered data
         filteredData.forEach((item) => console.log('Item error:', item.error)); // Log the item.error

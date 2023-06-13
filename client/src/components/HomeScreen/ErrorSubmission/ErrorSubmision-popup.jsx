@@ -48,7 +48,7 @@ const Popup = ({ onClose }) => {
         serial_num:'123456',
         personal_id: '6661',
         description: 'Das Teil ist Banane',
-        action_type: 'Anomaly',
+        action_type: 'Rework',
         category: 'Scratch',
       };
 
@@ -63,7 +63,7 @@ const Popup = ({ onClose }) => {
       if (response.ok) {
         console.log('Button 1 clicked successfully');
         // Show the success popup
-        setShowPopup1(true);
+        setShowPopup2(true);
       } else {
         console.error('Failed to click Button 1');
       }
@@ -81,7 +81,7 @@ const Popup = ({ onClose }) => {
         serial_num:'123456',
         personal_id: '6661',
         description: 'Das Teil ist Banane',
-        action_type: 'Anomaly',
+        action_type: 'Scrap',
         category: 'Scratch',
       };
 
@@ -94,11 +94,11 @@ const Popup = ({ onClose }) => {
       });
   
       if (response.ok) {
-        console.log('Button 1 clicked successfully');
+        console.log('Button 3 clicked successfully');
         // Show the success popup
-        setShowPopup1(true);
+        setShowPopup3(true);
       } else {
-        console.error('Failed to click Button 1');
+        console.error('Failed to click Button 3');
       }
     } catch (error) {
       console.error('Error:', error);
