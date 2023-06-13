@@ -7,9 +7,10 @@ export default function CustomError({ togglePopup, item }) {
 
   const togglePopup2 = () => {
     setIsOpen((prevState) => !prevState);
-    togglePopup(!isOpen);
+    togglePopup(!isOpen, item);
   };
-
+  
+  
   return (
     <Col className={`${styles.grow} col-3`} onClick={togglePopup2} style={{ cursor: "pointer" }}>
       <div className={`${styles.decorator} align-self-center}`} style={{ fontSize: 10 }}>{item.error_code}</div>

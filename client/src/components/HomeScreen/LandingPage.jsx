@@ -21,6 +21,8 @@ export default function LandingPage() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isOpen, setBool] = useState(false);
+  const [popupData, setPopupData] = useState(null); // State variable to store the item data
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +40,7 @@ export default function LandingPage() {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -52,9 +54,16 @@ export default function LandingPage() {
     console.log(pagination[2]);
   };
 
-  const handleOpenPopup = (isOpen) => {
+  const handleOpenPopup = (isOpen, item) => {
+    console.log('Item data:', item); // Check the item data
     setShowPopup(isOpen);
     setShowOverlay(isOpen);
+    // Do something with the item data, such as storing it in state
+
+    // Pass the item data to the Popup component
+    // You can store it in state or pass it as a prop
+    // Example using state:
+    setPopupData(item);
   };
 
   const handleClosePopup = () => {
@@ -142,7 +151,7 @@ export default function LandingPage() {
               {showPopup && (
                 <>
                   <div className="overlay" onClick={handleClosePopup}></div>
-                  <Popup onClose={handleClosePopup} />
+                  <Popup onClose={handleClosePopup} popupData={popupData} />
                 </>
               )}
               <Row>
