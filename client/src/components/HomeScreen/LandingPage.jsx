@@ -25,13 +25,20 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/home/defects');
-        setData(response.data);
+        const response = await axios.get(
+          'http://localhost:8080/home/defectlist'
+        );
+        const filteredData = response.data.filter(
+          (item) => item.product_id === 'CC Front RH Panel'
+        );
+        console.log('Filtered data:', filteredData); // Check the filtered data
+        filteredData.forEach((item) => console.log('Item error:', item.error)); // Log the item.error
+        setData(filteredData);
       } catch (error) {
-        // Handle error here
         console.error('Error fetching data:', error);
       }
     };
+  
     fetchData();
   }, []);
 
@@ -104,28 +111,28 @@ export default function LandingPage() {
           <Row className="flex-grow-1 justify-content-center">
             <Col className="">
               <Row className="gap-1 justify-content-evenly">
-                {data.slice(pagination[0], pagination[1]).map((error) => (
+                {data.slice(pagination[0], pagination[1]).map((item) => (
                   <CustomError
-                    key={error.error_num}
-                    error={error}
+                    key={item.error_code}
+                    item={item}
                     togglePopup={handleOpenPopup}
                   />
                 ))}
               </Row>
               <Row className="gap-1 justify-content-evenly">
-                {data.slice(pagination[1], pagination[2]).map((error) => (
+                {data.slice(pagination[1], pagination[2]).map((item) => (
                   <CustomError
-                    key={error.error_num}
-                    error={error}
+                    key={item.error_code}
+                    item={item}
                     togglePopup={handleOpenPopup}
                   />
                 ))}
               </Row>
               <Row className="gap-1 justify-content-evenly">
-                {data.slice(pagination[2], pagination[3]).map((error) => (
+                {data.slice(pagination[2], pagination[3]).map((item) => (
                   <CustomError
-                    key={error.error_num}
-                    error={error}
+                    key={item.error_code}
+                    item={item}
                     togglePopup={handleOpenPopup}
                   />
                 ))}
