@@ -8,7 +8,7 @@ const defectSchema = new mongoose.Schema({
   group: { type: String },
   defect_type: { type: String },
   quality_issues: { type: String },
-  need_location: { type: Number, enum: [0, 1, 2] },
+  need_location: { type: Number },
 });
 
 const DefectList = mongoose.model('DefectList', defectSchema);
