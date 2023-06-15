@@ -322,9 +322,9 @@ body {
 }
 
 .map-popup {
-    width: 500px;
+    width: 700px;
     height: 500px;
-    background-color: azure;
+    background-color: white;
     position: absolute;
 }
 
