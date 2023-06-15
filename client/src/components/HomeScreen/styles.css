@@ -13,7 +13,8 @@ body {
 }
 
 .footer {
-    height: 40px !important;
+    height: 0vh;
+    /* max-height: 80% !important; */
     border-top-width: 2px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -21,7 +22,7 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
-.footer:hover{
+.footer:hover {
     transform: translateY(-0.25em);
 }
 
@@ -73,6 +74,7 @@ body {
     padding: 20px;
     text-align: center;*/
 }
+
 .title-container {
     display: flex;
     align-items: center;
@@ -101,6 +103,7 @@ body {
     padding: 10px;
     margin-bottom: 20px;
 }
+
 .circle-button {
     display: flex;
     justify-content: center;
@@ -114,12 +117,12 @@ body {
     margin-left: auto;
 }
 
-.issue-element-display{
+.issue-element-display {
     display: flex;
     justify-content: space-between;
 }
 
-.issue-location{
+.issue-location {
     background: #2B77D1;
     color: white;
     padding: 10px;
@@ -129,7 +132,7 @@ body {
     width: 150px;
 }
 
-.issue-name{
+.issue-name {
     text-align: left;
     background: #F2F4F5;
     padding-left: 45px;
@@ -141,7 +144,7 @@ body {
     width: 400px;
 }
 
-.issue-type{
+.issue-type {
     text-align: right;
     font-size: smaller;
     color: #004689;
@@ -204,15 +207,6 @@ body {
     padding: 10px;
     border: 1px solid white;
 }
-{/*
-.button-container button {
-    margin-right: 10px;
-    background-color: lightblue;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid white;
-}
-*/}
 
 .anomaly-button {
     margin-right: 10px;
@@ -223,6 +217,7 @@ body {
     width: 100px;
     color: #104931;
 }
+
 .rework-button {
     margin-right: 10px;
     background-color: #FFD188;
@@ -345,7 +340,8 @@ body {
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background-color: azure; /* Set the background color to azure */
+    background-color: azure;
+    /* Set the background color to azure */
     z-index: 2;
 }
 
@@ -356,5 +352,3 @@ body {
     font-size: 20px;
     cursor: pointer;
 }
-
-

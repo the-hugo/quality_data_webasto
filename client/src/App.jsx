@@ -1,11 +1,16 @@
 import React from "react";
 import './App.css';
 import LandingPage from "./components/HomeScreen/LandingPage";
+import Dashboard from "./components/DataAnalytics/Dashboard";
+import { Switch, Route } from "react-router-dom";
 
 const App = () => {
     return (
         <>
-        <LandingPage/>
+        <Switch>
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/dashboard" exact component={Dashboard} />
+        </Switch>
         </>
 
     )

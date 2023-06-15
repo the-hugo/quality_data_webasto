@@ -58,11 +58,6 @@ export default function LandingPage() {
     console.log('Item data:', item); // Check the item data
     setShowPopup(isOpen);
     setShowOverlay(isOpen);
-    // Do something with the item data, such as storing it in state
-
-    // Pass the item data to the Popup component
-    // You can store it in state or pass it as a prop
-    // Example using state:
     setPopupData(item);
   };
 
@@ -177,8 +172,8 @@ export default function LandingPage() {
             </Col>
           </Row>
           <Row
-            className="gap-3 flex-grow-1 footer d-flex justify-content-center"
-            style={{ marginLeft: 20, marginRight: 20, maxHeight: 120 }}
+            className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
+            style={{ marginLeft: 20, marginRight: 20 }}
           >
             {/* Footer returns two columns */}
             <Footer />

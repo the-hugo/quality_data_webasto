@@ -1,13 +1,21 @@
+import { Container, Row } from "react-bootstrap";
 import React from "react";
+import Sidenav from "../HomeScreen/StructuringElements/SideBar";
+import { useState } from "react";
 
-const graph = function Graph() {
-    console.log("THis is a React component.");
+export default function Dashboard() {
+    const [isOpen, setBool] = useState(false);
+
+    const handleChildStateChange = (currentBool) => {
+        setBool(currentBool);
+      };
 
     return (<>
-        <div>
-            Hi from Dashboard
-        </div>
+        <Container fluid>
+            <Row>
+                <Sidenav onChildStateChange={handleChildStateChange} />
+                This is Dashboard
+            </Row>
+        </Container>
     </>)
 }
-
-export default graph;
