@@ -12,6 +12,40 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import './styles.css';
 
+function transformData(data) {
+  const colors = {
+    Assembly: "linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))",
+    Damage: "linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))",
+    Dimension: "linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))",
+    Surface: "linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))",
+  };
+
+  return data.map(element => {
+    let str = element.defect_type;
+    let [type] = str.split(" ");
+    let [type2] = type.split("/");
+
+    // Assign the color to the type using a switch statement
+    switch (type2) {
+      case "Assembly":
+        element.color = colors.Assembly;
+        break;
+      case "Damage":
+        element.color = colors.Damage;
+        break;
+      case "Dimension":
+        element.color = colors.Dimension;
+        break;
+      case "Surface":
+        element.color = colors.Surface;
+        break;
+    }
+
+    return element;
+  });
+}
+
+
 export default function LandingPage() {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState([0, 3, 6, 9]);
@@ -20,59 +54,38 @@ export default function LandingPage() {
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null); // State variable to store the item data
 
-  const defectTypeColors = {};
 
-  const getRandomColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    // return `rgb(${r},${g},${b})`;
-    return `linear-gradient(to right, rgb(${r},${g},${b}, 1), rgb(${r}, ${g}, ${b}, 0))`
-  };
+  // const defectTypeColors = {};
 
-  data.forEach((item) => {
-    item["color"] = defectTypeColors[item.defect_type] || (defectTypeColors[item.defect_type] = getRandomColor());
-  });
+  // const getRandomColor = () => {
+  //   const r = Math.floor(Math.random() * 256);
+  //   const g = Math.floor(Math.random() * 256);
+  //   const b = Math.floor(Math.random() * 256);
+  //   return `linear-gradient(to right, rgb(${r},${g},${b}, 1), rgb(${r}, ${g}, ${b}, 0))`
+  // };
 
-  const defectTypeColorsJSON = JSON.stringify(defectTypeColors);
-  localStorage.setItem('defectTypeColors', defectTypeColorsJSON);
 
-  // Retrieving defectTypeColors from localStorage and parsing it back to an object
-  const savedDefectTypeColorsJSON = localStorage.getItem('defectTypeColors');
-  const savedDefectTypeColors = JSON.parse(savedDefectTypeColorsJSON);
+  // data.forEach((item) => {
+  //   item["color"] = defectTypeColors[item.defect_type] || (defectTypeColors[item.defect_type] = getRandomColor());
+  // });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/home/defectlist'
-        );
-        const filteredData = response.data.filter(
-          (item) => item.product_id === 'CC RC Roof Panel Rem Lid 3dr'
-        );
-        console.log('Filtered data:', filteredData); // Check the filtered data
-        filteredData.forEach((item) => console.log('Item error:', item.error)); // Log the item.error
-        setData(filteredData);
+        const response = await axios.get('http://localhost:8080/home/defectlist');
+        const filteredData = response.data.filter(item => item.product_id === 'CC RC Roof Panel Rem Lid 3dr');
+        const transformedData = transformData(filteredData);
+        setData(transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
-
-  console.log('Data:', data); // Check the data
-
-  const back = () => {
-    setPagination([0, 3, 6, 9]);
-  };
-
-  const forward = () => {
-    setPagination([9, 12, 15, 18]);
-  };
+  
 
   const handleOpenPopup = (isOpen, item) => {
-    console.log('Item data:', item); // Check the item data
     setShowPopup(isOpen);
     setShowOverlay(isOpen);
     setPopupData(item);
