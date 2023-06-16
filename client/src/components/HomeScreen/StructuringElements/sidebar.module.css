@@ -1,4 +1,9 @@
+.transition-col {
+    transition: width 0.3s ease;
+  }
+
 .sidenav {
+    margin-right: 0;
     width: 120px;
     transition: width 0.4s ease-in-out;
     height: 100vh;

@@ -7,8 +7,6 @@ import Popup from './ErrorSubmission/ErrorSubmision-popup';
 import Header from './StructuringElements/Header';
 import Clock from './StructuringElements/Clock';
 import Footer from './StructuringElements/Footer';
-import ArrowRight from './StructuringElements/ArrowRight';
-import ArrowLeft from './StructuringElements/ArrowLeft';
 import CustomError from './ErrorSelection/CustomErrors';
 import SearchBar from './StructuringElements/SearchBar.jsx';
 import { useEffect } from 'react';
@@ -78,28 +76,12 @@ export default function LandingPage() {
 
         {/* SideNav is wrapped in a Col */}
         <Sidenav onChildStateChange={handleChildStateChange} />
-
-        {/* Left arrow */}
-        <Col className="col-1">
-          <Row className="h-100 flex-column">
-            <div style={{ paddingLeft: 0, marginTop: '24.81%' }}></div>
-            <Col
-              className="d-flex flex-column justify-content-center align-items-center"
-              style={{ paddingRight: 0 }}
-            >
-              <div onClick={back}>
-                <ArrowLeft />
-              </div>
-            </Col>
-          </Row>
-        </Col>
         <Col
           className={
             isOpen
-              ? 'd-flex flex-column align-items-stretch flex-shrink-2 col-9'
-              : 'd-flex flex-column align-items-stretch flex-shrink-2 col-8'
-          }
-        >
+              ? 'd-flex flex-column align-items-stretch flex-shrink-2 col-15 transition-col'
+              : 'd-flex flex-column align-items-stretch flex-shrink-2 col-16 transition-col'
+          }>
           <Row>
             {/* Header returns two cols */}
             <Header pagination={pagination} />
@@ -173,32 +155,10 @@ export default function LandingPage() {
           </Row>
           <Row
             className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
-            style={{ marginLeft: 20, marginRight: 20 }}
+            style={{ marginLeft: 20, marginRight: 20, padding: "3%" }}
           >
             {/* Footer returns two columns */}
             <Footer />
-          </Row>
-        </Col>
-        <Col className="col-1">
-          <Row className="h-100 flex-column">
-            <div
-              style={{
-                marginTop: 6,
-                textAlign: 'right',
-                paddingLeft: 0,
-                paddingRight: 0,
-              }}
-            >
-              <Clock />
-            </div>
-            <Col
-              className="d-flex flex-column justify-content-center align-items-center"
-              style={{ paddingRight: 0 }}
-            >
-              <div onClick={forward}>
-                <ArrowRight />
-              </div>
-            </Col>
           </Row>
         </Col>
       </Row>
