@@ -2,17 +2,21 @@
 import { Col, Row } from "react-bootstrap";
 import { Stack } from "react-bootstrap";
 import styles from "./header.module.css"
+import Clock from "./Clock.jsx"
 
 export default function Header({ pagination}) {
     return (
         <>
             <Col>
-                <Row>
-                    <Col>
-                        <Stack style={{ marginTop: "6%" }}>
+                <Row style={{ marginTop: "4%" }}>
+                    <Col className="col-22">
+                        <Stack>
                             {/* To be replaced by a function that calls the backend and returns the curren product */}
                             <span className={styles.font}><h4 style={{ marginBottom: "0%" }}><b>CC RC Roof Panel Rem Lid 3d</b></h4></span>
                         </Stack>
+                    </Col>
+                    <Col className="col-4 d-flex justify-content-end">
+                        <Clock></Clock>
                     </Col>
                 </Row>
                 <Row>

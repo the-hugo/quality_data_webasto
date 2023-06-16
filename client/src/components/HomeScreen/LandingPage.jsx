@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Sidenav from './StructuringElements/SideBar';
 import Popup from './ErrorSubmission/ErrorSubmision-popup';
 import Header from './StructuringElements/Header';
-import Clock from './StructuringElements/Clock';
 import Footer from './StructuringElements/Footer';
 import CustomError from './ErrorSelection/CustomErrors';
 import SearchBar from './StructuringElements/SearchBar.jsx';
@@ -21,6 +20,26 @@ export default function LandingPage() {
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null); // State variable to store the item data
 
+  const defectTypeColors = {};
+
+  const getRandomColor = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    // return `rgb(${r},${g},${b})`;
+    return `linear-gradient(to right, rgb(${r},${g},${b}, 1), rgb(${r}, ${g}, ${b}, 0))`
+  };
+
+  data.forEach((item) => {
+    item["color"] = defectTypeColors[item.defect_type] || (defectTypeColors[item.defect_type] = getRandomColor());
+  });
+
+  const defectTypeColorsJSON = JSON.stringify(defectTypeColors);
+  localStorage.setItem('defectTypeColors', defectTypeColorsJSON);
+
+  // Retrieving defectTypeColors from localStorage and parsing it back to an object
+  const savedDefectTypeColorsJSON = localStorage.getItem('defectTypeColors');
+  const savedDefectTypeColors = JSON.parse(savedDefectTypeColorsJSON);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,14 +61,14 @@ export default function LandingPage() {
     fetchData();
   }, []);
 
+  console.log('Data:', data); // Check the data
+
   const back = () => {
     setPagination([0, 3, 6, 9]);
-    console.log(pagination[2]);
   };
 
   const forward = () => {
     setPagination([9, 12, 15, 18]);
-    console.log(pagination[2]);
   };
 
   const handleOpenPopup = (isOpen, item) => {
@@ -76,11 +95,11 @@ export default function LandingPage() {
 
         {/* SideNav is wrapped in a Col */}
         <Sidenav onChildStateChange={handleChildStateChange} />
-        <Col
+        <Col style={{ paddingLeft: 24 }}
           className={
             isOpen
-              ? 'd-flex flex-column align-items-stretch flex-shrink-2 col-15 transition-col'
-              : 'd-flex flex-column align-items-stretch flex-shrink-2 col-16 transition-col'
+              ? 'd-flex flex-column align-items-stretch flex-shrink-2 col-22 transition-col'
+              : 'd-flex flex-column align-items-stretch flex-shrink-2 col-24 transition-col'
           }>
           <Row>
             {/* Header returns two cols */}

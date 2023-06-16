@@ -16,16 +16,16 @@ export default function Footer() {
     }
     return (
         <>
-            <Col className="col-3 d-flex align-self-center justify-content-center" style={{}}>
+            <Col className="col-4 d-flex align-self-center justify-content-center" style={{}}>
                 <ArrowLeft></ArrowLeft>
             </Col>
-            <Col className="col-12 d-flex align-self-center justify-content-center" style={{}}>
+            <Col className="col-17 d-flex align-self-center justify-content-center" style={{}}>
                 <div className={`${styles.switch} ${styles.pointer} d-flex align-self-center justify-content-center`} style={clickable}>
                     <AddCircleOutlineIcon></AddCircleOutlineIcon>
                     <span title="NEW EVENT" style={{ paddingLeft: 6, fontSize: 12, textAlign: "center" }}>NEW EVENT</span>
                 </div>
             </Col>
-            <Col className="col-3 d-flex align-self-center justify-content-center" style={{}}>
+            <Col className="col-4 d-flex align-self-center justify-content-center" style={{}}>
                 <ArrowRight></ArrowRight>
             </Col>
         </>

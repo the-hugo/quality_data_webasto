@@ -1,17 +1,12 @@
 .transition-col {
-    transition: width 0.3s ease;
-  }
+    transition: width 0.4s ease;
+}
 
 .sidenav {
-    margin-right: 0;
-    width: 120px;
-    transition: width 0.4s ease-in-out;
+    padding-top: 5%;
+    transition: width 0.2s ease-in-out;
     height: 100vh;
     background-color: #ffffff;
-    padding-top: 28px;
-    /* border-top-right-radius: 6%;
-    border-bottom-left-radius: 6%;
-    border-top-width: 3px; */
     border-inline-end-width: 2px;
     border-radius: 15px;
     box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.1);
@@ -19,14 +14,10 @@
 
 .sidenavClosed {
     composes: sidenav;
-    transition: width 0.4s ease-in-out;
-    width: 60px
+    transition: width 0.2s ease-in-out;
 }
 
 .sideitem {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
     cursor: pointer;
     color: #333399;
     /* color: #d0e4ff7a; */
@@ -34,18 +25,17 @@
 }
 
 .linkText {
-    padding-left: 8px;
     opacity: 1;
-    visibility: visible;
-    transition: opacity 1s ease-in;
-    font-size: 10pt;
+    display: block;
+    transition: opacity 0.6s ease-in;
+    font-size: 80%;
 }
 
 .linkTextClosed {
     composes: linkText;
+    display: none;
+    transition: opacity 0.4s ease-out;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease;
     /* font-size: 12pt; */
 }
 
@@ -54,24 +44,13 @@
 }
 
 .logo {
-
+    width: 80%;
     cursor: pointer;
     color: #B2BAC2;
     text-decoration: none;
-    padding: 10px;
     transition: transform 0.3s ease-in-out;
 }
 
 .logo:hover {
     transform: scale(1.1);
-}
-
-.open {
-    max-width: 160px !important;
-    transition: max-width 0.5s ease;
-}
-
-.closed {
-    max-width: 70px !important;
-    transition: max-width 0.5s ease;
 }

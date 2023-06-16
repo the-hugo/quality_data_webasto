@@ -5,6 +5,7 @@ import logo from "../../../images/logo.png";
 import Col from "react-bootstrap/esm/Col";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import Row from "react-bootstrap/esm/Row";
 
 export default function Sidenav({ onChildStateChange }) {
     const [open, setOpen] = useState(false);
@@ -19,40 +20,64 @@ export default function Sidenav({ onChildStateChange }) {
 
     return (
         <Col
-            className={`col-${open ? '3' : '2'} transition-col`}
-            style={{ paddingLeft: 0, transition: 'width 0.3s ease-in' }}
+            className={`${open ? 'col-4 ' + styles.sidenav : 'col-2 ' + styles.sidenavClosed} transition-col`}
+            style={{ transition: 'width 0.3s ease-in' }}
         >
-            <div className={open ? styles.sidenav : styles.sidenavClosed}>
-                <img src={logo} alt="webasto" className={styles.logo} onClick={toggleOpen} />
-                {navData.map(item => {
-                    if (item.text === 'Statistics') {
-                        return (
-                            <Link to="/dashboard" key={item.id}>
-                                <div className={styles.sideitem}>
-                                    {item.icon}
-                                    <span className={open ? styles.linkText : styles.linkTextClosed}>{item.text}</span>
-                                </div>
+            <Row className="d-flex justify-content-center" style={{ paddingBottom: "40%" }}>
+                <Col className="col d-flex justify-content-center">
+                    {/* <svg onClick={toggleOpen} src={logo} width="100%" height="100%" viewBox="0 0 24 24">
+                    </svg> */}
+                    <img onClick={toggleOpen} src={logo} alt="webasto" className={styles.logo} />
+                </Col>
+            </Row>
+            {navData.map(item => {
+                if (item.text === 'Statistics') {
+                    return (
+                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                            <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
+                                <Link to="/dashboard" key={item.id} style={{ backgroundColor: "transparent" }}>
+                                    <div className="d-flex align-items-center">
+                                        {item.icon}
+                                        <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
+                                            {item.text}
+                                        </span>
+                                    </div>
+                                </Link>
+                            </Col>
+                        </Row>
+
+                    );
+                } else if (item.text === 'Home') {
+                    return (
+                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                            <Link to="/" key={item.id} style={{ backgroundColor: "transparent" }}>
+                                <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
+                                    <div className="d-flex align-items-center">
+                                        {item.icon}
+                                        <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
+                                            {item.text}
+                                        </span>
+                                    </div>
+                                </Col>
                             </Link>
-                        );
-                    } else if (item.text === 'Home') {
-                        return (
-                            <Link to="/" key={item.id}>
-                                <div className={styles.sideitem}>
+                        </Row>
+                    );
+                } else {
+                    return (
+                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                            <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
+                                <div className="d-flex align-items-center">
                                     {item.icon}
-                                    <span className={open ? styles.linkText : styles.linkTextClosed}>{item.text}</span>
+                                    <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
+                                        {item.text}
+                                    </span>
                                 </div>
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <div key={item.id} className={styles.sideitem} to={item.link}>
-                                {item.icon}
-                                <span className={open ? styles.linkText : styles.linkTextClosed}>{item.text}</span>
-                            </div>
-                        );
-                    }
-                })}
-            </div>
+                            </Col>
+                        </Row>
+
+                    );
+                }
+            })}
         </Col>
     );
 }
