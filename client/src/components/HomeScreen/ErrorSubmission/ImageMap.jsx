@@ -218,7 +218,7 @@ const ImageMap = () => {
 
                 this.dropLocation = [
                     this.diX / this.diWidth,
-                    this.diY / this.diHeight,
+                    1 - (this.diY / this.diHeight),
                 ];
 
                 this.log();
