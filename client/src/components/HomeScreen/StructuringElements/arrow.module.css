@@ -1,11 +1,9 @@
 .arrowLeft {
-    width: 35px;
+    height: 10%;
     border-width: 1px;
     border-radius: 10px;
-    padding-top: 140px;
-    padding-bottom: 140px;
     padding-left: 4%;
-    /* // paddingRight: 4%; */
+    padding-right: 4%;
     border-color: #333399;
     background-color: #d0e4ff7a;
     transition: transform 0.3s ease-in-out;
@@ -18,13 +16,11 @@
 }
 
 .arrowRight {
-    width: 35px;
+    height: 10%;
     border-width: 1px;
     border-radius: 10px;
-    padding-top: 140px;
-    padding-bottom: 140px;
     padding-left: 4%;
-    /* // paddingRight: 4%; */
+    padding-right: 4%;
     border-color: #333399;
     background-color: #d0e4ff7a;
     transition: transform 0.3s ease-in-out;
