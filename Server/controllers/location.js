@@ -11,6 +11,16 @@ export const createLocation = async (req, res) => {
   }
 };
 
+export const getLocation = async (req, res) => {
+  try {
+    const locations = await Location.find();
+    res.json(locations);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 export const deleteLocation = async (req, res) => {
   try {
     const { id } = req.params;
@@ -46,3 +56,4 @@ export const editLocation = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+

@@ -41,49 +41,60 @@ const Dashboard = () => {
                 .attr('width', scaledWidth)
                 .attr('height', scaledHeight);
 
-            // Rest of the code for heatmap generation
-            // Sample data
-            const data = [
-                { x: 0.07027392739273924, y: 0.17833333333333334},
-                { x: 0.9297260726072608, y: 0.9216666666666666},
-                { x: 0.7297260726072608, y: 0.8216666666666666}
-                // Add more data points as needed
-            ];
-
-
+            // Define the scales for x and y axes based on the image size and coordinates
             const x = d3.scaleLinear().domain([0, 1]).range([xOffset, xOffset + scaledWidth]);
+            const y = d3.scaleLinear().domain([0, 1]).range([yOffset + scaledHeight, yOffset]);
+
+            // Render x-axis
             svg.append('g').attr('transform', `translate(0, ${yOffset + scaledHeight})`).call(d3.axisBottom(x));
 
-            const y = d3.scaleLinear().domain([0, 1]).range([yOffset + scaledHeight, yOffset]);
+            // Render y-axis
             svg.append('g').call(d3.axisLeft(y));
 
-            const densityData = d3
-                .contourDensity()
-                .x(function (d) {
-                    return x(d.x);
+            // Fetch location data from the server
+            fetch('http://localhost:8080/home/locations')
+                .then(response => response.json())
+                .then(data => {
+                    // Extract coordinates from each location object
+                    const locations = data.map(location => ({
+                        x: location.dropLocation[0],
+                        y: location.dropLocation[1]
+                    }));
+
+                    // Generate density data for the heatmap
+                    const densityData = d3
+                        .contourDensity()
+                        .x(function (d) {
+                            return x(d.x);
+                        })
+                        .y(function (d) {
+                            return y(d.y);
+                        })
+                        .size([scaledWidth, scaledHeight])
+                        .bandwidth(1)(locations);
+
+                    // Calculate the maximum density value
+                    const maxDensity = d3.max(densityData, function (d) {
+                        return d.value;
+                    });
+
+                    // Define the color scale for the heatmap
+                    const color = d3.scaleLinear().domain([0, maxDensity]).range(['yellow', 'darkred']);
+
+                    // Render the heatmap
+                    svg
+                        .insert('g', 'g')
+                        .selectAll('path')
+                        .data(densityData)
+                        .enter()
+                        .append('path')
+                        .attr('d', d3.geoPath())
+                        .attr('fill', function (d) {
+                            return color(d.value);
+                        });
                 })
-                .y(function (d) {
-                    return y(d.y);
-                })
-                .size([scaledWidth, scaledHeight])
-                .bandwidth(1)(data);
-
-            // Calculate the maximum density value
-            const maxDensity = d3.max(densityData, function (d) {
-                return d.value;
-            });
-
-            const color = d3.scaleLinear().domain([0, maxDensity]).range(['green', 'red']);
-
-            svg
-                .insert('g', 'g')
-                .selectAll('path')
-                .data(densityData)
-                .enter()
-                .append('path')
-                .attr('d', d3.geoPath())
-                .attr('fill', function (d) {
-                    return color(d.value);
+                .catch(error => {
+                    console.error('Error fetching locations:', error);
                 });
         };
     }, []);

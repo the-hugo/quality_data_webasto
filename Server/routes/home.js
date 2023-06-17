@@ -26,7 +26,7 @@ import {
 import {
   createLocation,
   deleteLocation,
-  editLocation,
+  editLocation, getLocation,
 } from '../controllers/location.js';
 import { getDefectList,editDefectList,createDefectList,deleteDefectList } from '../controllers/defectList.js';
 const router = express.Router();
@@ -57,6 +57,7 @@ router.get('/products/:serialNumber', findProductBySerialNumber);
 
 // Location routes
 router.post('/locations', createLocation);
+router.get('/locations', getLocation);
 router.put('/locations/:id', editLocation);
 router.delete('/locations/:id', deleteLocation);
 
