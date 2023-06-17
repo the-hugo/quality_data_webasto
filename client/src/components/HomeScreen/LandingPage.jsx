@@ -25,7 +25,6 @@ function transformData(data) {
     let [type] = str.split(" ");
     let [type2] = type.split("/");
 
-    // Assign the color to the type using a switch statement
     switch (type2) {
       case "Assembly":
         element.color = colors.Assembly;
