@@ -43,17 +43,6 @@ function transformData(data) {
     return element;
   });
 }
-
-
-export default function LandingPage() {
-  const [data, setData] = useState([]);
-  const [pagination, setPagination] = useState([0, 3, 6, 9]);
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [isOpen, setBool] = useState(false);
-  const [popupData, setPopupData] = useState(null); // State variable to store the item data
-
-
   // const defectTypeColors = {};
 
   // const getRandomColor = () => {
@@ -67,6 +56,18 @@ export default function LandingPage() {
   // data.forEach((item) => {
   //   item["color"] = defectTypeColors[item.defect_type] || (defectTypeColors[item.defect_type] = getRandomColor());
   // });
+
+
+export default function LandingPage() {
+  const [data, setData] = useState([]);
+  const [pagination, setPagination] = useState([0, 3, 6, 9]);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [isOpen, setBool] = useState(false);
+  const [popupData, setPopupData] = useState(null); // State variable to store the item data
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {

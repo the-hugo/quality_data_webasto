@@ -10,7 +10,7 @@ export default function CustomError({ togglePopup, item }) {
     setIsOpen((prevState) => !prevState);
     togglePopup(!isOpen, item);
   };
-  console.log(item)
+  
   console.log(item.need_location)
   if (item.need_location === "1") {
     return (

@@ -12,11 +12,12 @@ const Popup = ({ onClose, popupData }) => {
   const handleButtonClick = async (actionType) => {
     try {
       const data = {
-        serial_num: '123456',
-        personal_id: '6661',
-        description: 'Das Teil ist Banane',
+        serial_num: '321234',
+        category: popupData.defect_type,
+        description: "",
         action_type: actionType,
-        category: 'Scratch',
+        error_code: popupData.error_code,
+        error_type: popupData.error,
       };
 
       const response = await fetch('http://localhost:8080/home/defects', {
@@ -75,13 +76,7 @@ const Popup = ({ onClose, popupData }) => {
     </div>
   );
 
-  useEffect(() => {
-    if (popupData) {
-      console.log('Received popup data:', popupData);
-      // Additional processing or checks can be performed here
-    }
-  }, [popupData]);
-
+  
   return (
     <div className="popup">
       <div className="popup-content">

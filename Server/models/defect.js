@@ -10,6 +10,9 @@ const defectSchema = new mongoose.Schema({
   description: String,
   action_type: String,
   category: String,
+  error_type: String, // Added error_type field
+  error_code: String, // Added error_code field
+  date: { type: Date, default: Date.now }, // Added date field with default value of current date
   spots: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }], default: [] },
   component: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Component' }], default: [] },
 });
