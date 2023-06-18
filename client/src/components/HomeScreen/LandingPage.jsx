@@ -65,9 +65,7 @@ export default function LandingPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null); // State variable to store the item data
-
-
-
+  const [errorCounts, setErrorCounts] = useState({}); // State variable to store error counts
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +74,11 @@ export default function LandingPage() {
         const filteredData = response.data.filter(item => item.product_id === 'CC RC Roof Panel Rem Lid 3dr');
         const transformedData = transformData(filteredData);
         setData(transformedData);
+  
+        const response2 = await axios.get('http://localhost:8080/home/defects');
+        const filteredDefectData = response2.data.filter(defect => defect.product_id === 'CC RC Roof Panel Rem Lid 3dr');
+        const counts = await countErrorCodes(filteredDefectData);
+        setErrorCounts(counts);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -83,6 +86,23 @@ export default function LandingPage() {
   
     fetchData();
   }, []);
+  
+  useEffect(() => {
+    console.log(errorCounts);
+  }, [errorCounts]);
+  
+  const countErrorCodes = (defectData) => {
+    const counts = {};
+    defectData.forEach((defect) => {
+      const errorCode = defect.error_code;
+      counts[errorCode] = (counts[errorCode] || 0) + 1;
+    });
+  
+    // Convert counts object to an array of key-value pairs
+    const errorCountPairs = Object.entries(counts);
+  
+    return errorCountPairs;
+  };
   
 
   const handleOpenPopup = (isOpen, item) => {

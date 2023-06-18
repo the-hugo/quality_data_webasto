@@ -12,7 +12,8 @@ const Popup = ({ onClose, popupData }) => {
   const handleButtonClick = async (actionType) => {
     try {
       const data = {
-        serial_num: '321234',
+        serial_num: '123456',
+        product_id: 'CC RC Roof Panel Rem Lid 3dr',
         category: popupData.defect_type,
         description: "",
         action_type: actionType,

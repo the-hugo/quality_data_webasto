@@ -11,7 +11,6 @@ export default function CustomError({ togglePopup, item }) {
     togglePopup(!isOpen, item);
   };
   
-  console.log(item.need_location)
   if (item.need_location === "1") {
     return (
       <Col className={`${styles.grow} col-7`} onClick={togglePopup2} style={{ cursor: "pointer" }}>

@@ -2,11 +2,10 @@ import Defect from "../models/defect.js";
 
 export const getDefects = async (req, res) => {
     try {
-        const defects = await Defect.find();
-        // console.log(defects, "What")
-        res.status(200).json(defects)
-    } catch (e) {
-        res.status(404).json({message: e.message})
+        const defects = await Defect.find()
+        res.status(200).json(defects);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching defects" });
     }
 }
 
