@@ -9,6 +9,21 @@ const Popup = ({ onClose, popupData }) => {
   const [showMapPopup, setShowMapPopup] = useState(false);
 
 
+  useEffect(() => {
+    // Automatically hide the popup after 1.5 seconds
+    const timer = setTimeout(() => {
+      setShowPopup1(false);
+      setShowPopup2(false);
+      setShowPopup3(false);
+    }, 1500);
+
+    return () => {
+      // Clear the timer when the component is unmounted or the state is updated
+      clearTimeout(timer);
+    };
+  }, [showPopup1, showPopup2, showPopup3]);
+
+
   const handleButtonClick = async (actionType) => {
     try {
       const data = {
