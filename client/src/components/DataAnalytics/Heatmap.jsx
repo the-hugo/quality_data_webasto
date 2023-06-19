@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-import roof from '../../images/roof.png'; // Replace with the path to your roof image
+import roof from '../../images/roof.png';
 
 const Heatmap = () => {
     const chartRef = useRef(null);
@@ -99,7 +99,13 @@ const Heatmap = () => {
         };
     }, []);
 
-    return <div ref={chartRef}></div>;
+    return (
+
+        <div ref={chartRef}></div>
+
+    )
+
+        ;
 };
 
 export default Heatmap;

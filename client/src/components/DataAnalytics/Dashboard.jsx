@@ -11,7 +11,7 @@ const Dashboard = () => {
     return (
         <>
             <Heatmap />
-            <HeatmapCanvas coordinates={coordinates} imageSrc={Roof} />
+            {/*<HeatmapCanvas coordinates={coordinates} imageSrc={Roof} />*/}
         </>
     )
 };
