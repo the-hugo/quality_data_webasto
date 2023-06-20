@@ -249,6 +249,7 @@ const ImageMap = () => {
           const data = {
             error_num: errorNum,
             dropLocation,
+            type: "Exact Location",
           };
       
           try {
@@ -358,6 +359,7 @@ const ImageMap = () => {
                             ></span>
                             <DomainVerificationOutlined style={{ fontSize: '20px', marginLeft: '10px' }} />
                         </button>
+                        
                     </div>
                 </div>
             </div>
