@@ -70,6 +70,31 @@ export default function LandingPage() {
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null); // State variable to store the item data
   const [errorCounts, setErrorCounts] = useState({}); // State variable to store error counts
+  const [combinedData, setCombinedData] = useState([]);
+
+
+  // COMBINING DATA IN ORDER TO DISPLAY THE QUICK DEFECTS BASED ON THE COUNT OF DEFECTS OF A ERROR
+  useEffect(() => {
+    const combineData = () => {
+      const combinedData = data
+        .map((defect) => {
+          const errorNumber = defect.error_code;
+          const count = errorCounts[errorNumber] || 0;
+  
+          return {
+            ...defect,
+            count: count,
+          };
+        })
+        .filter((defect) => defect.count !== 0)
+        .sort((a, b) => b.count - a.count); // Sort by count in descending order
+  
+      setCombinedData(combinedData);
+    };
+  
+    combineData();
+  }, [data, errorCounts]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,13 +107,7 @@ export default function LandingPage() {
         );
         const transformedData = transformData(filteredData);
         setData(transformedData);
-
-        const response2 = await axios.get('http://localhost:8080/home/defects');
-        const filteredDefectData = response2.data.filter(
-          (defect) => defect.product_id === 'CC RC Roof Panel Rem Lid 3dr'
-        );
-        const counts = await countErrorCodes(filteredDefectData);
-        setErrorCounts(counts);
+        console.log('Data:', transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -98,21 +117,34 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    console.log(errorCounts);
-  }, [errorCounts]);
+    const countErrorCodes = (defectData) => {
+      const counts = {};
+      defectData.forEach((defect) => {
+        const errorCode = defect.error_code;
+        counts[errorCode] = (counts[errorCode] || 0) + 1;
+      });
 
-  const countErrorCodes = (defectData) => {
-    const counts = {};
-    defectData.forEach((defect) => {
-      const errorCode = defect.error_code;
-      counts[errorCode] = (counts[errorCode] || 0) + 1;
-    });
+      return counts;
+    };
 
-    // Convert counts object to an array of key-value pairs
-    const errorCountPairs = Object.entries(counts);
+    const fetchDefectData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/home/defects');
+        const filteredDefectData = response.data.filter(
+          (defect) => defect.product_id === 'CC RC Roof Panel Rem Lid 3dr'
+        );
+        const counts = countErrorCodes(filteredDefectData);
+        setErrorCounts(counts);
+        console.log('Error Counts:', counts);
+      } catch (error) {
+        console.error('Error fetching defect data:', error);
+      }
+    };
 
-    return errorCountPairs;
-  };
+    fetchDefectData();
+  }, []);
+
+  console.log('Combined Data:', combinedData);
 
   const handleOpenPopup = (isOpen, item) => {
     setShowPopup(isOpen);
@@ -143,7 +175,6 @@ export default function LandingPage() {
     pagination.currentPage * itemsPerPage
   );
 
-  
   return (
     <Container fluid>
       <Row className="d-flex w-100">
@@ -164,16 +195,18 @@ export default function LandingPage() {
             {/* Header returns two cols */}
             <Header pagination={pagination} />
           </Row>
-          <Row><Col
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                      }}
-                    >
-                      <span className="pagination">
-                        {pagination.currentPage} / {totalPages}
-                      </span>
-                    </Col></Row>
+          <Row>
+            <Col
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <span className="pagination">
+                {pagination.currentPage} / {totalPages}
+              </span>
+            </Col>
+          </Row>
           {/* SearchBar 
           <Row>
             <Col>
@@ -220,9 +253,20 @@ export default function LandingPage() {
                       </span>
                     </Col>
                   </Row>
-                  {data.length === 0 && (
+                  {combinedData.length === 0 && (
                     <Row className="d-flex align-items-center justify-content-center">
                       no items yet
+                    </Row>
+                  )}
+                  {combinedData.length > 0 && (
+                    <Row className="gap-1 justify-content-evenly">
+                      {combinedData.map((item) => (
+                        <CustomError
+                          key={item.error_code}
+                          item={{ ...item, error_code: item.count }} // Replace error_code with count
+                          togglePopup={handleOpenPopup}
+                        />
+                      ))}
                     </Row>
                   )}
                 </Col>
@@ -231,9 +275,8 @@ export default function LandingPage() {
           </Row>
           <Row
             className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
-            style={{ marginLeft: 20, marginRight: 20, padding: '3%' }}
+            style={{ marginLeft: 20, marginRight: 20 }}
           >
-            {/* Footer returns two columns */}
             <Footer />
           </Row>
         </Col>
