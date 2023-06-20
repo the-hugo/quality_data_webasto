@@ -8,6 +8,8 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showPopup3, setShowPopup3] = useState(false);
   const [showMapPopup, setShowMapPopup] = useState(false);
   const [showMainPopup, setShowMainPopup] = useState(true);
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // Track whether any popup is currently visible
+  const [isButtonsPopupShown, setIsButtonsPopupShown] = useState(true); // Track whether the buttons popup has been shown
 
 
 
@@ -33,20 +35,32 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
 
       if (response.ok) {
         console.log(`Button ${actionType} clicked successfully`);
+        setButtonClicked(true);
+
         // Show the success popup based on the action type
         if (actionType === 'Anomaly') {
           setShowPopup1(true);
-          setButtonClicked(true);
+          setShowPopup2(false);
+          setShowPopup3(false);
+          setIsPopupVisible(true); // Set isPopupVisible to true
         } else if (actionType === 'Rework') {
+          setShowPopup1(false);
           setShowPopup2(true);
-          setButtonClicked(true);
+          setShowPopup3(false);
+          setIsPopupVisible(true); // Set isPopupVisible to true
         } else if (actionType === 'Scrap') {
+          setShowPopup1(false);
+          setShowPopup2(false);
           setShowPopup3(true);
-          setButtonClicked(true);
+          setIsPopupVisible(true); // Set isPopupVisible to true
         }
+        setIsButtonsPopupShown(false); // Set isButtonsPopupShown to false
+
       } else {
         console.error(`Failed to click Button ${actionType}`);
       }
+
+
     } catch (error) {
       console.error('Error:', error);
     }
@@ -87,6 +101,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     setShowPopup1(false);
     setShowPopup2(false);
     setShowPopup3(false);
+    setIsPopupVisible(false); // Set isPopupVisible to false
     onClose();
   };
 
@@ -139,9 +154,13 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         <FaTimes style={{ fontSize: '1.3em' }} />
       </button>
 
-      {showPopup1 && <PopupComponent popupNumber={1} message="Successfully Submitted" />}
-      {showPopup2 && <PopupComponent popupNumber={2} message="Successfully Submitted" />}
-      {showPopup3 && <PopupComponent popupNumber={3} message="Successfully Submitted" />}
+      {((showPopup1 || showPopup2 || showPopup3) && isPopupVisible) || isButtonsPopupShown ? (
+          <>
+            {showPopup1 && <PopupComponent popupNumber={1} message="Successfully Submitted" />}
+            {showPopup2 && <PopupComponent popupNumber={2} message="Successfully Submitted" />}
+            {showPopup3 && <PopupComponent popupNumber={3} message="Successfully Submitted" />}
+          </>
+      ) : null}
       
       {showMapPopup && (
         <div className="map-popup">
