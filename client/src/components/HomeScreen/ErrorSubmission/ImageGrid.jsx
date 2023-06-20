@@ -5,7 +5,7 @@ const ImageGrid = () => {
     const [selectedGrid, setSelectedGrid] = useState([]);
     const imageRef = useRef(null);
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-    const gridSize = 3; // Number of grid cells per row/column
+    const gridSize = 4; // Number of grid cells per row/column
 
     useEffect(() => {
         if (imageRef.current) {
@@ -45,10 +45,9 @@ const ImageGrid = () => {
         };
     };
 
-
-    const handleGridClick = (gridId) => {
-        setSelectedGrid((prevSelectedGrid) => [...prevSelectedGrid, gridId]);
-        console.log('Selected Grid:', gridId);
+    const handleGridClick = (row, col) => {
+        setSelectedGrid((prevSelectedGrid) => [...prevSelectedGrid, { row, col }]);
+        console.log('Selected Grid:', row, col);
     };
 
     return (
@@ -78,7 +77,7 @@ const ImageGrid = () => {
                                     <div
                                         key={gridId}
                                         style={calculateGridCellStyle(row, col)}
-                                        onClick={() => handleGridClick(gridId)}
+                                        onClick={() => handleGridClick(row + 1, col + 1)}
                                     ></div>
                                 );
                             })
