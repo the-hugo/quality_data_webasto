@@ -3,6 +3,7 @@ import styles from './footer.module.css';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowLeft from "./ArrowLeft.jsx"
 import ArrowRight from "./ArrowRight.jsx"
+import newErrorPopup from "../ErrorSubmission/NewError-popup";
 
 export default function Footer() {
     const clickable = {

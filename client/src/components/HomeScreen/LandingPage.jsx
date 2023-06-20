@@ -67,6 +67,8 @@ export default function LandingPage() {
   });
   const [showOverlay, setShowOverlay] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [popupButtonClick, setPopupButtonClick] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null); // State variable to store the item data
   const [errorCounts, setErrorCounts] = useState({}); // State variable to store error counts
@@ -165,6 +167,8 @@ export default function LandingPage() {
   const handleClosePopup = () => {
     setShowPopup(false);
     setShowOverlay(false);
+    setPopupButtonClick(true);
+
   };
 
   const handleChildStateChange = (currentBool) => {
@@ -241,10 +245,26 @@ export default function LandingPage() {
 
               {/* Render the pop-up conditionally */}
               {showPopup && (
-                <>
-                  <div className="overlay" onClick={handleClosePopup}></div>
-                  <Popup onClose={handleClosePopup} popupData={popupData} />
-                </>
+                  <>
+                    <div className="overlay" onClick={handleClosePopup}></div>
+                    {popupButtonClick ? (
+                        // Render the popup component with a conditional statement
+                        <>
+                          <Popup
+                              onClose={handleClosePopup}
+                              popupData={popupData}
+                              setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                          />
+                          {setPopupButtonClick(false)}
+                        </>
+                    ) : (
+                        <Popup
+                            onClose={handleClosePopup}
+                            popupData={popupData}
+                            setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                        />
+                    )}
+                  </>
               )}
               <Row>
                 <Col>

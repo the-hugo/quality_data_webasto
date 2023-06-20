@@ -2,26 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
 
-const Popup = ({ onClose, popupData }) => {
+const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showPopup1, setShowPopup1] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
   const [showPopup3, setShowPopup3] = useState(false);
   const [showMapPopup, setShowMapPopup] = useState(false);
+  const [showMainPopup, setShowMainPopup] = useState(true);
 
-
-  useEffect(() => {
-    // Automatically hide the popup after 1.5 seconds
-    const timer = setTimeout(() => {
-      setShowPopup1(false);
-      setShowPopup2(false);
-      setShowPopup3(false);
-    }, 1500);
-
-    return () => {
-      // Clear the timer when the component is unmounted or the state is updated
-      clearTimeout(timer);
-    };
-  }, [showPopup1, showPopup2, showPopup3]);
 
 
   const handleButtonClick = async (actionType) => {
@@ -49,10 +36,13 @@ const Popup = ({ onClose, popupData }) => {
         // Show the success popup based on the action type
         if (actionType === 'Anomaly') {
           setShowPopup1(true);
+          setButtonClicked(true);
         } else if (actionType === 'Rework') {
           setShowPopup2(true);
+          setButtonClicked(true);
         } else if (actionType === 'Scrap') {
           setShowPopup3(true);
+          setButtonClicked(true);
         }
       } else {
         console.error(`Failed to click Button ${actionType}`);
@@ -62,6 +52,7 @@ const Popup = ({ onClose, popupData }) => {
     }
   };
 
+  /*
   const handleClosePopup = (popupNumber) => {
     if (popupNumber === 1) {
       setShowPopup1(false);
@@ -72,6 +63,34 @@ const Popup = ({ onClose, popupData }) => {
     }
     onClose();
   };
+*/
+
+  useEffect(() => {
+    if (showPopup1 || showPopup2 || showPopup3 || showMainPopup) {
+      // Automatically hide the popups after 2 seconds if any of them is shown
+      const timer = setTimeout(() => {
+        setShowPopup1(false);
+        setShowPopup2(false);
+        setShowPopup3(false);
+        setShowMainPopup(false);
+      }, 2000);
+
+      return () => {
+        // Clear the timer when the component is unmounted or the state is updated
+        clearTimeout(timer);
+      };
+    }
+  }, [showPopup1, showPopup2, showPopup3, showMainPopup]);
+
+
+  const handleClosePopup = (popupNumber) => {
+    setShowPopup1(false);
+    setShowPopup2(false);
+    setShowPopup3(false);
+    onClose();
+  };
+
+
 
   const handleOpenMapPopup = () => {
     setShowMapPopup(true);
