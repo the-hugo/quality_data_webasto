@@ -70,9 +70,11 @@ export default function LandingPage() {
   const [popupButtonClick, setPopupButtonClick] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [isOpen, setBool] = useState(false);
-  const [popupData, setPopupData] = useState(null); // State variable to store the item data
-  const [errorCounts, setErrorCounts] = useState({}); // State variable to store error counts
+  const [popupData, setPopupData] = useState(null);
+  const [errorCounts, setErrorCounts] = useState({});
   const [combinedData, setCombinedData] = useState([]);
+
+  const secondSectionItemsPerPage = 6;
 
   // COMBINING DATA IN ORDER TO DISPLAY THE QUICK DEFECTS BASED ON THE COUNT OF DEFECTS OF A ERROR
   useEffect(() => {
@@ -107,7 +109,6 @@ export default function LandingPage() {
         );
         const transformedData = transformData(filteredData);
         setData(transformedData);
-        console.log('Master List Data:', transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -147,7 +148,6 @@ export default function LandingPage() {
 
         const counts = countErrorCodes(filteredDefectData);
         setErrorCounts(counts);
-        console.log('Error Counts:', counts);
       } catch (error) {
         console.error('Error fetching defect data:', error);
       }
@@ -155,8 +155,6 @@ export default function LandingPage() {
 
     fetchDefectData();
   }, []);
-
-  console.log('Combined Data:', combinedData);
 
   const handleOpenPopup = (isOpen, item) => {
     setShowPopup(isOpen);
@@ -168,7 +166,6 @@ export default function LandingPage() {
     setShowPopup(false);
     setShowOverlay(false);
     setPopupButtonClick(true);
-
   };
 
   const handleChildStateChange = (currentBool) => {
@@ -176,17 +173,39 @@ export default function LandingPage() {
   };
 
   const handlePageChange = (page) => {
+    let itemsPerPage = pagination.itemsPerPage; // Use the default itemsPerPage value
+    if (combinedData.length > 0) {
+      itemsPerPage = 6; // Set itemsPerPage to 6 for the second section
+    }
+    const totalPages = Math.ceil(combinedData.length / itemsPerPage);
+    if (page < 1) {
+      page = 1;
+    } else if (page > totalPages) {
+      page = totalPages;
+    }
     setPagination((prevPagination) => ({
       ...prevPagination,
       currentPage: page,
     }));
   };
+  const totalPages = Math.ceil(combinedData.length / secondSectionItemsPerPage);
 
-  const itemsPerPage = pagination.itemsPerPage;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const currentPageData = data.slice(
-    (pagination.currentPage - 1) * itemsPerPage,
-    pagination.currentPage * itemsPerPage
+  const firstSectionItemsPerPage = 9;
+  const firstSectionTotalPages = Math.ceil(
+    data.length / firstSectionItemsPerPage
+  );
+  const firstSectionCurrentPageData = data.slice(
+    (pagination.currentPage - 1) * firstSectionItemsPerPage,
+    pagination.currentPage * firstSectionItemsPerPage
+  );
+
+
+  const secondSectionTotalPages = Math.ceil(
+    combinedData.length / secondSectionItemsPerPage
+  );
+  const secondSectionCurrentPageData = combinedData.slice(
+    (pagination.currentPage - 1) * secondSectionItemsPerPage,
+    pagination.currentPage * secondSectionItemsPerPage
   );
 
   return (
@@ -209,18 +228,6 @@ export default function LandingPage() {
             {/* Header returns two cols */}
             <Header pagination={pagination} />
           </Row>
-          <Row>
-            <Col
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <span className="pagination">
-                {pagination.currentPage} / {totalPages}
-              </span>
-            </Col>
-          </Row>
           {/* SearchBar 
           <Row>
             <Col>
@@ -228,86 +235,90 @@ export default function LandingPage() {
             </Col>
           </Row>
         */}
-          {/* Errors Here */}
-          <Row className="flex-grow-1 justify-content-center">
-            <Col className="">
-              {currentPageData.length > 0 && (
-                <Row className="gap-1 justify-content-evenly">
-                  {currentPageData.map((item) => (
-                    <CustomError
-                      key={item.error_code}
-                      item={item}
-                      togglePopup={handleOpenPopup}
-                    />
-                  ))}
-                </Row>
-              )}
-
-              {/* Render the pop-up conditionally */}
-              {showPopup && (
-                  <>
-                    <div className="overlay" onClick={handleClosePopup}></div>
-                    {popupButtonClick ? (
-                        // Render the popup component with a conditional statement
-                        <>
-                          <Popup
-                              onClose={handleClosePopup}
-                              popupData={popupData}
-                              setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                          />
-                          {setPopupButtonClick(false)}
-                        </>
-                    ) : (
-                        <Popup
-                            onClose={handleClosePopup}
-                            popupData={popupData}
-                            setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                        />
-                    )}
-                  </>
-              )}
-              <Row>
-                <Col>
-                  <Row style={{ marginTop: '3%' }}>
-                    <Col>
-                      <span className="font">FREQUENT EVENTS</span>
-                    </Col>
-                    <Col
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                      }}
-                    >
-                      <span className="pagination">
-                        {pagination.currentPage} / {totalPages}
-                      </span>
-                    </Col>
-                  </Row>
-                  {combinedData.length === 0 && (
-                    <Row className="d-flex align-items-center justify-content-center">
-                      no items yet
-                    </Row>
-                  )}
-                  {combinedData.length > 0 && (
-                    <Row className="gap-1 justify-content-evenly">
-                      {combinedData.map((item) => (
-                        <CustomError
-                          key={item.error_code}
-                          item={{ ...item, error_code: item.count }} // Replace error_code with count
-                          togglePopup={handleOpenPopup}
-                        />
-                      ))}
-                    </Row>
-                  )}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <Row
-            className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
-            style={{ marginLeft: 20, marginRight: 20 }}
+     {/* Errors Here */}
+     <Row className="flex-grow-1 justify-content-center">
+      <Col className="">
+        {/* Section 1 */}
+        <Row style={{ marginTop: '3%' }}>
+          <Col>
+            <span className="font">Defect List Items</span>
+          </Col>
+          <Col
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
           >
-            <Footer />
+            <span className="pagination">
+              {pagination.currentPage} / {firstSectionTotalPages}
+            </span>
+          </Col>
+        </Row>
+        {firstSectionCurrentPageData.length === 0 && (
+          <Row className="d-flex align-items-center justify-content-center">
+            no items yet
+          </Row>
+        )}
+        {firstSectionCurrentPageData.length > 0 && (
+          <Row className="gap-1 justify-content-evenly">
+            {firstSectionCurrentPageData.map((item) => (
+              <CustomError
+                key={item.error_code}
+                item={item}
+                togglePopup={handleOpenPopup}
+              />
+            ))}
+          </Row>
+        )}
+
+        {/* Section 2 */}
+        <Row>
+          <Col>
+            <Row style={{ marginTop: '3%' }}>
+              <Col>
+                <span className="font">Frequent Events</span>
+              </Col>
+              <Col
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <span className="pagination">
+                  {pagination.currentPage} / {secondSectionTotalPages}
+                </span>
+              </Col>
+            </Row>
+            {secondSectionCurrentPageData.length === 0 && (
+              <Row className="d-flex align-items-center justify-content-center">
+                no items yet
+              </Row>
+            )}
+            {secondSectionCurrentPageData.length > 0 && (
+              <Row className="gap-1 justify-content-evenly">
+                {secondSectionCurrentPageData.map((item) => (
+                  <CustomError
+                    key={item.error_code}
+                    item={{ ...item, error_code: item.count }} // Replace error_code with count
+                    togglePopup={handleOpenPopup}
+                  />
+                ))}
+              </Row>
+            )}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+
+    <Row
+      className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
+      style={{ marginLeft: 20, marginRight: 20 }}
+    >
+      <Footer
+        handlePageChange={handlePageChange}
+        pagination={pagination}
+        totalPages={secondSectionTotalPages} // Add the totalPages prop here
+      />
           </Row>
         </Col>
       </Row>
