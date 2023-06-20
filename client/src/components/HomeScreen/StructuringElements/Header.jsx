@@ -1,17 +1,16 @@
-// import { Row } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { Stack } from "react-bootstrap";
-import styles from "./header.module.css"
-import Clock from "./Clock.jsx"
+import styles from "./header.module.css";
+import Clock from "./Clock.jsx";
 
-export default function Header({ pagination}) {
+export default function Header() {
     return (
         <>
             <Col>
                 <Row style={{ marginTop: "4%" }}>
                     <Col className="col-22">
                         <Stack>
-                            {/* To be replaced by a function that calls the backend and returns the curren product */}
+                            {/* To be replaced by a function that calls the backend and returns the current product */}
                             <span className={styles.font}><h4 style={{ marginBottom: "0%" }}><b>CC RC Roof Panel Rem Lid 3d</b></h4></span>
                         </Stack>
                     </Col>
@@ -29,13 +28,7 @@ export default function Header({ pagination}) {
                         <span className={styles.font}>STATION: CCRC050</span>
                     </Col>
                 </Row>
-                <Row>
-                    <Col></Col>
-                    <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>                            
-                    {/* Number of pages */}
-                    <span className={styles.pagination}>{ pagination[0] === 0 ? "01 / 02" : "02 / 02"}</span></Col>
-                </Row>
             </Col>
         </>
-    )
+    );
 }

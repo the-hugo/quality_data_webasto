@@ -226,7 +226,7 @@ export default function LandingPage() {
         >
           <Row>
             {/* Header returns two cols */}
-            <Header pagination={pagination} />
+            <Header/>
           </Row>
           {/* SearchBar 
           <Row>
