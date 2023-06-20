@@ -72,7 +72,6 @@ export default function LandingPage() {
   const [errorCounts, setErrorCounts] = useState({}); // State variable to store error counts
   const [combinedData, setCombinedData] = useState([]);
 
-
   // COMBINING DATA IN ORDER TO DISPLAY THE QUICK DEFECTS BASED ON THE COUNT OF DEFECTS OF A ERROR
   useEffect(() => {
     const combineData = () => {
@@ -80,7 +79,7 @@ export default function LandingPage() {
         .map((defect) => {
           const errorNumber = defect.error_code;
           const count = errorCounts[errorNumber] || 0;
-  
+
           return {
             ...defect,
             count: count,
@@ -88,13 +87,12 @@ export default function LandingPage() {
         })
         .filter((defect) => defect.count !== 0)
         .sort((a, b) => b.count - a.count); // Sort by count in descending order
-  
+
       setCombinedData(combinedData);
     };
-  
+
     combineData();
   }, [data, errorCounts]);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +105,7 @@ export default function LandingPage() {
         );
         const transformedData = transformData(filteredData);
         setData(transformedData);
-        console.log('Data:', transformedData);
+        console.log('Master List Data:', transformedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -130,9 +128,21 @@ export default function LandingPage() {
     const fetchDefectData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/home/defects');
+        const currentDate = new Date();
+        const lastWeekDate = new Date();
+        lastWeekDate.setDate(lastWeekDate.getDate() - 7);
+
         const filteredDefectData = response.data.filter(
-          (defect) => defect.product_id === 'CC RC Roof Panel Rem Lid 3dr'
+          (defect) =>
+            defect.product_id === 'CC RC Roof Panel Rem Lid 3dr' &&
+            //Filter for week
+            //new Date(defect.date) >= lastWeekDate &&
+            //new Date(defect.date) <= currentDate
+
+            //FIlter for date
+            new Date(defect.date).toDateString() === currentDate.toDateString()
         );
+
         const counts = countErrorCodes(filteredDefectData);
         setErrorCounts(counts);
         console.log('Error Counts:', counts);
