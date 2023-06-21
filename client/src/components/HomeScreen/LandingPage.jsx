@@ -139,11 +139,11 @@ export default function LandingPage() {
           (defect) =>
             defect.product_id === 'CC RC Roof Panel Rem Lid 3dr' &&
             //Filter for week
-            //new Date(defect.date) >= lastWeekDate &&
-            //new Date(defect.date) <= currentDate
+            new Date(defect.date) >= lastWeekDate &&
+            new Date(defect.date) <= currentDate
 
             //FIlter for date
-            new Date(defect.date).toDateString() === currentDate.toDateString()
+            //new Date(defect.date).toDateString() === currentDate.toDateString()
         );
 
         const counts = countErrorCodes(filteredDefectData);
@@ -157,6 +157,7 @@ export default function LandingPage() {
   }, []);
 
   const handleOpenPopup = (isOpen, item) => {
+    console.log("BUttonPressed")
     setShowPopup(isOpen);
     setShowOverlay(isOpen);
     setPopupData(item);
@@ -268,13 +269,35 @@ export default function LandingPage() {
                 togglePopup={handleOpenPopup}
               />
             ))}
-          </Row>
-        )}
+              </Row>
+              )}
 
-        {/* Section 2 */}
-        <Row>
-          <Col>
-            <Row style={{ marginTop: '3%' }}>
+              {/* Render the pop-up conditionally */}
+              {showPopup && (
+                  <>
+                    <div className="overlay" onClick={handleClosePopup}></div>
+                    {popupButtonClick ? (
+                        // Render the popup component with a conditional statement
+                        <>
+                          <Popup
+                              onClose={handleClosePopup}
+                              popupData={popupData}
+                              setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                          />
+                          {setPopupButtonClick(false)}
+                        </>
+                    ) : (
+                        <Popup
+                            onClose={handleClosePopup}
+                            popupData={popupData}
+                            setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                        />
+                    )}
+                  </>
+              )}
+              <Row>
+                <Col>
+                  <Row style={{ marginTop: '3%' }}>
               <Col>
                 <span className="font">Frequent Events</span>
               </Col>
