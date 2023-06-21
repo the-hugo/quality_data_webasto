@@ -4,6 +4,8 @@ import { FaTimes } from 'react-icons/fa'; // Import close icon
 
 const NewErrorPopup = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [textField, setTextField] = useState('');
 
   const handleClosePopup = () => {
     setIsOpen(false);
@@ -26,18 +28,33 @@ const NewErrorPopup = ({ onClose }) => {
     setIsOpen(true); // Set isOpen to true when the component mounts
   }, []);
 
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
+  const handleTextFieldChange = (e) => {
+    setTextField(e.target.value);
+  };
+
   return (
     <div className="popup">
       <div className="popup-content">
         <div className="title-container">
-          <h3 className="popup-title">SELECTED</h3>
+          <h3 className="popup-title">Please select a new Error</h3>
         </div>
-        <div className="issue-element-display">
-          <p className="issue-location">TEST</p>
-          <div className="issue-definition-area">
-            <p className="issue-name">TEST</p>
-            <p className="issue-type">TEST</p>
-          </div>
+        <div className="option-container">
+          {['Dimension', 'Material', 'Seal', 'Surface', 'Engineering'].map(option => (
+            <label key={option} style={{ marginRight: '10px', cursor: 'pointer' }}>
+              <input type="radio" value={option} checked={selectedOption === option} onChange={handleOptionChange} />
+              {option}
+            </label>
+          ))}
+        </div>
+        <div className="title-container">
+          <h4 className="popup-title">Description:</h4>
+        </div>
+        <div className="text-field-container">
+          <input type="text" value={textField} onChange={handleTextFieldChange} placeholder="Enter text here..." style={{ margin: '10px 0', padding: '10px' }} />
         </div>
         <div className="button-container">
           <button className="anomaly-button" onClick={handleAnomalyClick}>Anomaly</button>
