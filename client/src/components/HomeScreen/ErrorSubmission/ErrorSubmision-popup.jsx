@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
 
-const Popup = ({ onClose, popupData, setButtonClicked }) => {
+const Popup = ({ onClose, popupData, setButtonClicked, setShowMainPopup }) => {
   const [showPopup1, setShowPopup1] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
   const [showPopup3, setShowPopup3] = useState(false);
   const [showMapPopup, setShowMapPopup] = useState(false);
-  const [showMainPopup, setShowMainPopup] = useState(true);
   const [isPopupVisible, setIsPopupVisible] = useState(false); // Track whether any popup is currently visible
   const [isButtonsPopupShown, setIsButtonsPopupShown] = useState(true); // Track whether the buttons popup has been shown
 
@@ -86,7 +85,9 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         setShowPopup1(false);
         setShowPopup2(false);
         setShowPopup3(false);
-        setShowMainPopup(false);
+        setShowMainPopup2 = () => {
+          setShowMainPopup();
+        };
       }, 2000);
 
       return () => {

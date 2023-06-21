@@ -48,7 +48,7 @@ export default function Footer({ handlePageChange, pagination, openPopup }) {
       <Col className="col-4 d-flex align-self-center justify-content-center">
         <ArrowRight onClick={() => handlePageChange(pagination.currentPage + 1)} />
       </Col>
-      {isPopupOpen && <NewErrorPopup onClose={closePopup} />}
+
     </>
   );
 }

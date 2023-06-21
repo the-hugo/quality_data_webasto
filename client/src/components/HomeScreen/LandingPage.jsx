@@ -9,6 +9,7 @@ import Footer from './StructuringElements/Footer';
 import CustomError from './ErrorSelection/CustomErrors';
 import axios from 'axios';
 import './styles.css';
+import NewErrorPopup from "./ErrorSubmission/NewErrorPopup";
 
 // Helper function to transform data and assign colors based on defect types
 function transformData(data) {
@@ -64,13 +65,17 @@ const LandingPage = () => {
 
   // Open new error popup
   const openNewErrorPopup = () => {
-    setIsNewErrorPopupOpen(true);
+    console.log(isNewErrorPopupOpen)
+    setIsNewErrorPopupOpen(!isNewErrorPopupOpen);
+    console.log(isNewErrorPopupOpen)
   };
 
   // Close new error popup
+  /*
   const closeNewErrorPopup = () => {
     setIsNewErrorPopupOpen(false);
   };
+*/
 
   // Combine data to display frequent defects based on error counts
   useEffect(() => {
@@ -196,6 +201,24 @@ const LandingPage = () => {
     pagination.currentPage * secondSectionItemsPerPage
   );
 
+  // main popup timer
+  // it makes the popup disappear when the issue card is active
+  /*
+  useEffect(() => {
+    if (showPopup) {
+      // Automatically hide the popups after 2 seconds if any of them is shown
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+      }, 2000);
+
+      return () => {
+        // Clear the timer when the component is unmounted or the state is updated
+        clearTimeout(timer);
+      };
+    }
+  }, [showPopup]);
+*/
+
   return (
     <Container fluid>
       <Row className="d-flex w-100">
@@ -245,13 +268,14 @@ const LandingPage = () => {
               )}
 
               {/* Render the popup conditionally */}
+              {isNewErrorPopupOpen && <NewErrorPopup onClose={openNewErrorPopup}/>}
               {showPopup && (
                 <>
                   <div className="overlay" onClick={handleClosePopup}></div>
                   {popupButtonClick ? (
                     // Render the popup component with a conditional statement
                     <>
-                      <Popup
+                      <Popup setShowMainPopup={setShowPopup(false)}
                         onClose={handleClosePopup}
                         popupData={popupData}
                         setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
@@ -260,6 +284,7 @@ const LandingPage = () => {
                     </>
                   ) : (
                     <Popup
+                        setShowMainPopup={setShowPopup(false)}
                       onClose={handleClosePopup}
                       popupData={popupData}
                       setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
