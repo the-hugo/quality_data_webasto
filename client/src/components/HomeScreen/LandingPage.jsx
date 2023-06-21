@@ -73,9 +73,17 @@ export default function LandingPage() {
   const [popupData, setPopupData] = useState(null);
   const [errorCounts, setErrorCounts] = useState({});
   const [combinedData, setCombinedData] = useState([]);
+  const [isNewErrorPopupOpen, setIsNewErrorPopupOpen] = useState(false);
 
   const secondSectionItemsPerPage = 6;
 
+  const openNewErrorPopup = () => {
+    setIsNewErrorPopupOpen(true);
+  };
+
+  const closeNewErrorPopup = () => {
+    setIsNewErrorPopupOpen(false);
+  };
   // COMBINING DATA IN ORDER TO DISPLAY THE QUICK DEFECTS BASED ON THE COUNT OF DEFECTS OF A ERROR
   useEffect(() => {
     const combineData = () => {
@@ -337,10 +345,11 @@ export default function LandingPage() {
       className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
       style={{ marginLeft: 20, marginRight: 20 }}
     >
-      <Footer
+         <Footer
         handlePageChange={handlePageChange}
         pagination={pagination}
-        totalPages={secondSectionTotalPages} // Add the totalPages prop here
+        totalPages={secondSectionTotalPages}
+        openPopup={openNewErrorPopup}
       />
           </Row>
         </Col>
