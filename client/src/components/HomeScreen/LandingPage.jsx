@@ -7,20 +7,16 @@ import Popup from './ErrorSubmission/ErrorSubmision-popup';
 import Header from './StructuringElements/Header';
 import Footer from './StructuringElements/Footer';
 import CustomError from './ErrorSelection/CustomErrors';
-// import SearchBar from './StructuringElements/SearchBar.jsx';
 import axios from 'axios';
 import './styles.css';
 
+// Helper function to transform data and assign colors based on defect types
 function transformData(data) {
   const colors = {
-    Assembly:
-      'linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))',
-    Damage:
-      'linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))',
-    Dimension:
-      'linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))',
-    Surface:
-      'linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))',
+    Assembly: 'linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))',
+    Damage: 'linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))',
+    Dimension: 'linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))',
+    Surface: 'linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))',
   };
 
   return data.map((element) => {
@@ -28,6 +24,7 @@ function transformData(data) {
     let [type] = str.split(' ');
     let [type2] = type.split('/');
 
+    // Assign color based on defect type
     switch (type2) {
       case 'Assembly':
         element.color = colors.Assembly;
@@ -46,20 +43,8 @@ function transformData(data) {
     return element;
   });
 }
-// const defectTypeColors = {};
 
-// const getRandomColor = () => {
-//   const r = Math.floor(Math.random() * 256);
-//   const g = Math.floor(Math.random() * 256);
-//   const b = Math.floor(Math.random() * 256);
-//   return `linear-gradient(to right, rgb(${r},${g},${b}, 1), rgb(${r}, ${g}, ${b}, 0))`
-// };
-
-// data.forEach((item) => {
-//   item["color"] = defectTypeColors[item.defect_type] || (defectTypeColors[item.defect_type] = getRandomColor());
-// });
-
-export default function LandingPage() {
+const LandingPage = () => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
@@ -77,14 +62,17 @@ export default function LandingPage() {
 
   const secondSectionItemsPerPage = 6;
 
+  // Open new error popup
   const openNewErrorPopup = () => {
     setIsNewErrorPopupOpen(true);
   };
 
+  // Close new error popup
   const closeNewErrorPopup = () => {
     setIsNewErrorPopupOpen(false);
   };
-  // COMBINING DATA IN ORDER TO DISPLAY THE QUICK DEFECTS BASED ON THE COUNT OF DEFECTS OF A ERROR
+
+  // Combine data to display frequent defects based on error counts
   useEffect(() => {
     const combineData = () => {
       const combinedData = data
@@ -106,15 +94,12 @@ export default function LandingPage() {
     combineData();
   }, [data, errorCounts]);
 
+  // Fetch initial data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:8080/home/defectlist'
-        );
-        const filteredData = response.data.filter(
-          (item) => item.product_id === 'CC RC Roof Panel Rem Lid 3dr'
-        );
+        const response = await axios.get('http://localhost:8080/home/defectlist');
+        const filteredData = response.data.filter((item) => item.product_id === 'CC RC Roof Panel Rem Lid 3dr');
         const transformedData = transformData(filteredData);
         setData(transformedData);
       } catch (error) {
@@ -125,6 +110,7 @@ export default function LandingPage() {
     fetchData();
   }, []);
 
+  // Fetch defect data and count error codes
   useEffect(() => {
     const countErrorCodes = (defectData) => {
       const counts = {};
@@ -146,12 +132,8 @@ export default function LandingPage() {
         const filteredDefectData = response.data.filter(
           (defect) =>
             defect.product_id === 'CC RC Roof Panel Rem Lid 3dr' &&
-            //Filter for week
             new Date(defect.date) >= lastWeekDate &&
             new Date(defect.date) <= currentDate
-
-            //FIlter for date
-            //new Date(defect.date).toDateString() === currentDate.toDateString()
         );
 
         const counts = countErrorCodes(filteredDefectData);
@@ -164,23 +146,26 @@ export default function LandingPage() {
     fetchDefectData();
   }, []);
 
+  // Handle opening the popup
   const handleOpenPopup = (isOpen, item) => {
-    console.log("BUttonPressed")
     setShowPopup(isOpen);
     setShowOverlay(isOpen);
     setPopupData(item);
   };
 
+  // Handle closing the popup
   const handleClosePopup = () => {
     setShowPopup(false);
     setShowOverlay(false);
     setPopupButtonClick(true);
   };
 
+  // Handle child state change
   const handleChildStateChange = (currentBool) => {
     setBool(currentBool);
   };
 
+  // Handle page change
   const handlePageChange = (page) => {
     let itemsPerPage = pagination.itemsPerPage; // Use the default itemsPerPage value
     if (combinedData.length > 0) {
@@ -197,21 +182,15 @@ export default function LandingPage() {
       currentPage: page,
     }));
   };
-  const totalPages = Math.ceil(combinedData.length / secondSectionItemsPerPage);
 
   const firstSectionItemsPerPage = 9;
-  const firstSectionTotalPages = Math.ceil(
-    data.length / firstSectionItemsPerPage
-  );
+  const firstSectionTotalPages = Math.ceil(data.length / firstSectionItemsPerPage);
   const firstSectionCurrentPageData = data.slice(
     (pagination.currentPage - 1) * firstSectionItemsPerPage,
     pagination.currentPage * firstSectionItemsPerPage
   );
 
-
-  const secondSectionTotalPages = Math.ceil(
-    combinedData.length / secondSectionItemsPerPage
-  );
+  const secondSectionTotalPages = Math.ceil(combinedData.length / secondSectionItemsPerPage);
   const secondSectionCurrentPageData = combinedData.slice(
     (pagination.currentPage - 1) * secondSectionItemsPerPage,
     pagination.currentPage * secondSectionItemsPerPage
@@ -223,137 +202,118 @@ export default function LandingPage() {
         {/* Overlay */}
         {showOverlay && <div className="overlay"></div>}
 
-        {/* SideNav is wrapped in a Col */}
+        {/* SideNav */}
         <Sidenav onChildStateChange={handleChildStateChange} />
+
         <Col
           style={{ paddingLeft: 24 }}
-          className={
-            isOpen
-              ? 'd-flex flex-column align-items-stretch flex-shrink-2 col-22 transition-col'
-              : 'd-flex flex-column align-items-stretch flex-shrink-2 col-24 transition-col'
-          }
+          className={`d-flex flex-column align-items-stretch flex-shrink-2 col-${isOpen ? '22' : '24'} transition-col`}
         >
           <Row>
-            {/* Header returns two cols */}
-            <Header/>
+            {/* Header */}
+            <Header />
           </Row>
-          {/* SearchBar 
-          <Row>
-            <Col>
-              <SearchBar />
-            </Col>
-          </Row>
-        */}
-     {/* Errors Here */}
-     <Row className="flex-grow-1 justify-content-center">
-      <Col className="">
-        {/* Section 1 */}
-        <Row style={{ marginTop: '3%' }}>
-          <Col>
-            <span className="font">Defect List Items</span>
-          </Col>
-          <Col
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <span className="pagination">
-              {pagination.currentPage} / {firstSectionTotalPages}
-            </span>
-          </Col>
-        </Row>
-        {firstSectionCurrentPageData.length === 0 && (
-          <Row className="d-flex align-items-center justify-content-center">
-            no items yet
-          </Row>
-        )}
-        {firstSectionCurrentPageData.length > 0 && (
-          <Row className="gap-1 justify-content-evenly">
-            {firstSectionCurrentPageData.map((item) => (
-              <CustomError
-                key={item.error_code}
-                item={item}
-                togglePopup={handleOpenPopup}
-              />
-            ))}
+
+          {/* Errors Section */}
+          <Row className="flex-grow-1 justify-content-center">
+            <Col className="">
+              {/* Section 1 */}
+              <Row style={{ marginTop: '3%' }}>
+                <Col>
+                  <span className="font">Defect List Items</span>
+                </Col>
+                <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <span className="pagination">
+                    {pagination.currentPage} / {firstSectionTotalPages}
+                  </span>
+                </Col>
               </Row>
+              {firstSectionCurrentPageData.length === 0 ? (
+                <Row className="d-flex align-items-center justify-content-center">
+                  no items yet
+                </Row>
+              ) : (
+                <Row className="gap-1 justify-content-evenly">
+                  {firstSectionCurrentPageData.map((item) => (
+                    <CustomError
+                      key={item.error_code}
+                      item={item}
+                      togglePopup={handleOpenPopup}
+                    />
+                  ))}
+                </Row>
               )}
 
-              {/* Render the pop-up conditionally */}
+              {/* Render the popup conditionally */}
               {showPopup && (
-                  <>
-                    <div className="overlay" onClick={handleClosePopup}></div>
-                    {popupButtonClick ? (
-                        // Render the popup component with a conditional statement
-                        <>
-                          <Popup
-                              onClose={handleClosePopup}
-                              popupData={popupData}
-                              setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                          />
-                          {setPopupButtonClick(false)}
-                        </>
-                    ) : (
-                        <Popup
-                            onClose={handleClosePopup}
-                            popupData={popupData}
-                            setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                        />
-                    )}
-                  </>
+                <>
+                  <div className="overlay" onClick={handleClosePopup}></div>
+                  {popupButtonClick ? (
+                    // Render the popup component with a conditional statement
+                    <>
+                      <Popup
+                        onClose={handleClosePopup}
+                        popupData={popupData}
+                        setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                      />
+                      {setPopupButtonClick(false)}
+                    </>
+                  ) : (
+                    <Popup
+                      onClose={handleClosePopup}
+                      popupData={popupData}
+                      setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
+                    />
+                  )}
+                </>
               )}
+
+              {/* Section 2 */}
               <Row>
                 <Col>
                   <Row style={{ marginTop: '3%' }}>
-              <Col>
-                <span className="font">Frequent Events</span>
-              </Col>
-              <Col
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                }}
-              >
-                <span className="pagination">
-                  {pagination.currentPage} / {secondSectionTotalPages}
-                </span>
-              </Col>
-            </Row>
-            {secondSectionCurrentPageData.length === 0 && (
-              <Row className="d-flex align-items-center justify-content-center">
-                no items yet
+                    <Col>
+                      <span className="font">Frequent Events</span>
+                    </Col>
+                    <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <span className="pagination">
+                        {pagination.currentPage} / {secondSectionTotalPages}
+                      </span>
+                    </Col>
+                  </Row>
+                  {secondSectionCurrentPageData.length === 0 ? (
+                    <Row className="d-flex align-items-center justify-content-center">
+                      no items yet
+                    </Row>
+                  ) : (
+                    <Row className="gap-1 justify-content-evenly">
+                      {secondSectionCurrentPageData.map((item) => (
+                        <CustomError
+                          key={item.error_code}
+                          item={{ ...item, error_code: item.count }} // Replace error_code with count
+                          togglePopup={handleOpenPopup}
+                        />
+                      ))}
+                    </Row>
+                  )}
+                </Col>
               </Row>
-            )}
-            {secondSectionCurrentPageData.length > 0 && (
-              <Row className="gap-1 justify-content-evenly">
-                {secondSectionCurrentPageData.map((item) => (
-                  <CustomError
-                    key={item.error_code}
-                    item={{ ...item, error_code: item.count }} // Replace error_code with count
-                    togglePopup={handleOpenPopup}
-                  />
-                ))}
-              </Row>
-            )}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+            </Col>
+          </Row>
 
-    <Row
-      className="flex-grow-1 footer d-flex justify-content-evenly align-items-center"
-      style={{ marginLeft: 20, marginRight: 20 }}
-    >
-         <Footer
-        handlePageChange={handlePageChange}
-        pagination={pagination}
-        totalPages={secondSectionTotalPages}
-        openPopup={openNewErrorPopup}
-      />
+          {/* Footer */}
+          <Row className="flex-grow-1 footer d-flex justify-content-evenly align-items-center" style={{ marginLeft: 20, marginRight: 20 }}>
+            <Footer
+              handlePageChange={handlePageChange}
+              pagination={pagination}
+              totalPages={secondSectionTotalPages}
+              openPopup={openNewErrorPopup}
+            />
           </Row>
         </Col>
       </Row>
     </Container>
   );
-}
+};
+
+export default LandingPage;
