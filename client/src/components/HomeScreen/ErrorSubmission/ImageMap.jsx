@@ -7,6 +7,7 @@ import {
     ArrowCircleUpOutlined,
     DomainVerificationOutlined,
 } from '@mui/icons-material';
+import './maps.css';
 
 
 const ImageMap = () => {
@@ -275,77 +276,46 @@ const ImageMap = () => {
 
     return (
         <>
-            <p>
-                Click anywhere in the map area below to see the red square move to the
-                position of your click.
-            </p>
+            <div style={{alignItems: 'center'}}>
+                <p>
+                    Click anywhere in the map area below to see the red square move to the
+                    position of your click.
+                </p>
+            </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div
-                    id="container"
+                    className="container-map"
                     ref={containerRef}
-                    style={{
-                        position: 'relative',
-                        width: '500px',
-                        height: '300px',
-                        border: '1px black solid',
-                        overflow: 'hidden',
-                        backgroundColor: '#eee',
-                        cursor: 'pointer',
-                    }}
                 >
                     <img
-                        id="img"
+                        className="img-map"
                         ref={imgRef}
                         alt=""
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                        }}
                     />
                     <div
-                        id="pin"
+                        className="pin"
                         ref={pinRef}
-                        style={{
-                            position: 'absolute',
-                            width: '8px',
-                            height: '8px',
-                            backgroundColor: 'red',
-                            transition: 'all 0.5s',
-                            transform: 'translate(-50%, -50%)',
-                        }}
                     ></div>
                 </div>
                 <div style={{ marginLeft: '16px' }}>
-                    <div style={{ display: 'grid', gridTemplateRows: '1fr auto 1fr', gap: '8px' }}>
-                        <button onClick={handleMoveUp}>
-                            <ArrowCircleUpOutlined />
+                    <div style={{ display: 'grid', gridTemplateRows: '2fr auto 2fr', gap: '10px' }}>
+                        <button className="moveUp-btn" onClick={handleMoveUp}>
+                            <ArrowCircleUpOutlined style={{ fontSize: '35px'}} />
                         </button>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <button onClick={handleMoveLeft}>
-                                <ArrowCircleLeftOutlined />
+                        <div style={{ display: 'flex', justifyContent: 'center'}}>
+                            <button className="moveLeft-btn" onClick={handleMoveLeft}>
+                                <ArrowCircleLeftOutlined style={{ fontSize: '35px'}} />
                             </button>
-                            <button onClick={handleMoveRight}>
-                                <ArrowCircleRightOutlined />
+                            <button className="moveRight-btn" onClick={handleMoveRight}>
+                                <ArrowCircleRightOutlined style={{ fontSize: '35px'}} />
                             </button>
                         </div>
-                        <button onClick={handleMoveDown}>
-                            <ArrowCircleDownOutlined />
+                        <button className="moveDown-btn" onClick={handleMoveDown}>
+                            <ArrowCircleDownOutlined style={{ fontSize: '35px'}} />
                         </button>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                        <button
-                            style={{
-                                background: '#0069eb',
-                                borderRadius: '30px',
-                                border: 'none',
-                                color: '#fff',
-                                fontSize: '16px',
-                                padding: '15px 30px',
-                                textDecoration: 'none',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30%' }}>
+                        <button className="submit-btn"
                             onClick={handleLogDropLocation}
                         >
                             Submit

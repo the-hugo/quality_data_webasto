@@ -166,10 +166,10 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         <div className="popup">
           <div className="popup-content">
             <div className="title-container">
-              <h3 className="popup-title" style={{color: "#3e3ecf"}}>SELECTED</h3>
-              <div className="circle-button" onClick={handleOpenMapPopup}>
+              <h3 className="popup-title" style={{color: "#3e3ecf", paddingTop: '8%'}}>SELECTED</h3>
+              {/*<div className="circle-button" onClick={handleOpenMapPopup}>
                 {icon}
-              </div>
+              </div> */}
             </div>
             <div className="issue-element-display">
               <p className="issue-location" style={{ background: transformedData[0].color }}>
@@ -181,10 +181,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
               </div>
             </div>
             <div className="map-area">
-            <div style={{background: "aquamarine", textAlign: "center"}}>
-              Temp Render
               {map}
-            </div>
             </div>
             <div className="button-container">
               <button className="anomaly-button" onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
