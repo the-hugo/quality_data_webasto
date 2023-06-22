@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-
+import './NewErrorPopup.css'; // Import the CSS file
 // Category Options
 const categoryOptions = [
   'Dimension & Fit',
@@ -106,27 +106,12 @@ const NewErrorPopup = ({ onClose }) => {
             <div className="title-container">
               <h3 className="popup-title">Please select a new Error</h3>
             </div>
-            <div
-              className="option-container"
-              style={{ display: 'flex', justifyContent: 'space-between' }}
-            >
+            <div className="option-container">
               {categoryOptions.map((option) => (
                 <div
                   key={option}
                   onClick={() => setSelectedCategory(option)}
-                  style={{
-                    padding: '10px',
-                    border: '1px solid #000',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    backgroundColor: selectedCategory === option ? '#aaa' : '#fff',
-                    flex: 1,
-                    textAlign: 'center',
-                    marginRight:
-                      categoryOptions.indexOf(option) === categoryOptions.length - 1
-                        ? 0
-                        : '10px',
-                  }}
+                  className={`category-option ${selectedCategory === option ? 'selected' : ''}`}
                 >
                   {option}
                 </div>
@@ -136,7 +121,7 @@ const NewErrorPopup = ({ onClose }) => {
               <select
                 value={selectedError}
                 onChange={(e) => setSelectedError(e.target.value)}
-                style={{ margin: '10px 0', padding: '10px', width: '100%' }}
+                className="error-dropdown"
               >
                 <option value="">Select Error</option>
                 {errorDropdownOptions.map((option) => (
@@ -151,12 +136,7 @@ const NewErrorPopup = ({ onClose }) => {
                 value={textField}
                 onChange={(e) => setTextField(e.target.value)}
                 placeholder="Description"
-                style={{
-                  margin: '10px 0',
-                  padding: '10px',
-                  width: '100%',
-                  height: '100px',
-                }}
+                className="description-textarea"
               />
             </div>
             <div className="button-container">

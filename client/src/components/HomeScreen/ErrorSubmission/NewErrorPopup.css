@@ -3,7 +3,7 @@
   justify-content: space-between;
 }
 
-.option-item {
+.option-container > div {
   padding: 10px;
   border: 1px solid #000;
   border-radius: 4px;
@@ -12,29 +12,21 @@
   text-align: center;
 }
 
-.option-item:not(:last-child) {
-  margin-right: 10px;
+.option-container > div:last-child {
+  margin-right: 0;
 }
 
-.option-item.selected {
+.option-container > div.selected {
   background-color: #aaa;
 }
 
-.dropdown-container {
-  /* your styles */
-}
-
-.dropdown {
+.dropdown-container select {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
 }
 
-.text-field-container {
-  /* your styles */
-}
-
-.text-field {
+.text-field-container textarea {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
