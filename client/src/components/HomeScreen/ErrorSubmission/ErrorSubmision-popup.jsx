@@ -4,6 +4,19 @@ import ImageMap from './ImageMap';
 import { GridView as GridViewIcon } from '@mui/icons-material';
 import './popup.css';
 
+
+//function to determine type of location icon
+const determineIcon = (popupData) => {
+  //evaluate the condition based on popupData
+  if (popupData.need_location === "1") {
+    return <FaMapMarkerAlt style={{ color: 'azure' }} />
+  } else if (popupData.need_location === "2") {
+    return <GridViewIcon style={{ color: "#333399" }} />
+  } else {
+    return null;
+  }
+}
+
 const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
@@ -97,17 +110,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     });
   }
 
-  //function to determine type of location icon
-  const determineIcon = (popupData) => {
-    //evaluate the condition based on popupData
-    if (popupData.need_location === "1") {
-      return <FaMapMarkerAlt style={{ color: 'azure' }} />
-    } else if (popupData.need_location === "2") {
-      return <GridViewIcon style={{ color: "#333399" }} />
-    } else {
-      return null;
-    }
-  }
+
 
   const handleClosePopup = () => {
     setShowFirstPopup(false);
@@ -153,6 +156,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
               <div className="circle-button" onClick={handleOpenMapPopup}>
                 {/*<FaMapMarkerAlt style={{ color: 'azure' }} />*/}
                 {/* determineIcon.need_location */}
+                {icon}
               </div>
             </div>
             <div className="issue-element-display">
