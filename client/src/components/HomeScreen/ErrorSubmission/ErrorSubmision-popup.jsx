@@ -24,7 +24,7 @@ const mapType = (popupData) => {
   if (popupData.need_location === "1") {
     return <ImageMap />
   } else if (popupData.need_location === "2") {
-    return <ImageGrid/>
+    return <ImageGrid />
   } else {
     return null;
   }
@@ -180,7 +180,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
                 <p className="issue-type">{popupData.defect_type}</p>
               </div>
             </div>
-            <div className="map-area">
+            <div className="map-area" style={{alignContent: 'center'}}>
               {map}
             </div>
             <div className="button-container">

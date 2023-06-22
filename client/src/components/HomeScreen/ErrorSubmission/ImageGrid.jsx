@@ -84,56 +84,60 @@ const ImageGrid = () => {
   };
 
   return (
-      <div
-          style={{
-            position: 'relative',
-            width: '500px',
-            height: '300px',
-            border: '1px black solid',
-            overflow: 'hidden',
-            backgroundColor: '#eee',
-          }}
-      >
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <img
-                ref={imageRef}
-                src={roof}
-                alt="Your Image"
-                style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain' }}
-            />
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-              {Array.from({ length: gridSize }, (_, row) =>
-                  Array.from({ length: gridSize }, (_, col) => {
-                    const gridId = row * gridSize + col + 1;
-                    return (
-                        <div
-                            key={gridId}
-                            style={calculateGridCellStyle(row, col)}
-                            onClick={() => handleGridClick(row + 1, col + 1)}
-                        ></div>
-                    );
-                  })
-              )}
-            </div>
-          </div>
-        </div>
-        <button
-            onClick={PushGridLocation}
+      <div className="gridMap-render" >
+        <div className="imgBackground-grid"
             style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              padding: '10px',
-              backgroundColor: 'blue',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
+              position: 'relative',
+              width: '500px',
+              height: '300px',
+              border: '1px black solid',
+              overflow: 'hidden',
+              backgroundColor: '#eee',
             }}
         >
-          Save Location
-        </button>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <img
+                  className="gridImg"
+                  ref={imageRef}
+                  src={roof}
+                  alt="Your Image"
+                  style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain' }}
+              />
+              <div className="grid-render" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+                {Array.from({ length: gridSize }, (_, row) =>
+                    Array.from({ length: gridSize }, (_, col) => {
+                      const gridId = row * gridSize + col + 1;
+                      return (
+                          <div
+                              key={gridId}
+                              style={calculateGridCellStyle(row, col)}
+                              onClick={() => handleGridClick(row + 1, col + 1)}
+                          ></div>
+                      );
+                    })
+                )}
+              </div>
+            </div>
+          </div>
+          <button
+              className="pushGridLoc-btn"
+              onClick={PushGridLocation}
+              style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                padding: '10px',
+                backgroundColor: 'blue',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+          >
+            Save Location
+          </button>
+        </div>
       </div>
   );
 };

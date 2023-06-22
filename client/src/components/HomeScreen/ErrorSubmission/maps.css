@@ -57,3 +57,7 @@
 }
 
 {/*MAP GRID*/}
+
+.gridMap-render {
+    position: center;
+}
