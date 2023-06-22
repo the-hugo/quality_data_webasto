@@ -152,7 +152,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         <div className="popup">
           <div className="popup-content">
             <div className="title-container">
-              <h3 className="popup-title">SELECTED</h3>
+              <h3 className="popup-title" style={{color: "#3e3ecf"}}>SELECTED</h3>
               <div className="circle-button" onClick={handleOpenMapPopup}>
                 {/*<FaMapMarkerAlt style={{ color: 'azure' }} />*/}
                 {/* determineIcon.need_location */}
