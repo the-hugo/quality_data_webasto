@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
 
-const Popup = ({ onClose, popupData, setButtonClicked, setShowMainPopup }) => {
+const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ }) => {
   const [showPopup1, setShowPopup1] = useState(false);
   const [showPopup2, setShowPopup2] = useState(false);
   const [showPopup3, setShowPopup3] = useState(false);
@@ -79,15 +79,15 @@ const Popup = ({ onClose, popupData, setButtonClicked, setShowMainPopup }) => {
 */
 
   useEffect(() => {
-    if (showPopup1 || showPopup2 || showPopup3 || showMainPopup) {
+    if (showPopup1 || showPopup2 || showPopup3 ) {
       // Automatically hide the popups after 2 seconds if any of them is shown
       const timer = setTimeout(() => {
         setShowPopup1(false);
         setShowPopup2(false);
         setShowPopup3(false);
-        setShowMainPopup2 = () => {
+       /* setShowMainPopup2 = () => {
           setShowMainPopup();
-        };
+        }; */
       }, 2000);
 
       return () => {
@@ -95,7 +95,7 @@ const Popup = ({ onClose, popupData, setButtonClicked, setShowMainPopup }) => {
         clearTimeout(timer);
       };
     }
-  }, [showPopup1, showPopup2, showPopup3, showMainPopup]);
+  }, [showPopup1, showPopup2, showPopup3]);
 
 
   const handleClosePopup = (popupNumber) => {

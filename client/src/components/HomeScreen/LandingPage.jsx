@@ -275,7 +275,7 @@ const LandingPage = () => {
                   {popupButtonClick ? (
                     // Render the popup component with a conditional statement
                     <>
-                      <Popup setShowMainPopup={setShowPopup(false)}
+                      <Popup
                         onClose={handleClosePopup}
                         popupData={popupData}
                         setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
@@ -284,7 +284,6 @@ const LandingPage = () => {
                     </>
                   ) : (
                     <Popup
-                        setShowMainPopup={setShowPopup(false)}
                       onClose={handleClosePopup}
                       popupData={popupData}
                       setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
