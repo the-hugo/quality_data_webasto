@@ -3,6 +3,7 @@ import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
 import { GridView as GridViewIcon } from '@mui/icons-material';
 import './popup.css';
+import ImageGrid from "./ImageGrid";
 
 
 //function to determine type of location icon
@@ -17,6 +18,18 @@ const determineIcon = (popupData) => {
   }
 }
 
+//function to determine map type
+const mapType = (popupData) => {
+  //evaluate the condition based on popupData
+  if (popupData.need_location === "1") {
+    return <ImageMap />
+  } else if (popupData.need_location === "2") {
+    return <ImageGrid/>
+  } else {
+    return null;
+  }
+}
+
 const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
@@ -24,6 +37,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showMapPopup, setShowMapPopup] = useState(false);
   const transformedData = transformData([popupData]); // Transform the data
   const icon = determineIcon(popupData); // Get the appropriate icon
+  const map = mapType(popupData); // Get the appropriate map
 
   const handleButtonClick = async (actionType) => {
     setButtonClicked(actionType);
@@ -154,8 +168,6 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
             <div className="title-container">
               <h3 className="popup-title" style={{color: "#3e3ecf"}}>SELECTED</h3>
               <div className="circle-button" onClick={handleOpenMapPopup}>
-                {/*<FaMapMarkerAlt style={{ color: 'azure' }} />*/}
-                {/* determineIcon.need_location */}
                 {icon}
               </div>
             </div>
@@ -167,6 +179,12 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
                 <p className="issue-name">{popupData.error}</p>
                 <p className="issue-type">{popupData.defect_type}</p>
               </div>
+            </div>
+            <div className="map-area">
+            <div style={{background: "aquamarine", textAlign: "center"}}>
+              Temp Render
+              {map}
+            </div>
             </div>
             <div className="button-container">
               <button className="anomaly-button" onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
