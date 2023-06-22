@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import roof from "../../../images/roof.png";
 
 const ImageGrid = () => {
-  const [selectedGrid, setSelectedGrid] = useState([]);
+  const [selectedGrid, setSelectedGrid] = useState(null);
   const imageRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const gridSize = 4; // Number of grid cells per row/column
@@ -42,21 +42,22 @@ const ImageGrid = () => {
       left: `${col * cellWidth + gridOffsetX + imageOffsetX}px`,
       width: `${cellWidth}px`,
       height: `${cellHeight}px`,
+      backgroundColor: selectedGrid && selectedGrid.row === row + 1 && selectedGrid.col === col + 1 ? 'yellow' : 'transparent',
     };
   };
 
   const PushGridLocation = async () => {
-    if (selectedGrid.length > 0) {
-      const { row, col } = selectedGrid[selectedGrid.length - 1];
-  
+    if (selectedGrid) {
+      const { row, col } = selectedGrid;
+
       const errorNum = 2; // Replace with your custom error number
-  
+
       const data = {
         error_num: errorNum,
         dropLocation: [row, col],
         type: "Grid",
       };
-  
+
       try {
         const response = await fetch('http://localhost:8080/home/locations', {
           method: 'POST',
@@ -65,7 +66,7 @@ const ImageGrid = () => {
           },
           body: JSON.stringify(data),
         });
-  
+
         if (response.ok) {
           console.log('Location created successfully');
         } else {
@@ -76,66 +77,64 @@ const ImageGrid = () => {
       }
     }
   };
-  
-  
 
   const handleGridClick = (row, col) => {
-    setSelectedGrid((prevSelectedGrid) => [...prevSelectedGrid, { row, col }]);
+    setSelectedGrid({ row, col });
     console.log('Selected Grid:', row, col);
   };
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '500px',
-        height: '300px',
-        border: '1px black solid',
-        overflow: 'hidden',
-        backgroundColor: '#eee',
-      }}
-    >
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-          <img
-            ref={imageRef}
-            src={roof}
-            alt="Your Image"
-            style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain' }}
-          />
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-            {Array.from({ length: gridSize }, (_, row) =>
-              Array.from({ length: gridSize }, (_, col) => {
-                const gridId = row * gridSize + col + 1;
-                return (
-                  <div
-                    key={gridId}
-                    style={calculateGridCellStyle(row, col)}
-                    onClick={() => handleGridClick(row + 1, col + 1)}
-                  ></div>
-                );
-              })
-            )}
+      <div
+          style={{
+            position: 'relative',
+            width: '500px',
+            height: '300px',
+            border: '1px black solid',
+            overflow: 'hidden',
+            backgroundColor: '#eee',
+          }}
+      >
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <img
+                ref={imageRef}
+                src={roof}
+                alt="Your Image"
+                style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+              {Array.from({ length: gridSize }, (_, row) =>
+                  Array.from({ length: gridSize }, (_, col) => {
+                    const gridId = row * gridSize + col + 1;
+                    return (
+                        <div
+                            key={gridId}
+                            style={calculateGridCellStyle(row, col)}
+                            onClick={() => handleGridClick(row + 1, col + 1)}
+                        ></div>
+                    );
+                  })
+              )}
+            </div>
           </div>
         </div>
+        <button
+            onClick={PushGridLocation}
+            style={{
+              position: 'absolute',
+              bottom: '10px',
+              right: '10px',
+              padding: '10px',
+              backgroundColor: 'blue',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+        >
+          Save Location
+        </button>
       </div>
-      <button
-  onClick={PushGridLocation}
-  style={{
-    position: 'absolute',
-    bottom: '10px',
-    right: '10px',
-    padding: '10px',
-    backgroundColor: 'blue',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  }}
->
-  Save Location
-</button>
-    </div>
   );
 };
 
