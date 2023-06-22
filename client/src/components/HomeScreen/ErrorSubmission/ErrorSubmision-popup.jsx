@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
+import { GridView as GridViewIcon } from '@mui/icons-material';
 import './popup.css';
 
 const Popup = ({ onClose, popupData, setButtonClicked }) => {
@@ -9,6 +10,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [popupStyle, setPopupStyle] = useState("");
   const [showMapPopup, setShowMapPopup] = useState(false);
   const transformedData = transformData([popupData]); // Transform the data
+  const icon = determineIcon(popupData); // Get the appropriate icon
 
   const handleButtonClick = async (actionType) => {
     setButtonClicked(actionType);
@@ -55,7 +57,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
       setTimeout(() => {
         setShowSecondPopup(false);
         setPopupStyle("");  // reset the popupStyle state
-      }, 1000);
+      }, 1300);
 
     } else {
       console.error(`Failed to click Button ${actionType}`);
@@ -95,6 +97,18 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     });
   }
 
+  //function to determine type of location icon
+  const determineIcon = (popupData) => {
+    //evaluate the condition based on popupData
+    if (popupData.need_location === "1") {
+      return <FaMapMarkerAlt style={{ color: 'azure' }} />
+    } else if (popupData.need_location === "2") {
+      return <GridViewIcon style={{ color: "#333399" }} />
+    } else {
+      return null;
+    }
+  }
+
   const handleClosePopup = () => {
     setShowFirstPopup(false);
     setShowSecondPopup(false);
@@ -127,6 +141,8 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     </div>
   );
 
+
+
   return (
     <>
       {showFirstPopup && (
@@ -135,7 +151,8 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
             <div className="title-container">
               <h3 className="popup-title">SELECTED</h3>
               <div className="circle-button" onClick={handleOpenMapPopup}>
-                <FaMapMarkerAlt style={{ color: 'azure' }} />
+                {/*<FaMapMarkerAlt style={{ color: 'azure' }} />*/}
+                {icon}
               </div>
             </div>
             <div className="issue-element-display">
