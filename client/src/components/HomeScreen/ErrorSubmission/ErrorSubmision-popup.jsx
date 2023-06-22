@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
+import './popup.css';
 
 const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ }) => {
-  const [showPopup1, setShowPopup1] = useState(false);
-  const [showPopup2, setShowPopup2] = useState(false);
-  const [showPopup3, setShowPopup3] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupStyle, setPopupStyle] = useState('');
   const [showMapPopup, setShowMapPopup] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false); // Track whether any popup is currently visible
   const [isButtonsPopupShown, setIsButtonsPopupShown] = useState(true); // Track whether the buttons popup has been shown
@@ -35,27 +35,20 @@ const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ })
       if (response.ok) {
         console.log(`Button ${actionType} clicked successfully`);
         setButtonClicked(true);
-
-        // Show the success popup based on the action type
-        if (actionType === 'Anomaly') {
-          setShowPopup1(true);
-          setShowPopup2(false);
-          setShowPopup3(false);
-          setIsPopupVisible(true); // Set isPopupVisible to true
-        } else if (actionType === 'Rework') {
-          setShowPopup1(false);
-          setShowPopup2(true);
-          setShowPopup3(false);
-          setIsPopupVisible(true); // Set isPopupVisible to true
-        } else if (actionType === 'Scrap') {
-          setShowPopup1(false);
-          setShowPopup2(false);
-          setShowPopup3(true);
-          setIsPopupVisible(true); // Set isPopupVisible to true
-        }
+        setShowPopup(true);
+        setIsPopupVisible(true); // Set isPopupVisible to true
         setIsButtonsPopupShown(false); // Set isButtonsPopupShown to false
 
-      } else {
+        // Set the popup style based on the action type
+        if (actionType === 'Anomaly') {
+          setPopupStyle('popup1');
+        } else if (actionType === 'Rework') {
+          setPopupStyle('popup2');
+        } else if (actionType === 'Scrap') {
+          setPopupStyle('popup3');
+        }
+      }
+      else {
         console.error(`Failed to click Button ${actionType}`);
       }
 
@@ -78,34 +71,25 @@ const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ })
   };
 */
 
-  useEffect(() => {
-    if (showPopup1 || showPopup2 || showPopup3 ) {
-      // Automatically hide the popups after 2 seconds if any of them is shown
-      const timer = setTimeout(() => {
-        setShowPopup1(false);
-        setShowPopup2(false);
-        setShowPopup3(false);
-       /* setShowMainPopup2 = () => {
-          setShowMainPopup();
-        }; */
-      }, 2000);
-
-      return () => {
-        // Clear the timer when the component is unmounted or the state is updated
-        clearTimeout(timer);
-      };
-    }
-  }, [showPopup1, showPopup2, showPopup3]);
-
-
-  const handleClosePopup = (popupNumber) => {
-    setShowPopup1(false);
-    setShowPopup2(false);
-    setShowPopup3(false);
-    setIsPopupVisible(false); // Set isPopupVisible to false
-    onClose();
+useEffect(() => {
+  let timer;
+  if (showPopup) {
+    timer = setTimeout(() => {
+      setShowPopup(false);
+    }, 1000);
+  }
+  return () => {
+    clearTimeout(timer);
   };
+}, [showPopup]);
 
+
+
+const handleClosePopup = () => {
+  setShowPopup(false);
+  setIsPopupVisible(false); // Set isPopupVisible to false
+  onClose();
+};
 
 
   const handleOpenMapPopup = () => {
@@ -116,18 +100,18 @@ const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ })
     setShowMapPopup(false);
   };
 
-  const PopupComponent = ({ popupNumber, message }) => (
-    <div className={`popup${popupNumber}`}>
-      <div className={`popup${popupNumber}-content`}>
-        <div className={`popup${popupNumber}-close`} onClick={() => handleClosePopup(popupNumber)}>
+  const PopupComponent = ({ className, message }) => (
+    <div className={className}>
+      <div className={`${className}-content`}>
+        <div className={`${className}-close`} onClick={handleClosePopup}>
           <FaTimes />
         </div>
-        <div className={`popup${popupNumber}-message`}>{message}</div>
+        <div className={`${className}-message`}>{message}</div>
       </div>
     </div>
   );
 
-  
+
   return (
     <div className="popup">
       <div className="popup-content">
@@ -138,12 +122,12 @@ const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ })
           </div>
         </div>
         <div className={'issue-element-display'}>
-  <p className={'issue-location'}>{popupData.error_code}</p>
-  <div className={'issue-definition-area'}>
-    <p className={'issue-name'}>{popupData.error}</p>
-    <p className={'issue-type'}>{popupData.defect_type}</p>
-  </div>
-</div>
+          <p className={'issue-location'}>{popupData.error_code}</p>
+          <div className={'issue-definition-area'}>
+            <p className={'issue-name'}>{popupData.error}</p>
+            <p className={'issue-type'}>{popupData.defect_type}</p>
+          </div>
+        </div>
         <div className="button-container">
           <button className={'anomaly-button'} onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
           <button className={'rework-button'} onClick={() => handleButtonClick('Rework')}>Rework</button>
@@ -155,14 +139,10 @@ const Popup = ({ onClose, popupData, setButtonClicked, /* setShowMainPopup */ })
         <FaTimes style={{ fontSize: '1.3em' }} />
       </button>
 
-      {((showPopup1 || showPopup2 || showPopup3) && isPopupVisible) || isButtonsPopupShown ? (
-          <>
-            {showPopup1 && <PopupComponent popupNumber={1} message="Successfully Submitted" />}
-            {showPopup2 && <PopupComponent popupNumber={2} message="Successfully Submitted" />}
-            {showPopup3 && <PopupComponent popupNumber={3} message="Successfully Submitted" />}
-          </>
-      ) : null}
-      
+      {showPopup && isPopupVisible ? (
+    <PopupComponent className={popupStyle} message="Successfully Submitted" />
+) : null}
+
       {showMapPopup && (
         <div className="map-popup">
           <div className="map-popup-content">
