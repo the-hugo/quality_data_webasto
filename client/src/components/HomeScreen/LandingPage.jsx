@@ -201,23 +201,7 @@ const LandingPage = () => {
     pagination.currentPage * secondSectionItemsPerPage
   );
 
-  // main popup timer
-  // it makes the popup disappear when the issue card is active
-  /*
-  useEffect(() => {
-    if (showPopup) {
-      // Automatically hide the popups after 2 seconds if any of them is shown
-      const timer = setTimeout(() => {
-        setShowPopup(false);
-      }, 2000);
 
-      return () => {
-        // Clear the timer when the component is unmounted or the state is updated
-        clearTimeout(timer);
-      };
-    }
-  }, [showPopup]);
-*/
 
   return (
     <Container fluid>
@@ -267,29 +251,31 @@ const LandingPage = () => {
                 </Row>
               )}
 
-              {/* Render the popup conditionally */}
-              {isNewErrorPopupOpen && <NewErrorPopup onClose={openNewErrorPopup}/>}
-              {showPopup && (
+              {/* Render the NEW error popup conditionally */}
+              {isNewErrorPopupOpen && (
                 <>
                   <div className="overlay" onClick={handleClosePopup}></div>
-                  {popupButtonClick ? (
-                    // Render the popup component with a conditional statement
-                    <>
-                      <Popup
-                        onClose={handleClosePopup}
-                        popupData={popupData}
-                        setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                      />
-                      {setPopupButtonClick(false)}
-                    </>
-                  ) : (
-                    <Popup
-                      onClose={handleClosePopup}
-                      popupData={popupData}
-                      setButtonClicked={setButtonClicked} // Make sure to pass the setButtonClicked prop
-                    />
-                  )}
+                  <>
+                   <NewErrorPopup
+                      onClose={openNewErrorPopup}
+                   />
+                  </>
                 </>
+              )}
+
+              {/* Render the error popup conditionally */}
+              {showPopup && (
+                  <>
+                    <div className="overlay" onClick={handleClosePopup}></div>
+                        <>
+                          <Popup
+                              onClose={handleClosePopup}
+                              popupData={popupData}
+                              setButtonClicked={setButtonClicked}
+                          />
+                        </>
+                    )
+                  </>
               )}
 
               {/* Section 2 */}
