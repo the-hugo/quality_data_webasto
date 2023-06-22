@@ -9,9 +9,9 @@ import './popup.css';
 const determineIcon = (popupData) => {
   //evaluate the condition based on popupData
   if (popupData.need_location === "1") {
-    return <FaMapMarkerAlt style={{ color: "#333399", fontSize: '1.5em' }} />
+    return <FaMapMarkerAlt className="locMark" />
   } else if (popupData.need_location === "2") {
-    return <GridViewIcon style={{ color: "#333399", fontSize: '1.9em' }} />
+    return <GridViewIcon className={"gridView"} style={{ color: "#333399", fontSize: '1.9em' }} />
   } else {
     return null;
   }
