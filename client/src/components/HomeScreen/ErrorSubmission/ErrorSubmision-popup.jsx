@@ -184,8 +184,8 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
               {map}
             </div>
             <div className="button-container">
-              <button className="anomaly-button" onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
-              <button className="rework-button" onClick={() => handleButtonClick('Rework')}>Rework</button>
+              <button className="anomaly-button" style={{marginRight: '10%'}} onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
+              <button className="rework-button" style={{marginRight: '10%'}} onClick={() => handleButtonClick('Rework')}>Rework</button>
               <button className="scrap-button" onClick={() => handleButtonClick('Scrap')}>Scrap</button>
             </div>
           </div>
