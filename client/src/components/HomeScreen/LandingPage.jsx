@@ -70,12 +70,6 @@ const LandingPage = () => {
     console.log(isNewErrorPopupOpen)
   };
 
-  // Close new error popup
-  /*
-  const closeNewErrorPopup = () => {
-    setIsNewErrorPopupOpen(false);
-  };
-*/
 
   // Combine data to display frequent defects based on error counts
   useEffect(() => {

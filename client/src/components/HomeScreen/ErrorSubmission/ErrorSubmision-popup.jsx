@@ -8,6 +8,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showSecondPopup, setShowSecondPopup] = useState(false);
   const [popupStyle, setPopupStyle] = useState("");
   const [showMapPopup, setShowMapPopup] = useState(false);
+  const transformedData = transformData([popupData]); // Transform the data
 
   const handleButtonClick = async (actionType) => {
     setButtonClicked(actionType);
@@ -61,6 +62,39 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     }
   };
 
+  // Helper function to transform data and assign colors based on defect types
+  function transformData(data) {
+    const colors = {
+      Assembly: 'linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))',
+      Damage: 'linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))',
+      Dimension: 'linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))',
+      Surface: 'linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))',
+    };
+    return data.map((element) => {
+      let str = element.defect_type;
+      let [type] = str.split(' ');
+      let [type2] = type.split('/');
+
+      // Assign color based on defect type
+      switch (type2) {
+        case 'Assembly':
+          element.color = colors.Assembly;
+          break;
+        case 'Damage':
+          element.color = colors.Damage;
+          break;
+        case 'Dimension':
+          element.color = colors.Dimension;
+          break;
+        case 'Surface':
+          element.color = colors.Surface;
+          break;
+      }
+
+      return element;
+    });
+  }
+
   const handleClosePopup = () => {
     setShowFirstPopup(false);
     setShowSecondPopup(false);
@@ -81,6 +115,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     }
   }, [showFirstPopup, showSecondPopup]);
   
+  //Message Popups
   const PopupComponent = ({ className, message }) => (
     <div className={className}>
       <div className={`${className}-content`}>
@@ -104,7 +139,9 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
               </div>
             </div>
             <div className="issue-element-display">
-              <p className="issue-location">{popupData.error_code}</p>
+              <p className="issue-location" style={{ background: transformedData[0].color }}>
+                {popupData.error_code}
+              </p>
               <div className="issue-definition-area">
                 <p className="issue-name">{popupData.error}</p>
                 <p className="issue-type">{popupData.defect_type}</p>
