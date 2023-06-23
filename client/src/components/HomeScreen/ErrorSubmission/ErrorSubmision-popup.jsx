@@ -166,7 +166,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         <div className="popup">
           <div className="popup-content">
             <div className="title-container">
-              <h3 className="popup-title" style={{color: "#3e3ecf", paddingTop: '8%'}}>SELECTED</h3>
+              <h3 className="popup-title" style={{color: "#3e3ecf", paddingTop: '5%'}}>SELECTED</h3>
               {/*<div className="circle-button" onClick={handleOpenMapPopup}>
                 {icon}
               </div> */}
