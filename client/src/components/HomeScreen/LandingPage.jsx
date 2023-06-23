@@ -45,6 +45,8 @@ function transformData(data) {
   });
 }
 
+const productfilter = "CC RC Roof Panel Rem Lid 3dr";
+
 const LandingPage = () => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({
@@ -98,7 +100,7 @@ const LandingPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/home/defectlist');
-        const filteredData = response.data.filter((item) => item.product_id === 'CC RC Roof Panel Rem Lid 3dr');
+        const filteredData = response.data.filter((item) => item.product_id === productfilter);
         const transformedData = transformData(filteredData);
         setData(transformedData);
       } catch (error) {
@@ -130,7 +132,7 @@ const LandingPage = () => {
 
         const filteredDefectData = response.data.filter(
           (defect) =>
-            defect.product_id === 'CC RC Roof Panel Rem Lid 3dr' &&
+            defect.product_id === productfilter &&
             new Date(defect.date) >= lastWeekDate &&
             new Date(defect.date) <= currentDate
         );

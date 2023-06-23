@@ -15,47 +15,13 @@ const MasterBar = () => {
   const [errorTypes, setErrorTypes] = useState([]);
   const [productNames, setProductNames] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [allData, setAllData] = useState([]); // new state to hold all data
 
   const fetchDefectData = async () => {
     try {
       // Fetch all data
       const response = await axios.get('http://localhost:8080/home/defects');
-
-      // Extract product names, categories, and error types from the data
-      const productNames = [
-        ...new Set(response.data.map((defect) => defect.product_id)),
-      ];
-      const categories = [
-        ...new Set(response.data.map((defect) => defect.category)),
-      ];
-      const errorTypes = [
-        ...new Set(response.data.map((defect) => defect.error_type)),
-      ];
-
-      // Update the state variables with the fetched data
-      setProductNames(productNames);
-      setCategories(categories);
-      setErrorTypes(errorTypes);
-
-      // Filter data based on selected filters
-      const filteredDefectData = response.data.filter(defect =>
-        (!startDate || new Date(defect.date) >= new Date(startDate)) &&
-        (!endDate || new Date(defect.date) <= new Date(endDate)) &&
-        (!product || defect.product_id === product)
-      );
-
-      // Filter data further based on category
-      const categoryFilteredData = filteredDefectData.filter(
-        (defect) => !category || defect.category === category
-      );
-
-      // Filter data further based on error type
-      const finalFilteredData = categoryFilteredData.filter(
-        (defect) => !errorType || defect.error_type === errorType
-      );
-
-      // Update the filtered data state
-      setFilteredData(finalFilteredData);
+      setAllData(response.data); // store all data
     } catch (error) {
       console.error('Error fetching defect data:', error);
     }
@@ -63,7 +29,39 @@ const MasterBar = () => {
 
   useEffect(() => {
     fetchDefectData();
-  }, [startDate, endDate, product, category, errorType]);
+  }, []);
+
+  useEffect(() => {
+    const productNames = [
+      ...new Set(allData.map((defect) => defect.product_id)),
+    ];
+    setProductNames(productNames);
+
+    const filteredDataForProduct = allData.filter(
+      (defect) => !product || defect.product_id === product
+    );
+
+    const categories = [
+      ...new Set(filteredDataForProduct.map((defect) => defect.category)),
+    ];
+    setCategories(categories);
+
+    const filteredDataForCategory = filteredDataForProduct.filter(
+      (defect) => !category || defect.category === category
+    );
+
+    const errorTypes = [
+      ...new Set(filteredDataForCategory.map((defect) => defect.error_type)),
+    ];
+    setErrorTypes(errorTypes);
+
+    const finalFilteredData = filteredDataForCategory.filter(
+      (defect) => !errorType || defect.error_type === errorType
+    );
+
+    setFilteredData(finalFilteredData);
+  }, [allData, product, category, errorType]);
+
 
   return (
     <div className="filter-bar">
