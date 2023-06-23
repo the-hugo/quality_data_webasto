@@ -1,0 +1,52 @@
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filter-bar select,
+.filter-bar .react-datepicker-wrapper,
+.filter-bar .react-datepicker__input-container input {
+  min-width: 150px;
+  padding: 8px;
+  border: none;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+.filter-bar select:focus,
+.filter-bar .react-datepicker-wrapper:focus,
+.filter-bar .react-datepicker__input-container input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #a1c3f2;
+}
+
+.filter-bar select option {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.filter-bar select option:hover {
+  background-color: #c2c2c2;
+}
+
+.filter-bar select option:checked {
+  background-color: #a1c3f2;
+  color: #fff;
+}
+
+.react-datepicker {
+  font-family: inherit;
+}
+
+.react-datepicker__input-container input {
+  cursor: pointer;
+}
