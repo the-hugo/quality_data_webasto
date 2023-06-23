@@ -3,8 +3,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: auto;
     height: auto;
+    padding: 2%;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -126,39 +127,6 @@
     padding-bottom: 5%;
 }
 
-.popup1 {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px;
-    height: 500px;
-    background-color: lightgreen;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
-
-.popup1-content {
-    text-align: center;
-}
-
-.popup1-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    border: 1px solid #004689;
-    border-radius: 50%;
-    cursor: pointer;
-    color: #004689;
-    padding: 3px;
-    font-size: 22px;
-}
-
-.popup1-message {
-    font-size: 24px;
-}
 
 .button1 {
     background-color: lightblue;
@@ -215,6 +183,46 @@
     border: 1px solid #711711;
 }
 
+
+{/* ANOMALY POPUP */}
+.popup1 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 500px;
+    background-color: lightgreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border-radius: 16px;
+}
+
+.popup1-content {
+    text-align: center;
+}
+
+.popup1-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: 1px solid #004689;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #004689;
+    padding: 3px;
+    font-size: 22px;
+}
+
+.popup1-message {
+    font-size: 24px;
+}
+
+
+{/* REWORK POPUP */}
+
 .popup2 {
     position: fixed;
     top: 50%;
@@ -227,6 +235,7 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
+    border-radius: 16px;
 }
 
 .popup2-content {
@@ -249,6 +258,8 @@
     font-size: 24px;
 }
 
+
+{/* SCRAP POPUP */}
 .popup3 {
     position: fixed;
     top: 50%;
@@ -261,6 +272,7 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
+    border-radius: 16px;
 }
 
 .popup3-content {
@@ -283,6 +295,8 @@
     font-size: 24px;
 }
 
+{/*MAP POPUP RENDERING*/}
+{/* INACTIVE */}
 .map-popup {
     width: 700px;
     height: 500px;

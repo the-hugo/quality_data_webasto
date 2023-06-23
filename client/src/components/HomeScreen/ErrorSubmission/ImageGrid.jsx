@@ -84,17 +84,8 @@ const ImageGrid = () => {
   };
 
   return (
-      <div className="gridMap-render" >
-        <div className="imgBackground-grid"
-            style={{
-              position: 'relative',
-              width: '500px',
-              height: '300px',
-              border: '1px black solid',
-              overflow: 'hidden',
-              backgroundColor: '#eee',
-            }}
-        >
+      <div className="gridMap-render" style={{marginLeft: '15%'}} >
+        <div className="imgBackground-grid">
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <img
@@ -102,9 +93,8 @@ const ImageGrid = () => {
                   ref={imageRef}
                   src={roof}
                   alt="Your Image"
-                  style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain' }}
               />
-              <div className="grid-render" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+              <div className="grid-render" >
                 {Array.from({ length: gridSize }, (_, row) =>
                     Array.from({ length: gridSize }, (_, col) => {
                       const gridId = row * gridSize + col + 1;
@@ -120,24 +110,13 @@ const ImageGrid = () => {
               </div>
             </div>
           </div>
-          <button
-              className="pushGridLoc-btn"
-              onClick={PushGridLocation}
-              style={{
-                position: 'absolute',
-                bottom: '10px',
-                right: '10px',
-                padding: '10px',
-                backgroundColor: 'blue',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-          >
-            Save Location
-          </button>
         </div>
+        <button
+            className="pushGridLoc-btn"
+            onClick={PushGridLocation}
+        >
+          Save Location
+        </button>
       </div>
   );
 };
