@@ -1,3 +1,5 @@
+
+
 .popup {
     position: fixed;
     top: 50%;
@@ -18,6 +20,7 @@
     display: flex;
     flex-direction: column;
     align-content: flex-start;
+    padding: 3%;
 }
 
 .title-container {
@@ -29,7 +32,7 @@
 
 .popup-title {
     text-align: left;
-    color: #2B77D1;
+    color: #3e3ecf;
 }
 
 .close-button {
@@ -191,8 +194,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 700px;
-    height: 500px;
-    background-color: lightgreen;
+    height: 250px;
+    background-color: #7DDE86;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -208,16 +211,19 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    border: 1px solid #004689;
+    border: 2px solid #104931;
     border-radius: 50%;
     cursor: pointer;
-    color: #004689;
+    color: #104931;
     padding: 3px;
     font-size: 22px;
 }
 
 .popup1-message {
-    font-size: 24px;
+    font-size: 26px;
+    color: #104931;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 
@@ -229,8 +235,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 700px;
-    height: 500px;
-    background-color: lightgoldenrodyellow;
+    height: 250px;
+    background-color: #FFD188;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -246,16 +252,19 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    border: 1px solid #004689;
+    border: 2px solid #A05E03;
     border-radius: 50%;
     cursor: pointer;
-    color: #004689;
+    color: #A05E03;
     padding: 3px;
     font-size: 22px;
 }
 
 .popup2-message {
-    font-size: 24px;
+    font-size: 26px;
+    color: #A05E03;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 
@@ -266,8 +275,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 700px;
-    height: 500px;
-    background-color: indianred;
+    height: 250px;
+    background-color: #FF6D6D;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -283,16 +292,19 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    border: 1px solid #004689;
+    border: 2px solid #711711;
     border-radius: 50%;
     cursor: pointer;
-    color: #004689;
+    color: #711711;
     padding: 3px;
     font-size: 22px;
 }
 
 .popup3-message {
-    font-size: 24px;
+    font-size: 26px;
+    color: #711711;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 {/*MAP POPUP RENDERING*/}

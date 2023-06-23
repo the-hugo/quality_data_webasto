@@ -25,7 +25,7 @@ export default function Footer({ handlePageChange, pagination, openPopup }) {
     borderWidth: '1px',
     borderRadius: '10px',
     borderColor: '#333399',
-    backgroundColor: '#d0e4ff7a',
+    backgroundColor: '#3e3ecf20',
   };
 
   return (
