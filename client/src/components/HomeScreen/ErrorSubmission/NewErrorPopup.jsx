@@ -102,7 +102,7 @@ const NewErrorPopup = ({ onClose }) => {
     <>
       {currentPopup === 'first' && (
         <div className="popup">
-          <div className="popup-content">
+          <div className="popup-content" style={{padding: '4%'}}>
             <div className="title-container">
               <h3 className="popup-title">Please select a new Error</h3>
             </div>
