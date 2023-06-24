@@ -1,0 +1,36 @@
+.site-card-wrapper .ant-card {
+  margin: 20px 0;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+}
+
+.site-card-wrapper .ant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.site-card-wrapper .ant-card .ant-card-body {
+  background: #fafafa;
+  padding: 20px;
+}
+
+.site-card-wrapper .ant-card .ant-card-body h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.filter-bar:hover {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+}

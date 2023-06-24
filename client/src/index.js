@@ -7,6 +7,7 @@ import './custom.scss';
 import "@fontsource/roboto";
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ChakraProvider>

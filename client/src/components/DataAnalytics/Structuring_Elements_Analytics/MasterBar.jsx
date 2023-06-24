@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './MasterBar.css';
+import { DatePicker, Select } from 'antd';
+
+
+const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const MasterBar = () => {
   const [product, setProduct] = useState('');
@@ -65,49 +69,55 @@ const MasterBar = () => {
 
   return (
     <div className="filter-bar">
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        placeholderText="Start Date"
+      <RangePicker 
+        onChange={(dates) => {
+          setStartDate(dates[0]);
+          setEndDate(dates[1]);
+        }}
       />
-      <DatePicker
-        selected={endDate}
-        onChange={(date) => setEndDate(date)}
-        placeholderText="End Date"
-      />
-
-      <select value={product} onChange={(e) => setProduct(e.target.value)}>
-        <option value="">All Products</option>
+  
+      <Select
+        style={{ minWidth: 200 }} // Set minimum width here
+        value={product}
+        onChange={(value) => setProduct(value)}
+        placeholder="All Products"
+      >
         {productNames.map((productName, index) => (
-          <option key={index} value={productName}>
+          <Option key={index} value={productName}>
             {productName}
-          </option>
+          </Option>
         ))}
-      </select>
-
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="">All Categories</option>
+      </Select>
+  
+      <Select
+        style={{ minWidth: 200 }} // Set minimum width here
+        value={category}
+        onChange={(value) => setCategory(value)}
+        placeholder="All Categories"
+      >
         {categories.map((category, index) => (
-          <option key={index} value={category}>
+          <Option key={index} value={category}>
             {category}
-          </option>
+          </Option>
         ))}
-      </select>
-
-      <select value={errorType} onChange={(e) => setErrorType(e.target.value)}>
-        <option value="">All Error Types</option>
+      </Select>
+  
+      <Select
+        style={{ minWidth: 200 }} // Set minimum width here
+        value={errorType}
+        onChange={(value) => setErrorType(value)}
+        placeholder="All Error Types"
+      >
         {errorTypes.map((errorType, index) => (
-          <option key={index} value={errorType}>
+          <Option key={index} value={errorType}>
             {errorType}
-          </option>
+          </Option>
         ))}
-      </select>
-
+      </Select>
+  
       {/* Render your filtered data here */}
-
       
     </div>
-  );
-};
-
-export default MasterBar;
+  );}
+  
+  export default MasterBar;
