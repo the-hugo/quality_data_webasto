@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import './NewErrorPopup.css'; // Import the CSS file
+import { GridView as GridViewIcon } from '@mui/icons-material';
 // Category Options
 const categoryOptions = [
   'Dimension & Fit',
@@ -131,13 +132,24 @@ const NewErrorPopup = ({ onClose }) => {
                 ))}
               </select>
             </div>
-            <div className="text-field-container">
-              <textarea
-                value={textField}
-                onChange={(e) => setTextField(e.target.value)}
-                placeholder="Description"
-                className="description-textarea"
-              />
+            <div className="text-plus-location-area" style={{display: 'flex'}}>
+              <div className="text-field-container" style={{display: 'flex', width: '80%', height: '100px'}}>
+                <textarea
+                  value={textField}
+                  onChange={(e) => setTextField(e.target.value)}
+                  placeholder="Description"
+                  className="description-textarea"
+                />
+              </div>
+              <div className='loc-btns' style={{justifyItems: 'right', marginLeft: '10%'}}>
+              <button className="pinpoint-loc-btn" style={{marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px'}}>
+                <FaMapMarkerAlt style={{ fontSize: '1.3em' }} />
+              </button>
+              <br/>
+              <button className="grid-loc-btn" style={{marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px'}}>
+                <GridViewIcon style={{ color: "#333399", fontSize: '1.3em' }} />
+              </button>
+              </div>
             </div>
             <div className="button-container">
               <ButtonComponent
