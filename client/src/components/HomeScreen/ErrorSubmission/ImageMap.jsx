@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import roof from "../../../images/roof.png";
 import {
     ArrowCircleDownOutlined,
@@ -14,6 +14,7 @@ const ImageMap = () => {
     const containerRef = useRef(null);
     const pinRef = useRef(null);
     const imgRef = useRef(null);
+    const [locations, setLocations] = useState([]);
 
     const handleMoveUp = () => {
         const minY = window.pinner.y_lb;
@@ -78,10 +79,6 @@ const ImageMap = () => {
 
             initImgSrc(src) {
                 this.imgRef.src = src;
-                // Example image sources:
-                // this.imgRef.src = 'https://storage.googleapis.com/ifca-assets/london.png'; // normal
-                // this.imgRef.src = 'https://storage.googleapis.com/ifca-assets/long.png'; // long
-                // this.imgRef.src = 'https://storage.googleapis.com/ifca-assets/tall.png'; // tall
             }
 
             initListeners() {
@@ -241,42 +238,82 @@ const ImageMap = () => {
         });
     }, []);
 
-    const handleLogDropLocation = async () => {
+    const handleAddLocation = () => {
         if (window.pinner) {
-          const { dropLocation } = window.pinner;
-      
-          const errorNum = 1; // Replace with your custom error number
-      
-          const data = {
-            error_num: errorNum,
-            dropLocation,
-            type: "Exact Location",
-          };
-      
-          try {
-            const response = await fetch('http://localhost:8080/home/locations', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
-            });
-      
-            if (response.ok) {
-              console.log('Location created successfully');
-            } else {
-              console.error('Failed to create location');
-            }
-          } catch (error) {
-            console.error('Error:', error);
-          }
+            const { dropLocation } = window.pinner;
+            const errorNum = 1; // Replace with your custom error number
+
+            const newLocation = {
+                error_num: errorNum,
+                dropLocation,
+                type: "Exact Location",
+            };
+
+            setLocations(prevLocations => [...prevLocations, newLocation]);
+
+
+            window.pinner.setPinLocation(dropLocation); // Set the pin location
+            window.pinner.renderPin(); // Render the pin
+
         }
-      };
+
+    };
+
+    useEffect(() => {
+        console.log(locations);
+    }, [locations]);
+
+
+
+    const handleLogDropLocation = () => {
+        if (window.pinner) {
+            const { dropLocation } = window.pinner;
+            const errorNum = 1; // Replace with your custom error number
+
+            const newLocation = {
+                error_num: errorNum,
+                dropLocation,
+                type: "Exact Location",
+            };
+
+            setLocations(prevLocations => [...prevLocations, newLocation]); // Add pointer position as the last location
+        }
+    };
+
+    const sendLocationsToBackend = async () => {
+        try {
+            for (const location of locations) {
+                const response = await fetch('http://localhost:8080/home/locations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(location),
+                });
+
+                if (response.ok) {
+                    console.log('Location created successfully');
+                } else {
+                    console.error('Failed to create location');
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (locations.length > 0) {
+            sendLocationsToBackend();
+        }
+    }, [locations]);
+
+
 
 
     return (
         <>
-            <div style={{alignItems: 'center'}}>
+            <div style={{ alignItems: 'center' }}>
                 <p>
                     Click anywhere in the map area below to see the red square move to the
                     position of your click.
@@ -300,24 +337,28 @@ const ImageMap = () => {
                 <div style={{ marginLeft: '16px' }}>
                     <div style={{ display: 'grid', gridTemplateRows: '2fr auto 2fr', gap: '10px' }}>
                         <button className="moveUp-btn" onClick={handleMoveUp}>
-                            <ArrowCircleUpOutlined style={{ fontSize: '35px'}} />
+                            <ArrowCircleUpOutlined style={{ fontSize: '35px' }} />
                         </button>
-                        <div style={{ display: 'flex', justifyContent: 'center'}}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <button className="moveLeft-btn" onClick={handleMoveLeft}>
-                                <ArrowCircleLeftOutlined style={{ fontSize: '35px'}} />
+                                <ArrowCircleLeftOutlined style={{ fontSize: '35px' }} />
                             </button>
                             <button className="moveRight-btn" onClick={handleMoveRight}>
-                                <ArrowCircleRightOutlined style={{ fontSize: '35px'}} />
+                                <ArrowCircleRightOutlined style={{ fontSize: '35px' }} />
                             </button>
                         </div>
                         <button className="moveDown-btn" onClick={handleMoveDown}>
-                            <ArrowCircleDownOutlined style={{ fontSize: '35px'}} />
+                            <ArrowCircleDownOutlined style={{ fontSize: '35px' }} />
                         </button>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30%' }}>
-                        <button className="submit-btn"
-                            onClick={handleLogDropLocation}
-                        >
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}>
+                        <button className="add-location-btn" onClick={handleAddLocation}>
+                            Additional Location
+                        </button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}>
+
+                        <button className="submit-btn" onClick={handleLogDropLocation}>
                             Submit
                             <span
                                 style={{
@@ -329,7 +370,6 @@ const ImageMap = () => {
                             ></span>
                             <DomainVerificationOutlined style={{ fontSize: '20px', marginLeft: '10px' }} />
                         </button>
-                        
                     </div>
                 </div>
             </div>

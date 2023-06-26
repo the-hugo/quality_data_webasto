@@ -29,6 +29,19 @@
     transform: translate(-50%, -50%);
 }
 
+.add-location-btn {
+    background: grey;
+    border-radius: 16px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    padding: 15px 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
 .submit-btn {
     background: #3e3ecf;
     border-radius: 16px;
