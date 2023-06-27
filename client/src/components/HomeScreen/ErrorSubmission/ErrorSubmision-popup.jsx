@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
 import ImageMap from './ImageMap';
 import { GridView as GridViewIcon } from '@mui/icons-material';
@@ -34,25 +34,25 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
   const [popupStyle, setPopupStyle] = useState("");
-  const [showMapPopup, setShowMapPopup] = useState(false);
   const transformedData = transformData([popupData]); // Transform the data
   const icon = determineIcon(popupData); // Get the appropriate icon
   const map = mapType(popupData); // Get the appropriate map
+  const [locationObjectIds, setLocationObjectIds] = useState([]);
   
 
   const handleButtonClick = async (actionType) => {
     setButtonClicked(actionType);
-
+  
     const data = {
       serial_num: '123456',
       product_id: 'CC RC Roof Panel Rem Lid 3dr',
       category: popupData.defect_type,
-      description: "",
+      description: '',
       action_type: actionType,
       error_code: popupData.error_code,
       error_type: popupData.error,
     };
-
+  
     const response = await fetch('http://localhost:8080/home/defects', {
       method: 'POST',
       headers: {
@@ -60,39 +60,51 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
       },
       body: JSON.stringify(data),
     });
-
+  
     if (response.ok) {
-     const response_error = response.error_num;
-
-      let actionStyle = "";
-      switch(actionType.toLowerCase()){
-        case "anomaly":
-          actionStyle = "popup1";
+      const responseData = await response.json(); // Parse the response data as JSON
+      const response_error = responseData.error_num;
+  
+      let actionStyle = '';
+      switch (actionType.toLowerCase()) {
+        case 'anomaly':
+          actionStyle = 'popup1';
           break;
-        case "rework":
-          actionStyle = "popup2";
+        case 'rework':
+          actionStyle = 'popup2';
           break;
-        case "scrap":
-          actionStyle = "popup3";
+        case 'scrap':
+          actionStyle = 'popup3';
           break;
       }
       setPopupStyle(actionStyle);
-
-      setShowFirstPopup(false);  // Close the first popup immediately after successful POST request
-
+  
+      setShowFirstPopup(false); // Close the first popup immediately after successful POST request
+  
       // Show the second popup immediately
       setShowSecondPopup(true);
-
+  
       // Hide the second popup after one second
       setTimeout(() => {
         setShowSecondPopup(false);
-        setPopupStyle("");  // reset the popupStyle state
+        setPopupStyle(''); // reset the popupStyle state
       }, 1300);
-
+  
+      await callChildFunction(response_error); // Wait for the locations to be added and sent to the backend
     } else {
       console.error(`Failed to click Button ${actionType}`);
     }
   };
+  
+  useEffect(() => {
+    console.log('locationObjectIds changed:', locationObjectIds);
+  }, [locationObjectIds]);
+
+  const handleLocationObjectIds = (objectIds) => {
+    setLocationObjectIds(objectIds);
+    // Do something with the ObjectIds in the parent component
+  };
+  
 
   // Helper function to transform data and assign colors based on defect types
   function transformData(data) {
@@ -127,20 +139,22 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     });
   }
 
-
+    // Create a ref instance
+    const childRef = useRef();
+  
+    const callChildFunction = (responseError) => {
+      // Call the function in the ChildComponent
+      if (childRef.current) {
+        childRef.current.sendLocationsToBackend(responseError);
+      }
+      else{console.log("doesnt pass")}
+    }
+  
 
   const handleClosePopup = () => {
     setShowFirstPopup(false);
     setShowSecondPopup(false);
     onClose();
-  };
-
-  const handleOpenMapPopup = () => {
-    setShowMapPopup(true);
-  };
-
-  const handleCloseMapPopup = () => {
-    setShowMapPopup(false);
   };
 
   useEffect(() => {
@@ -184,7 +198,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
               </div>
             </div>
             <div className="map-area" style={{alignContent: 'center'}}>
-              {map}
+            <ImageMap ref={childRef} onLocationObjectIds={handleLocationObjectIds} />
             </div>
             <div className="button-container">
               <button className="anomaly-button" style={{marginRight: '10%'}} onClick={() => handleButtonClick('Anomaly')}>Anomaly</button>
@@ -200,18 +214,6 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
       {showSecondPopup && (
         <div className={`popup ${popupStyle}`}>
           <PopupComponent className={popupStyle} message="Successfully Submitted" />
-        </div>
-      )}
-      {showMapPopup && (
-        <div className="popup map-popup">
-          <div className="popup-content">
-            <div className="image-map">
-              <ImageMap />
-            </div>
-            <button className="map-close" onClick={handleCloseMapPopup}>
-              <FaTimes />
-            </button>
-          </div>
         </div>
       )}
     </>

@@ -40,8 +40,9 @@ router.delete('/comps/:id', deleteComp);
 // Defect routes
 router.get('/defects', getDefects);
 router.post('/defects', createDefect);
-router.put('/defects/:id', editDefect);
+router.put('/defects/:error_num', editDefect); // Use ':error_num' parameter in the route
 router.delete('/defects/:id', deleteDefect);
+
 
 // User routes
 router.post('/users', createUser);
