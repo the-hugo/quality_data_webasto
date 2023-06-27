@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import roof from "../../../images/roof.png";
-import {
-    ArrowCircleDownOutlined,
-    ArrowCircleLeftOutlined,
-    ArrowCircleRightOutlined,
-    ArrowCircleUpOutlined,
-    DomainVerificationOutlined,
-} from '@mui/icons-material';
 import './maps.css';
 
 
@@ -16,50 +9,7 @@ const ImageMap = () => {
     const imgRef = useRef(null);
     const [locations, setLocations] = useState([]);
 
-    const handleMoveUp = () => {
-        const minY = window.pinner.y_lb;
-        const newY = window.pinner.adjY - 5;
-
-        if (newY >= minY) {
-            window.pinner.movePointer(0, -5);
-        } else {
-            window.pinner.movePointer(0, minY - window.pinner.adjY);
-        }
-    };
-
-    const handleMoveDown = () => {
-        const maxY = window.pinner.y_ub;
-        const newY = window.pinner.adjY + 5;
-
-        if (newY <= maxY) {
-            window.pinner.movePointer(0, 5);
-        } else {
-            window.pinner.movePointer(0, maxY - window.pinner.adjY);
-        }
-    };
-
-    const handleMoveLeft = () => {
-        const minX = window.pinner.x_lb;
-        const newX = window.pinner.adjX - 5;
-
-        if (newX >= minX) {
-            window.pinner.movePointer(-5, 0);
-        } else {
-            window.pinner.movePointer(minX - window.pinner.adjX, 0);
-        }
-    };
-
-    const handleMoveRight = () => {
-        const maxX = window.pinner.x_ub;
-        const newX = window.pinner.adjX + 5;
-
-        if (newX <= maxX) {
-            window.pinner.movePointer(5, 0);
-        } else {
-            window.pinner.movePointer(maxX - window.pinner.adjX, 0);
-        }
-    };
-
+    
 
     useEffect(() => {
         class Pinner {
@@ -265,20 +215,6 @@ const ImageMap = () => {
 
 
 
-    const handleLogDropLocation = () => {
-        if (window.pinner) {
-            const { dropLocation } = window.pinner;
-            const errorNum = 1; // Replace with your custom error number
-
-            const newLocation = {
-                error_num: errorNum,
-                dropLocation,
-                type: "Exact Location",
-            };
-
-            setLocations(prevLocations => [...prevLocations, newLocation]); // Add pointer position as the last location
-        }
-    };
 
     const sendLocationsToBackend = async () => {
         try {
@@ -335,22 +271,6 @@ const ImageMap = () => {
                     ></div>
                 </div>
                 <div style={{ marginLeft: '16px' }}>
-                    <div style={{ display: 'grid', gridTemplateRows: '2fr auto 2fr', gap: '10px' }}>
-                        <button className="moveUp-btn" onClick={handleMoveUp}>
-                            <ArrowCircleUpOutlined style={{ fontSize: '35px' }} />
-                        </button>
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <button className="moveLeft-btn" onClick={handleMoveLeft}>
-                                <ArrowCircleLeftOutlined style={{ fontSize: '35px' }} />
-                            </button>
-                            <button className="moveRight-btn" onClick={handleMoveRight}>
-                                <ArrowCircleRightOutlined style={{ fontSize: '35px' }} />
-                            </button>
-                        </div>
-                        <button className="moveDown-btn" onClick={handleMoveDown}>
-                            <ArrowCircleDownOutlined style={{ fontSize: '35px' }} />
-                        </button>
-                    </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}>
                         <button className="add-location-btn" onClick={handleAddLocation}>
                             Additional Location
@@ -358,18 +278,7 @@ const ImageMap = () => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10%' }}>
 
-                        <button className="submit-btn" onClick={handleLogDropLocation}>
-                            Submit
-                            <span
-                                style={{
-                                    width: '1px',
-                                    borderRight: '1px solid #fff',
-                                    height: '16px',
-                                    margin: '0 0 0 10px',
-                                }}
-                            ></span>
-                            <DomainVerificationOutlined style={{ fontSize: '20px', marginLeft: '10px' }} />
-                        </button>
+                
                     </div>
                 </div>
             </div>

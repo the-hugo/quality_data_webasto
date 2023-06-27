@@ -38,6 +38,7 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const transformedData = transformData([popupData]); // Transform the data
   const icon = determineIcon(popupData); // Get the appropriate icon
   const map = mapType(popupData); // Get the appropriate map
+  
 
   const handleButtonClick = async (actionType) => {
     setButtonClicked(actionType);
@@ -61,6 +62,8 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     });
 
     if (response.ok) {
+     const response_error = response.error_num;
+
       let actionStyle = "";
       switch(actionType.toLowerCase()){
         case "anomaly":
