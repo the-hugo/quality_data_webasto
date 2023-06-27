@@ -1,33 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import ImageMap from './ImageMap';
-import { GridView as GridViewIcon } from '@mui/icons-material';
+
 import './popup.css';
 import ImageGrid from './ImageGrid';
-
-//function to determine type of location icon
-const determineIcon = (popupData) => {
-  //evaluate the condition based on popupData
-  if (popupData.need_location === '1') {
-    return <FaMapMarkerAlt className="locMark" />;
-  } else if (popupData.need_location === '2') {
-    return (
-      <GridViewIcon
-        className={'gridView'}
-        style={{ color: '#333399', fontSize: '1.9em' }}
-      />
-    );
-  } else {
-    return null;
-  }
-};
 
 const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
   const [popupStyle, setPopupStyle] = useState('');
   const transformedData = transformData([popupData]); // Transform the data
-  const icon = determineIcon(popupData); // Get the appropriate icon
   const [locationObjectIds, setLocationObjectIds] = useState([]);
 
   const handleButtonClick = async (actionType) => {
@@ -66,7 +48,11 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         case 'scrap':
           actionStyle = 'popup3';
           break;
+        default:
+          console.warn(`Unexpected actionType: ${actionType}`);
+          break;
       }
+      
       setPopupStyle(actionStyle);
 
       setShowFirstPopup(false); // Close the first popup immediately after successful POST request
@@ -126,6 +112,9 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
         case 'Surface':
           element.color = colors.Surface;
           break;
+        default:
+          console.warn(`Unexpected defect type: ${type2}`);
+          break;
       }
 
       return element;
@@ -155,7 +144,9 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     if (!showFirstPopup && !showSecondPopup) {
       handleClosePopup();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showFirstPopup, showSecondPopup]);
+  
 
   //Message Popups
   const PopupComponent = ({ className, message }) => (

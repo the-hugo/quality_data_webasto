@@ -3,7 +3,7 @@ import React, { forwardRef, useImperativeHandle, useState, useRef, useEffect } f
 import roof from "../../../images/roof.png";
 
 const ImageGrid = forwardRef((props, ref) => {
-  const { error_num, onLocationObjectIds } = props;
+  const { onLocationObjectIds } = props; 
   const [selectedLocations, setSelectedLocations] = useState([]);
   const imageRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
@@ -14,7 +14,7 @@ const ImageGrid = forwardRef((props, ref) => {
       const { clientWidth, clientHeight } = imageRef.current.parentElement;
       setContainerSize({ width: clientWidth, height: clientHeight });
     }
-  }, [imageRef.current]);
+  }, []);
 
   const calculateGridCellStyle = (row, col) => {
     if (!imageRef.current) return {}; // Return empty object if imageRef.current is null
@@ -133,34 +133,34 @@ const ImageGrid = forwardRef((props, ref) => {
   }, [selectedLocations]);
 
   return (
-      <div className="gridMap-render" style={{ marginLeft: '15%' }}>
-        <div className="imgBackground-grid">
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <img
-                  className="gridImg"
-                  ref={imageRef}
-                  src={roof}
-                  alt="Your Image"
-              />
-              <div className="grid-render">
-                {Array.from({ length: gridSize }, (_, row) =>
-                    Array.from({ length: gridSize }, (_, col) => {
-                      const gridId = row * gridSize + col + 1;
-                      return (
-                          <div
-                              key={gridId}
-                              style={calculateGridCellStyle(row, col)}
-                              onClick={() => handleGridClick(row + 1, col + 1)}
-                          ></div>
-                      );
-                    })
-                )}
-              </div>
+    <div className="gridMap-render" style={{ marginLeft: '15%' }}>
+      <div className="imgBackground-grid">
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <img
+                className="gridImg"
+                ref={imageRef}
+                src={roof}
+                alt="Roof" // changed alt text
+            />
+            <div className="grid-render">
+              {Array.from({ length: gridSize }, (_, row) =>
+                  Array.from({ length: gridSize }, (_, col) => {
+                    const gridId = row * gridSize + col + 1;
+                    return (
+                        <div
+                            key={gridId}
+                            style={calculateGridCellStyle(row, col)}
+                            onClick={() => handleGridClick(row + 1, col + 1)}
+                        ></div>
+                    );
+                  })
+              )}
             </div>
           </div>
         </div>
       </div> 
+    </div> 
   );
 });
 
