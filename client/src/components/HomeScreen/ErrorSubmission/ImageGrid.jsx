@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { forwardRef, useImperativeHandle, useState, useRef, useEffect } from 'react';
+
 import roof from "../../../images/roof.png";
 
-const ImageGrid = () => {
+const ImageGrid = forwardRef((props, ref) => {
+  const { error_num, onLocationObjectIds } = props;
   const [selectedLocations, setSelectedLocations] = useState([]);
   const imageRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
@@ -50,40 +52,64 @@ const ImageGrid = () => {
     };
   };
 
-  const pushGridLocations = async () => {
-    if (selectedLocations.length > 0) {
-      const errorNum = 2; // Replace with your custom error number
+  useImperativeHandle(ref, () => ({
+    pushGridLocations,
+  }));
 
-      try {
-        for (const location of selectedLocations) {
-          const data = {
-            error_num: errorNum,
-            dropLocation: [ location.row, location.col ],
-            type: "Grid",
-          };
-
-          const response = await fetch('http://localhost:8080/home/locations', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-          });
-
-          if (response.ok) {
-            console.log('Location created successfully:', location);
-          } else {
-            console.error('Failed to create location:', location);
-          }
+  const pushGridLocations = async (errorNum) => {
+    try {
+      const objectIds = [];
+      console.log(errorNum)
+      for (const location of selectedLocations) {
+        const data = {
+          error_num: errorNum,
+          dropLocation: [ location.row, location.col ],
+          type: "Grid",
+        };
+  
+        const response = await fetch('http://localhost:8080/home/locations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+  
+        if (response.ok) {
+          const responseData = await response.json();
+          objectIds.push(responseData._id);
+        } else {
+          console.error('Failed to create location:', location);
         }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        // Clear the selected locations after all locations are submitted
-        setSelectedLocations([]);
       }
+  
+      // Clear the selected locations after all locations are submitted
+      setSelectedLocations([]);
+  
+      onLocationObjectIds(objectIds); // Pass the ObjectIds back to the parent component
+  
+      const defectData = {
+        spots: objectIds,
+      };
+  
+      const defectResponse = await fetch(`http://localhost:8080/home/defects/${errorNum}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(defectData),
+      });
+  
+      if (defectResponse.ok) {
+        console.log('Defect updated successfully');
+      } else {
+        console.error('Failed to update defect');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
+  
 
   const handleGridClick = (row, col) => {
     const location = { row, col };
@@ -99,6 +125,7 @@ const ImageGrid = () => {
       setSelectedLocations([...selectedLocations, location]);
     }
   };
+
 
   // Log currently selected locations to the console
   useEffect(() => {
@@ -133,11 +160,8 @@ const ImageGrid = () => {
             </div>
           </div>
         </div>
-        <button className="pushGridLoc-btn" onClick={pushGridLocations}>
-          Save Locations
-        </button>
-      </div>
+      </div> 
   );
-};
+});
 
 export default ImageGrid;

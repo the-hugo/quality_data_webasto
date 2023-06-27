@@ -22,7 +22,6 @@ const determineIcon = (popupData) => {
   }
 };
 
-
 const Popup = ({ onClose, popupData, setButtonClicked }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
@@ -133,15 +132,16 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
     });
   }
 
-  // Create a ref instance
-  const childRef = useRef();
+  const imageMapRef = useRef();
+  const imageGridRef = useRef();
 
   const callChildFunction = (responseError) => {
-    // Call the function in the ChildComponent
-    if (childRef.current) {
-      childRef.current.sendLocationsToBackend(responseError);
+    if (imageMapRef.current) {
+      imageMapRef.current.sendLocationsToBackend(responseError);
+    } else if (imageGridRef.current) {
+      imageGridRef.current.pushGridLocations(responseError);
     } else {
-      console.log('doesnt pass');
+      console.log('Neither ImageMap nor ImageGrid exist');
     }
   };
 
@@ -200,11 +200,16 @@ const Popup = ({ onClose, popupData, setButtonClicked }) => {
             <div className="map-area" style={{ alignContent: 'center' }}>
               {popupData.need_location === '1' ? (
                 <ImageMap
-                  ref={childRef}
+                  ref={imageMapRef}
                   onLocationObjectIds={handleLocationObjectIds}
                 />
               ) : null}
-              {popupData.need_location === '2' ? <ImageGrid /> : null}
+              {popupData.need_location === '2' ? (
+                <ImageGrid
+                  ref={imageGridRef}
+                  onLocationObjectIds={handleLocationObjectIds}
+                />
+              ) : null}
             </div>
             <div className="button-container">
               <button
