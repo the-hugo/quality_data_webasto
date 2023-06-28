@@ -1,27 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Row } from 'antd';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 import MasterBar from './Structuring_Elements_Analytics/MasterBar';
 import Heatmap from './Heatmap';
 import HeatmapGrid from './HeatmapGrid';
 import './Dashboard2.css';
 
-
 const data = [
-  {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-  {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-  {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
+  { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
+  { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
+  { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 },
   // Add more data points as needed
 ];
 
 const Dashboard2 = () => {
+  const [locationIds, setLocationIds] = useState([]);
+
   return (
     <div className="site-card-wrapper">
-      <row><MasterBar /> {/* Use MasterBar component here */}</row>
+      <row>
+        <MasterBar setLocationIds={setLocationIds} />
+        {/* Use MasterBar component here */}
+      </row>
       <Row gutter={16}>
         <Col span={12}>
           <Card title="Heatmap Exact Location" bordered={true}>
-            <Heatmap /> {/* Add Heatmap component here */}
+            <Heatmap locationIds={locationIds} />
           </Card>
         </Col>
         <Col span={12}>
@@ -44,7 +56,12 @@ const Dashboard2 = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+              <Line
+                type="monotone"
+                dataKey="pv"
+                stroke="#8884d8"
+                activeDot={{ r: 8 }}
+              />
               <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
             </LineChart>
           </Card>

@@ -57,3 +57,18 @@ export const editLocation = async (req, res) => {
   }
 };
 
+
+export const getLocationById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const location = await Location.findById(id);
+    
+    if (!location) {
+      return res.status(404).json({ message: "Location not found" });
+    }
+    
+    res.json(location);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
