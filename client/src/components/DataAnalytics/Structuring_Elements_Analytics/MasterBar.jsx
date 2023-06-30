@@ -3,8 +3,6 @@ import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 import './MasterBar.css';
 import { DatePicker, Select } from 'antd';
-
-
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -12,7 +10,6 @@ const MasterBar = ({ setLocationIds }) => {
   const [product, setProduct] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
   const [category, setCategory] = useState('');
   const [errorType, setErrorType] = useState('');
   const [categories, setCategories] = useState([]);
@@ -31,6 +28,8 @@ const MasterBar = ({ setLocationIds }) => {
     }
   };
 
+
+  // Filter data based on selected product, category, and error type
   useEffect(() => {
     fetchDefectData();
   }, []);
