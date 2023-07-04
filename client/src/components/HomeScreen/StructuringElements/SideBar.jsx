@@ -35,7 +35,7 @@ export default function Sidenav({ onChildStateChange }) {
                     return (
                         <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
                             <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
-                                <Link to="/dashboard" key={item.id} style={{ backgroundColor: "transparent" }}>
+                                <Link to="/dashboard2" key={item.id} style={{ backgroundColor: "transparent" }}>
                                     <div className="d-flex align-items-center">
                                         {item.icon}
                                         <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
