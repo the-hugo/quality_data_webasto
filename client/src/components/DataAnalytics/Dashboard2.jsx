@@ -38,7 +38,7 @@ const Dashboard2 = () => {
         </Col>
         <Col span={12}>
           <Card title="Heatmap Grid Locations" bordered={true}>
-            <HeatmapGrid /> {/* Add HeatmapGrid component here */}
+            <HeatmapGrid locationIds={locationIds} /> {/* Add HeatmapGrid component here */}
           </Card>
         </Col>
       </Row>
