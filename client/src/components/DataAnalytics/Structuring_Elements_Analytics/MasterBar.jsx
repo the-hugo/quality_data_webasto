@@ -28,6 +28,8 @@ const MasterBar = ({ setLocationIds }) => {
     }
   };
 
+
+  // Filter data based on selected product, category, and error type
   useEffect(() => {
     fetchDefectData();
   }, []);
@@ -65,7 +67,7 @@ const MasterBar = ({ setLocationIds }) => {
 
   return (
     <div className="filter-bar">
-      <RangePicker 
+      <RangePicker
         onChange={(dates) => {
           if (dates) {
             setStartDate(dates[0].toDate());
@@ -78,47 +80,51 @@ const MasterBar = ({ setLocationIds }) => {
       />
 
       <Select
-        style={{ minWidth: 200 }} // Set minimum width here
+        style={{ minWidth: 200 }}
         value={product}
         onChange={(value) => setProduct(value)}
         placeholder="All Products"
       >
+        <Option key="all" value="">All Products</Option>
         {productNames.map((productName, index) => (
           <Option key={index} value={productName}>
             {productName}
           </Option>
         ))}
       </Select>
-  
+
       <Select
-        style={{ minWidth: 200 }} // Set minimum width here
+        style={{ minWidth: 200 }}
         value={category}
         onChange={(value) => setCategory(value)}
         placeholder="All Categories"
       >
+        <Option key="all" value="">All Categories</Option>
         {categories.map((category, index) => (
           <Option key={index} value={category}>
             {category}
           </Option>
         ))}
       </Select>
-  
+
       <Select
-        style={{ minWidth: 200 }} // Set minimum width here
+        style={{ minWidth: 200 }}
         value={errorType}
         onChange={(value) => setErrorType(value)}
         placeholder="All Error Types"
       >
+        <Option key="all" value="">All Error Types</Option>
         {errorTypes.map((errorType, index) => (
           <Option key={index} value={errorType}>
             {errorType}
           </Option>
         ))}
       </Select>
-  
+
       {/* Render your filtered data here */}
-      
+
     </div>
-  );}
-  
-  export default MasterBar;
+  );
+}
+
+export default MasterBar;
