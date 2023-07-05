@@ -28,56 +28,55 @@ const MasterBar = ({ setLocationIds }) => {
     }
   };
 
-
-  // Filter data based on selected product, category, and error type
   useEffect(() => {
     fetchDefectData();
   }, []);
 
   useEffect(() => {
-    const productNames = [
-      ...new Set(allData.map((defect) => defect.product_id)),
-    ];
+    const productNames = [...new Set(allData.map((defect) => defect.product_id))];
     setProductNames(productNames);
 
-    const filteredDataForProduct = allData.filter(
-      (defect) => !product || defect.product_id === product
-    );
+    const filteredDataForProduct = allData.filter((defect) => !product || defect.product_id === product);
 
-    const categories = [
-      ...new Set(filteredDataForProduct.map((defect) => defect.category)),
-    ];
+    const categories = [...new Set(filteredDataForProduct.map((defect) => defect.category))];
     setCategories(categories);
 
-    const filteredDataForCategory = filteredDataForProduct.filter(
-      (defect) => !category || defect.category === category
-    );
+    const filteredDataForCategory = filteredDataForProduct.filter((defect) => !category || defect.category === category);
 
-    const errorTypes = [
-      ...new Set(filteredDataForCategory.map((defect) => defect.error_type)),
-    ];
+    const errorTypes = [...new Set(filteredDataForCategory.map((defect) => defect.error_type))];
     setErrorTypes(errorTypes);
 
-    const finalFilteredData = filteredDataForCategory.filter(
-      (defect) => !errorType || defect.error_type === errorType
-    );
+    const filteredDataForErrorType = filteredDataForCategory.filter((defect) => !errorType || defect.error_type === errorType);
+
+    const finalFilteredData = filteredDataForErrorType.filter((defect) => {
+      if (startDate === null || endDate === null) {
+        // If no date range is selected, include all defects
+        return true;
+      }
+      const defectDate = new Date(defect.date);
+      return defectDate >= startDate && defectDate <= endDate;
+    });
 
     const locationIds = finalFilteredData.flatMap(defect => defect.spots);
     setLocationIds(locationIds); // Update location IDs here
     console.log(locationIds)
     setFilteredData(finalFilteredData);
-  }, [allData, product, category, errorType]);
-
+  }, [allData, product, category, errorType, startDate, endDate]);
 
   return (
     <div className="filter-bar">
       <RangePicker 
         onChange={(dates) => {
-          setStartDate(dates[0]);
-          setEndDate(dates[1]);
+          if (dates) {
+            setStartDate(dates[0].toDate());
+            setEndDate(dates[1].toDate());
+          } else {
+            setStartDate(null);
+            setEndDate(null);
+          }
         }}
       />
-  
+
       <Select
         style={{ minWidth: 200 }} // Set minimum width here
         value={product}

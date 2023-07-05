@@ -150,15 +150,6 @@ const HeatmapGrid = ({ locationIds }) => {
 
     return (
         <div>
-            <div>
-                Grid Size:
-                <input
-                    type="number"
-                    min="1"
-                    value={gridSize}
-                    onChange={(e) => setGridSize(parseInt(e.target.value))}
-                />
-            </div>
             {fetchedData.length > 0 ? (
                 <div ref={chartRef}></div>
             ) : (
