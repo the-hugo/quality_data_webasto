@@ -312,7 +312,7 @@ const LandingPage = () => {
             <Footer
               handlePageChange={handlePageChange}
               pagination={pagination}
-              totalPages={secondSectionTotalPages}
+              totalPages={firstSectionTotalPages}
               openPopup={openNewErrorPopup}
             />
           </Row>
