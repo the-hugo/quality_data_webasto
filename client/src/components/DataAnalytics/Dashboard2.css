@@ -1,8 +1,17 @@
+.site-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+
 .site-card-wrapper .ant-card {
   margin: 20px 0;
   border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 800px;
 }
 
 .site-card-wrapper .ant-card:hover {
@@ -34,35 +43,62 @@
 .filter-bar:hover {
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
 }
+
 .kpi-card {
-  width: 300px;
+  width: 200px; /* Adjust the width */
   margin-bottom: 20px;
   border-radius: 10px;
-  background-color: #fce4e4;
-  border: 1px solid #f08d8d;
-  padding: 16px;
+  background-color: #ffe5e5; /* A light, smooth red */
+  border: 1px solid #ff7f7f; /* A slightly darker red for the border */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+}
+
+.kpi-card .ant-card-head {
+  width: 100%; /* Ensures the header line colors the card entirely */
+  padding: 8px;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid #ff7f7f; /* A bottom border for the header */
+}
+
+.kpi-card .ant-card-head-title {
+  font-size: 0.9rem; /* Slightly smaller font size for the header */
+  color: #ff7f7f; /* Using the darker red for the header */
+  font-weight: bold; /* Bold font weight for the header */
+  background: none; /* Removing the background from the header */
+  margin-bottom: 0;
+}
+
+.kpi-card .text-item {
+  font-size: 1.1rem; /* Slightly larger font size for the text */
+  color: #ff7f7f; /* Using the darker red for the text */
+  background: transparent; /* Ensuring no background for the text */
+  padding: 8px;
+  border-radius: 5px;
+}
+
+
+.chart-container {
+  width: 100%; /* Ensures the chart is responsive */
+  height: 300px;
+}
+
+
+.column-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column-container .ant-col {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.kpi-card .ant-card-head {
-  background-color: #f08d8d;
-  padding: 8px;
-  text-align: center;
-  border-radius: 10px 10px 0 0;
-}
-
-.kpi-card .ant-card-head-title {
-  font-size: 1rem;
-  color: #fff;
-  margin-bottom: 0;
-}
-
-.kpi-card .text-item {
-  font-size: 1rem;
-  color: #fff;
-  background-color: #f08d8d;
-  padding: 8px;
-  border-radius: 5px;
+.column-container .ant-card {
+  width: 100%;
 }
