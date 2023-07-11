@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { scaleSequential } from 'd3-scale';
+import { interpolateYlOrRd } from 'd3-scale-chromatic';
+
+
 
 import roof from '../../../images/roof.png';
 
@@ -84,16 +88,13 @@ const HeatmapGrid = ({ locationIds }) => {
                         combinations[key] = combinations[key] ? combinations[key] + 1 : 1;
                     });
 
-                    const x = d3.scaleBand().range([xOffset, xOffset + scaledWidth]).domain(d3.range(1, setGridSize(gridSize + 1)));
+                    const x = d3.scaleBand().range([xOffset, xOffset + scaledWidth]).domain(d3.range(1, gridSize + 1));
 
-                    const y = d3.scaleBand().range([yOffset, yOffset + scaledHeight]).domain(d3.range(1, setGridSize(gridSize + 1)));
+                    const y = d3.scaleBand().range([yOffset, yOffset + scaledHeight]).domain(d3.range(1, gridSize + 1));
 
                     const maxCount = d3.max(Object.values(combinations));
-                    const colorScale = d3
-                        .scaleLinear()
-                        .domain([0, maxCount])
-                        .range(['rgba(255, 255, 0, 0.2)', 'rgba(209, 209, 0, 0.8)']);
-
+                    const colorScale = scaleSequential(interpolateYlOrRd).domain([0, maxCount]);
+                    
                     svg
                         .selectAll('rect')
                         .data(fetchedData)
@@ -103,7 +104,12 @@ const HeatmapGrid = ({ locationIds }) => {
                         .attr('y', (d) => y(d.row))
                         .attr('width', x.bandwidth())
                         .attr('height', y.bandwidth())
-                        .attr('fill', (d) => colorScale(combinations[`${d.row}-${d.column}`]));
+                        .attr('fill', (d) => {
+                            const rgbColor = colorScale(combinations[`${d.row}-${d.column}`]);
+                            const color = d3.color(rgbColor); // Convert the RGB color to a d3 color
+                            color.opacity = 0.73; // Modify the color's opacity
+                            return color; // d3 color objects are automatically converted to a string
+                        });
 
                     // Render vertical grid lines
                     svg
