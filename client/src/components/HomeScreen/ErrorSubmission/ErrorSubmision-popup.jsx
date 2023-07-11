@@ -5,15 +5,15 @@ import ImageMap from './ImageMap';
 import './popup.css';
 import ImageGrid from './ImageGrid';
 
-const Popup = ({ onClose, popupData, setButtonClicked }) => {
+const Popup = ({ onClose, popupData }) => {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);
   const [popupStyle, setPopupStyle] = useState('');
   const transformedData = transformData([popupData]); // Transform the data
   const [locationObjectIds, setLocationObjectIds] = useState([]);
+  
 
   const handleButtonClick = async (actionType) => {
-    setButtonClicked(actionType);
 
     const data = {
       serial_num: '123456',

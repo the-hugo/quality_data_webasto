@@ -10,6 +10,17 @@ import CustomError from './ErrorSelection/CustomErrors';
 import axios from 'axios';
 import './styles.css';
 import NewErrorPopup from "./ErrorSubmission/NewErrorPopup";
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+  Button,
+} from '@chakra-ui/react'
 
 // Helper function to transform data and assign colors based on defect types
 function transformData(data) {
@@ -64,6 +75,7 @@ const LandingPage = () => {
   const [isNewErrorPopupOpen, setIsNewErrorPopupOpen] = useState(false);
 
   const secondSectionItemsPerPage = 6;
+
 
   // Open new error popup
   const openNewErrorPopup = () => {
@@ -223,6 +235,24 @@ const LandingPage = () => {
               <Row style={{ marginTop: '3%' }}>
                 <Col>
                   <span className="font">Defect List Items</span>
+                  <Popover>
+                    <PopoverTrigger>
+                      <Button style={{ borderWidth: 0, backgroundColor: 'transparent'}}>
+                        <HelpCenterIcon></HelpCenterIcon>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>Colors:</PopoverHeader>
+                      <PopoverBody>
+                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(0, 176, 240, 1)" }}></div>Surface/Finish</Row>
+                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(255, 229, 43, 1)" }}></div>Damage</Row>
+                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(208, 0, 230, 1)" }}></div>Assembly/Fitting</Row>
+                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(115, 178, 72, 1)" }}></div>Dimension</Row>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Col>
                 <Col style={{ display: 'flex', justifyContent: 'flex-end' }}>
                   <span className="pagination">
@@ -251,25 +281,25 @@ const LandingPage = () => {
                 <>
                   <div className="overlay" onClick={handleClosePopup}></div>
                   <>
-                   <NewErrorPopup
+                    <NewErrorPopup
                       onClose={openNewErrorPopup}
-                   />
+                    />
                   </>
                 </>
               )}
 
               {/* Render the error popup conditionally */}
               {showPopup && (
+                <>
+                  <div className="overlay" onClick={handleClosePopup}></div>
                   <>
-                    <div className="overlay" onClick={handleClosePopup}></div>
-                        <>
-                          <Popup
-                              onClose={handleClosePopup}
-                              popupData={popupData}
-                          />
-                        </>
-                    )
+                    <Popup
+                      onClose={handleClosePopup}
+                      popupData={popupData}
+                    />
                   </>
+                  )
+                </>
               )}
 
               {/* Section 2 */}
