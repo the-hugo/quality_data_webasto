@@ -84,14 +84,10 @@ const Popup = ({ onClose, popupData }) => {
   // Helper function to transform data and assign colors based on defect types
   function transformData(data) {
     const colors = {
-      Assembly:
-        'linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))',
-      Damage:
-        'linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))',
-      Dimension:
-        'linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))',
-      Surface:
-        'linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))',
+      Damage: 'linear-gradient(to right, rgb(236, 164, 0, 1), rgb(236, 164, 0, 0))',
+      Assembly: 'linear-gradient(to right, rgb(208, 0, 230, 1), rgb(240, 66, 219, 0))',
+      Surface: 'linear-gradient(to right, rgb(8 , 157, 217, 1), rgb(8 , 157, 217, 0))',
+      Dimension: 'linear-gradient(to right, rgb(137, 209, 183, 1), rgb(137, 209, 18 3, 0))',
     };
     return data.map((element) => {
       let str = element.defect_type;

@@ -25,10 +25,10 @@ import {
 // Helper function to transform data and assign colors based on defect types
 function transformData(data) {
   const colors = {
-    Damage: 'linear-gradient(to right, rgb(255, 229, 43, 1), rgb(51, 51, 153, 0))',
-    Assembly: 'linear-gradient(to right, rgb(208, 0, 230, 1), rgb(51, 51, 204, 0))',
-    Surface: 'linear-gradient(to right, rgb(0, 176, 240, 1), rgb(51, 51, 255, 0))',
-    Dimension: 'linear-gradient(to right, rgb(115, 178, 72, 1), rgb(51, 51, 102, 0))',
+    Damage: 'linear-gradient(to right, rgb(236, 164, 0, 1), rgb(236, 164, 0, 0))',
+    Assembly: 'linear-gradient(to right, rgb(208, 0, 230, 1), rgb(240, 66, 219, 0))',
+    Surface: 'linear-gradient(to right, rgb(8 , 157, 217, 1), rgb(8 , 157, 217, 0))',
+    Dimension: 'linear-gradient(to right, rgb(137, 209, 183, 1), rgb(137, 209, 18 3, 0))',
   };
 
   return data.map((element) => {
@@ -237,7 +237,7 @@ const LandingPage = () => {
                   <span className="font">Defect List Items</span>
                   <Popover>
                     <PopoverTrigger>
-                      <Button style={{ borderWidth: 0, backgroundColor: 'transparent'}}>
+                      <Button style={{ borderWidth: 0, backgroundColor: 'transparent' }}>
                         <HelpCenterIcon></HelpCenterIcon>
                       </Button>
                     </PopoverTrigger>
@@ -246,10 +246,10 @@ const LandingPage = () => {
                       <PopoverCloseButton />
                       <PopoverHeader>Colors:</PopoverHeader>
                       <PopoverBody>
-                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(0, 176, 240, 1)" }}></div>Surface/Finish</Row>
-                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(255, 229, 43, 1)" }}></div>Damage</Row>
-                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(208, 0, 230, 1)" }}></div>Assembly/Fitting</Row>
-                      <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(115, 178, 72, 1)" }}></div>Dimension</Row>
+                        <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(8 , 157, 217, 1)" }}></div>Surface/Finish</Row>
+                        <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(236, 164, 0, 1)" }}></div>Damage</Row>
+                        <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(208, 0, 230, 1)" }}></div>Assembly/Fitting</Row>
+                        <Row style={{ marginBottom: 4 }}><div style={{ borderWidth: 1, width: 3, marginLeft: 9, marginRight: 9, backgroundColor: "rgb(137, 209, 183, 1)" }}></div>Dimension</Row>
                       </PopoverBody>
                     </PopoverContent>
                   </Popover>

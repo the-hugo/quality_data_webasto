@@ -8,7 +8,7 @@ export default function CustomError({ togglePopup, item }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup2 = () => {
-    setIsOpen((prevState) => !prevState);
+    setIsOpen(!isOpen);
     togglePopup(!isOpen, item);
   };
 

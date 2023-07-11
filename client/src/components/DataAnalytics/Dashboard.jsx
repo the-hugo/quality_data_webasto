@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Col, Row } from 'antd';
+import { Card } from 'antd';
 import {
   LineChart,
   Line,
@@ -12,6 +12,8 @@ import {
 import MasterBar from './Structuring_Elements_Analytics/MasterBar.jsx';
 import Heatmap from './Structuring_Elements_Analytics/Heatmap.jsx';
 import HeatmapGrid from './Structuring_Elements_Analytics/HeatmapGrid.jsx';
+import Sidenav from '../HomeScreen/StructuringElements/SideBar.jsx';
+import { Container, Row, Col } from 'react-bootstrap';
 import './Dashboard.css';
 
 const data = [
@@ -23,14 +25,21 @@ const data = [
 
 const Dashboard = () => {
   const [locationIds, setLocationIds] = useState([]);
+  const [isOpen, setBool] = useState(false);
+
+  const handleChildStateChange = (currentBool) => {
+    setBool(currentBool);
+  };
 
   return (
-    <div className="site-card-wrapper">
-      <Col span={24}>
-        <MasterBar setLocationIds={setLocationIds} />
-      </Col>
-
-      <Row gutter={16}>
+    <Container>
+      <Row>
+        <Sidenav onChildStateChange={handleChildStateChange} />
+        <Col
+          style={{ paddingLeft: 24 }}
+          className={`d-flex flex-column align-items-stretch flex-shrink-2 col-${isOpen ? '22' : '24'} transition-col`}
+        >          <MasterBar setLocationIds={setLocationIds} />
+        </Col>
         <Col span={8}>
           <Card title="Heatmap Exact Location" bordered={true}>
             <Heatmap locationIds={locationIds} />
@@ -66,11 +75,11 @@ const Dashboard = () => {
           <Card title="Line Chart 2" bordered={true}>
             <div className="chart-container">
               <LineChart
-               width={400}
-               height={280}
-               data={data}
-               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-             >
+                width={400}
+                height={280}
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
@@ -136,7 +145,7 @@ const Dashboard = () => {
           </Card>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };
 
