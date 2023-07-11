@@ -33,9 +33,9 @@ export default function Sidenav({ onChildStateChange }) {
             {navData.map(item => {
                 if (item.text === 'Statistics') {
                     return (
-                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                        <Row key={item.id} className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
                             <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
-                                <Link to="/dashboard2" key={item.id} style={{ backgroundColor: "transparent" }}>
+                                <Link to="/dashboard" key={item.id} style={{ backgroundColor: "transparent" }}>
                                     <div className="d-flex align-items-center">
                                         {item.icon}
                                         <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
@@ -49,8 +49,8 @@ export default function Sidenav({ onChildStateChange }) {
                     );
                 } else if (item.text === 'Home') {
                     return (
-                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
-                            <Link to="/" key={item.id} style={{ backgroundColor: "transparent" }}>
+                        <Row  key={item.id} className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                            <Link to="/" style={{ backgroundColor: "transparent" }}>
                                 <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
                                     <div className="d-flex align-items-center">
                                         {item.icon}
@@ -64,7 +64,7 @@ export default function Sidenav({ onChildStateChange }) {
                     );
                 } else {
                     return (
-                        <Row className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                        <Row key={item.id}  className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
                             <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
                                 <div className="d-flex align-items-center">
                                     {item.icon}

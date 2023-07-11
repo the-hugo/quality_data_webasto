@@ -34,6 +34,9 @@ const MasterBar = ({ setLocationIds }) => {
     fetchDefectData();
   }, []);
 
+  console.log("MasterBar filtered Data", filteredData)
+  console.log("MasterBar:", setLocationIds)
+
   useEffect(() => {
     const productNames = [...new Set(allData.map((defect) => defect.product_id))];
     setProductNames(productNames);
@@ -63,7 +66,7 @@ const MasterBar = ({ setLocationIds }) => {
     setLocationIds(locationIds); // Update location IDs here
     console.log(locationIds)
     setFilteredData(finalFilteredData);
-  }, [allData, product, category, errorType, startDate, endDate]);
+  }, [allData, product, category, errorType, startDate, endDate, setLocationIds]);
 
   return (
     <div className="filter-bar">

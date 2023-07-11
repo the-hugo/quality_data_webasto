@@ -4,18 +4,13 @@ import styles from './footer.module.css';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowLeft from './ArrowLeft.jsx';
 import ArrowRight from './ArrowRight.jsx';
-import NewErrorPopup from '../ErrorSubmission/NewErrorPopup';
 
 export default function Footer({ handlePageChange, pagination, openPopup }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openLocalPopup = () => {
-    setIsPopupOpen(true);
+    setIsPopupOpen(!isPopupOpen);
     openPopup(); // Also call the openPopup function from props
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
   };
 
 

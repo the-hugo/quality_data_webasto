@@ -49,18 +49,20 @@ const NewErrorPopup = ({ onClose }) => {
 
       if (response.ok) {
         let actionStyle = "";
-      switch(actionType.toLowerCase()){
-        case "anomaly":
-          actionStyle = "popup1";
-          break;
-        case "rework":
-          actionStyle = "popup2";
-          break;
-        case "scrap":
-          actionStyle = "popup3";
-          break;
-      }
-      setPopupStyle(actionStyle);
+        switch (actionType.toLowerCase()) {
+          case "anomaly":
+            actionStyle = "popup1";
+            break;
+          case "rework":
+            actionStyle = "popup2";
+            break;
+          case "scrap":
+            actionStyle = "popup3";
+            break;
+          default:
+            console.log("popup error")
+        }
+        setPopupStyle(actionStyle);
         setCurrentPopup('confirmation');
 
         setTimeout(() => {
@@ -86,8 +88,8 @@ const NewErrorPopup = ({ onClose }) => {
     </button>
   );
 
-   //Message Popups
-   const PopupComponent = ({ className, message }) => (
+  //Message Popups
+  const PopupComponent = ({ className, message }) => (
     <div className={className}>
       <div className={`${className}-content`}>
         <div className={`${className}-close`} onClick={handleClosePopup}>
@@ -103,7 +105,7 @@ const NewErrorPopup = ({ onClose }) => {
     <>
       {currentPopup === 'first' && (
         <div className="popup">
-          <div className="popup-content" style={{padding: '4%'}}>
+          <div className="popup-content" style={{ padding: '4%' }}>
             <div className="title-container">
               <h3 className="popup-title">Please select a new Error</h3>
             </div>
@@ -132,8 +134,8 @@ const NewErrorPopup = ({ onClose }) => {
                 ))}
               </select>
             </div>
-            <div className="text-plus-location-area" style={{display: 'flex'}}>
-              <div className="text-field-container" style={{display: 'flex', width: '80%', height: '100px'}}>
+            <div className="text-plus-location-area" style={{ display: 'flex' }}>
+              <div className="text-field-container" style={{ display: 'flex', width: '80%', height: '100px' }}>
                 <textarea
                   value={textField}
                   onChange={(e) => setTextField(e.target.value)}
@@ -141,14 +143,14 @@ const NewErrorPopup = ({ onClose }) => {
                   className="description-textarea"
                 />
               </div>
-              <div className='loc-btns' style={{justifyItems: 'right', marginLeft: '10%'}}>
-              <button className="pinpoint-loc-btn" style={{marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px'}}>
-                <FaMapMarkerAlt style={{ fontSize: '1.3em' }} />
-              </button>
-              <br/>
-              <button className="grid-loc-btn" style={{marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px'}}>
-                <GridViewIcon style={{ color: "#333399", fontSize: '1.3em' }} />
-              </button>
+              <div className='loc-btns' style={{ justifyItems: 'right', marginLeft: '10%' }}>
+                <button className="pinpoint-loc-btn" style={{ marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px' }}>
+                  <FaMapMarkerAlt style={{ fontSize: '1.3em' }} />
+                </button>
+                <br />
+                <button className="grid-loc-btn" style={{ marginTop: '20px', border: '1px solid', borderRadius: '30px', padding: '8px' }}>
+                  <GridViewIcon style={{ color: "#333399", fontSize: '1.3em' }} />
+                </button>
               </div>
             </div>
             <div className="button-container">
@@ -179,8 +181,8 @@ const NewErrorPopup = ({ onClose }) => {
       )}
       {currentPopup === 'confirmation' && (
         <div className={`popup ${popupStyle}`}>
-        <PopupComponent className={popupStyle} message="Successfully Submitted" />
-      </div>
+          <PopupComponent className={popupStyle} message="Successfully Submitted" />
+        </div>
       )}
     </>
   );

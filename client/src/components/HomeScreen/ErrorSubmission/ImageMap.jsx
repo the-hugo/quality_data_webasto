@@ -249,6 +249,7 @@ const { error_num, onLocationObjectIds } = props;
   
       onLocationObjectIds(objectIds); // Pass the ObjectIds back to the parent component
       console.log(objectIds);
+      console.log(error_num)
   
       const defectData = {
         spots: objectIds,

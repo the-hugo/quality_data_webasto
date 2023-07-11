@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-import roof from '../../images/roof.png';
+import roof from '../../../images/roof.png';
 
 const HeatmapGrid = ({ locationIds }) => {
     const chartRef = useRef(null);
@@ -84,9 +84,9 @@ const HeatmapGrid = ({ locationIds }) => {
                         combinations[key] = combinations[key] ? combinations[key] + 1 : 1;
                     });
 
-                    const x = d3.scaleBand().range([xOffset, xOffset + scaledWidth]).domain(d3.range(1, gridSize + 1));
+                    const x = d3.scaleBand().range([xOffset, xOffset + scaledWidth]).domain(d3.range(1, setGridSize(gridSize + 1)));
 
-                    const y = d3.scaleBand().range([yOffset, yOffset + scaledHeight]).domain(d3.range(1, gridSize + 1));
+                    const y = d3.scaleBand().range([yOffset, yOffset + scaledHeight]).domain(d3.range(1, setGridSize(gridSize + 1)));
 
                     const maxCount = d3.max(Object.values(combinations));
                     const colorScale = d3

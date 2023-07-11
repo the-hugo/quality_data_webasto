@@ -14,10 +14,10 @@ import NewErrorPopup from "./ErrorSubmission/NewErrorPopup";
 // Helper function to transform data and assign colors based on defect types
 function transformData(data) {
   const colors = {
-    Assembly: 'linear-gradient(to right, rgb(51, 51, 153, 1), rgb(51, 51, 153, 0))',
-    Damage: 'linear-gradient(to right, rgb(51, 51, 204, 1), rgb(51, 51, 204, 0))',
-    Dimension: 'linear-gradient(to right, rgb(51, 51, 255, 1), rgb(51, 51, 255, 0))',
-    Surface: 'linear-gradient(to right, rgb(51, 51, 102, 1), rgb(51, 51, 102, 0))',
+    Damage: 'linear-gradient(to right, rgb(255, 229, 43, 1), rgb(51, 51, 153, 0))',
+    Assembly: 'linear-gradient(to right, rgb(208, 0, 230, 1), rgb(51, 51, 204, 0))',
+    Surface: 'linear-gradient(to right, rgb(0, 176, 240, 1), rgb(51, 51, 255, 0))',
+    Dimension: 'linear-gradient(to right, rgb(115, 178, 72, 1), rgb(51, 51, 102, 0))',
   };
 
   return data.map((element) => {
@@ -39,6 +39,8 @@ function transformData(data) {
       case 'Surface':
         element.color = colors.Surface;
         break;
+      default:
+        console.log("Unknown Category")
     }
 
     return element;
@@ -55,8 +57,6 @@ const LandingPage = () => {
   });
   const [showOverlay, setShowOverlay] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupButtonClick, setPopupButtonClick] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState(false);
   const [isOpen, setBool] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const [errorCounts, setErrorCounts] = useState({});
@@ -158,7 +158,6 @@ const LandingPage = () => {
   const handleClosePopup = () => {
     setShowPopup(false);
     setShowOverlay(false);
-    setPopupButtonClick(true);
   };
 
   // Handle child state change
@@ -267,7 +266,6 @@ const LandingPage = () => {
                           <Popup
                               onClose={handleClosePopup}
                               popupData={popupData}
-                              setButtonClicked={setButtonClicked}
                           />
                         </>
                     )
