@@ -87,7 +87,7 @@ const Popup = ({ onClose, popupData }) => {
       Damage: 'linear-gradient(to right, rgb(236, 164, 0, 1), rgb(236, 164, 0, 0))',
       Assembly: 'linear-gradient(to right, rgb(208, 0, 230, 1), rgb(240, 66, 219, 0))',
       Surface: 'linear-gradient(to right, rgb(8 , 157, 217, 1), rgb(8 , 157, 217, 0))',
-      Dimension: 'linear-gradient(to right, rgb(137, 209, 183, 1), rgb(137, 209, 18 3, 0))',
+      Dimension: 'linear-gradient(to right, rgb(137, 209, 183, 1), rgb(137, 209, 183, 0))',
     };
     return data.map((element) => {
       let str = element.defect_type;

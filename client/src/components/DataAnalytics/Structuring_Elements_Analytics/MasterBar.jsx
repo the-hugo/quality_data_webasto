@@ -66,7 +66,7 @@ const MasterBar = ({ setLocationIds, passFilteredData }) => {
     setLocationIds(locationIds); // Update location IDs here
     setFilteredData(finalFilteredData);
     passFilteredData(finalFilteredData)
-  }, []);
+  }, [allData, product, category, errorType, startDate, endDate]);
 
   return (
     <div className="filter-bar">

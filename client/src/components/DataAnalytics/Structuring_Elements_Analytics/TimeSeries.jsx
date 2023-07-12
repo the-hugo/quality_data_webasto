@@ -9,98 +9,147 @@ import {
 } from 'recharts';
 import { useState, useEffect } from 'react';
 import Card from 'antd/es/card/Card';
+import { useMemo } from 'react';
 
 
 const TimeSeries = function Timeseries({ filteredData }) {
-    const [timeseries, setSeries] = useState([])
-
+    const [timeseries, setSeries] = useState([]);
+    const [keys, setValues] = useState([]);
+    const [trendLine, setTrendLine] = useState([]);
+  
+    const colors = useMemo(() => {
+      const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      return keys.reduce((result, graph) => {
+        result[graph] = randomColor();
+        return result;
+      }, {});
+    }, [keys]);
+  
     useEffect(() => {
-        const fetchDefectData = () => {
-            try {
-                const data = filteredData
-                const dailyCounts = {};
-                console.log("DATA", data)
-                for (let i = 0; i < data.length; i++) {
-                    const fullDate = new Date(data[i].date);
-                    const formattedDate = fullDate.toISOString().substring(0, 10);
-                    data[i].date = formattedDate;
-
-                    const currentDate = formattedDate;
-                    const errorCategory = data[i].category;
-
-                    if (!dailyCounts[currentDate]) {
-                        dailyCounts[currentDate] = {
-                            totalCount: 0,
-                            damageCount: 0,
-                            surfaceCount: 0,
-                            dimensionCount: 0,
-                            assemblyCount: 0,
-                        };
-                    }
-                    if (dailyCounts[currentDate][data[i].error_type]) {
-                        dailyCounts[currentDate][data[i].error_type]++;
-                    } else {
-                        dailyCounts[currentDate][data[i].error_type] = 0
-                    }
-                    switch (errorCategory) {
-                        case 'Damage':
-                            dailyCounts[currentDate].damageCount++;
-                            dailyCounts[currentDate].totalCount++;
-                            break;
-                        case 'Surface/Finish':
-                            dailyCounts[currentDate].surfaceCount++;
-                            dailyCounts[currentDate].totalCount++;
-                            break;
-                        case 'Dimension':
-                            dailyCounts[currentDate].dimensionCount++;
-                            dailyCounts[currentDate].totalCount++;
-                            break;
-                        case 'Assembly/Fitting':
-                            dailyCounts[currentDate].assemblyCount++;
-                            dailyCounts[currentDate].totalCount++;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                console.log('counts', dailyCounts);
-                setSeries(timeseries.concat(dailyCounts));
-            } catch (error) {
-                console.error('Error fetching defect data:', error);
+      const calculateTrendLine = (data) => {
+        const xData = data.map((item, index) => index);
+        const yData = data.map((item) => item.Total);
+  
+        const sum = (arr) => arr.reduce((a, b) => a + b, 0);
+        const mean = (arr) => sum(arr) / arr.length;
+        const subtractMean = (arr) => arr.map((val) => val - mean(arr));
+        const multiplyArrays = (arr1, arr2) => arr1.map((val, index) => val * arr2[index]);
+        const square = (num) => num * num;
+  
+        const xMean = mean(xData);
+        const yMean = mean(yData);
+  
+        const xMinusMean = subtractMean(xData);
+        const yMinusMean = subtractMean(yData);
+  
+        const b1 =
+          sum(multiplyArrays(xMinusMean, yMinusMean)) / sum(xMinusMean.map((val) => square(val)));
+  
+        const b0 = yMean - b1 * xMean;
+  
+        const trendLineData = xData.map((val) => ({
+          x: val,
+          Trend: b0 + b1 * val,
+        }));
+  
+        setTrendLine(trendLineData);
+      };
+  
+      const fetchDefectData = () => {
+        try {
+          const data = filteredData.map((item) => {
+            const fullDate = new Date(item.date);
+            const formattedDate = fullDate.toISOString().substring(0, 10);
+            return {
+              ...item,
+              date: formattedDate,
+            };
+          });
+  
+          const dailyCounts = data.reduce((counts, item) => {
+            const { date, error_type, category } = item;
+  
+            if (!counts[date]) {
+              counts[date] = {
+                Total: 0,
+                Damage: 0,
+                Surface: 0,
+                Dimension: 0,
+                Assembly: 0,
+              };
             }
-        };
-
-        fetchDefectData();
+  
+            counts[date][error_type] = (counts[date][error_type] || 0) + 1;
+  
+            switch (category) {
+              case 'Damage':
+                counts[date].Damage++;
+                counts[date].Total++;
+                break;
+              case 'Surface/Finish':
+                counts[date].Surface++;
+                counts[date].Total++;
+                break;
+              case 'Dimension':
+                counts[date].Dimension++;
+                counts[date].Total++;
+                break;
+              case 'Assembly/Fitting':
+                counts[date].Assembly++;
+                counts[date].Total++;
+                break;
+              default:
+                break;
+            }
+  
+            return counts;
+          }, {});
+  
+          const dailyCountsArray = Object.entries(dailyCounts).map(([date, counts]) => ({
+            date,
+            ...counts,
+          }));
+  
+          setSeries(dailyCountsArray);
+          const keys = Object.keys(dailyCountsArray[0]);
+          const index = keys.indexOf('date');
+          const x = keys.splice(index, 1);
+          setValues(keys);
+          calculateTrendLine(dailyCountsArray);
+        } catch (error) {
+          console.error('Error fetching defect data:', error);
+        }
+      };
+      fetchDefectData();
     }, [filteredData]);
-
-
-
+  
     return (
-        <Card title="Line Chart 1" bordered={true}>
-            <div className="chart-container">
-                <LineChart
-                    width={400}
-                    height={280}
-                    data={timeseries}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line
-                        type="monotone"
-                        dataKey="pv"
-                        stroke="#8884d8"
-                        activeDot={{ r: 8 }}
-                    />
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                </LineChart>
-            </div>
-        </Card>
-    )
-}
-
+      <Card title="Line Chart 1" bordered={true}>
+        <div className="chart-container">
+          <LineChart width={400} height={280} data={timeseries} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            {keys.map((graph) => (
+              <Line key={graph} type="monotone" dataKey={graph} stroke={colors[graph]} />
+            ))}
+            {trendLine.length > 0 && (
+              <Line
+                key="Trend Line"
+                type="linear"
+                data={trendLine}
+                dataKey="Trend"
+                stroke="#000000"
+                strokeWidth={2}
+                dot={false}
+              />
+            )}
+          </LineChart>
+        </div>
+      </Card>
+    );
+  };
+  
 export default TimeSeries;
