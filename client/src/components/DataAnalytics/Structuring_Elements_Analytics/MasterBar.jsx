@@ -6,7 +6,7 @@ import { DatePicker, Select } from 'antd';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const MasterBar = ({ setLocationIds }) => {
+const MasterBar = ({ setLocationIds, passFilteredData }) => {
   const [product, setProduct] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -64,9 +64,9 @@ const MasterBar = ({ setLocationIds }) => {
 
     const locationIds = finalFilteredData.flatMap(defect => defect.spots);
     setLocationIds(locationIds); // Update location IDs here
-    console.log(locationIds)
     setFilteredData(finalFilteredData);
-  }, [allData, product, category, errorType, startDate, endDate, setLocationIds]);
+    passFilteredData(finalFilteredData)
+  }, [allData, product, category, errorType, startDate, endDate]);
 
   return (
     <div className="filter-bar">

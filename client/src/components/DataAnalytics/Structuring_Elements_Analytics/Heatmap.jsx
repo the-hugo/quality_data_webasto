@@ -135,7 +135,6 @@ const Heatmap = ({ locationIds }) => {
           .then((data) => {
             // Filter out any null values from the location data
             const validData = data.filter((d) => d !== null);
-            console.log(validData);
             // Render the heatmap with the location data
             renderHeatmap(validData);
           })
