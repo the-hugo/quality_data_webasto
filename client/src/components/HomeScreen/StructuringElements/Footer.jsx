@@ -5,6 +5,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowLeft from './ArrowLeft.jsx';
 import ArrowRight from './ArrowRight.jsx';
 
+
+// We create a foort component that will be passed to the landing page
+// IT includes 2 arrows and a button to add a new event
+// also it handles the change of page on the frontend 
 export default function Footer({ handlePageChange, pagination, openPopup }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 

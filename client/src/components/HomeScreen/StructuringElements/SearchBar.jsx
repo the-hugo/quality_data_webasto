@@ -2,6 +2,8 @@ import "./SearchBar.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// THE SEARCHBAR FUNCTION IS USED TO SEARCH FOR A PRODUCT BY ITS SERIAL NUMBER
+// It currently is not used for the MVP, but it is a feature that can be implemented in the future
 function SearchBar({ placeholder }) {
   const [filteredData, setFilteredData] = useState([]);
   const [serialNumber, setSerialNumber] = useState("");

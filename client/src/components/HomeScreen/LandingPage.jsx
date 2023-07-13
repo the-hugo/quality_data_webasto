@@ -31,6 +31,8 @@ function transformData(data) {
     Dimension: 'linear-gradient(to right, rgb(137, 209, 183, 1), rgb(137, 209, 183, 0))',
   };
 
+
+  //Set color based on defect type and return data (New data with color attribute)
   return data.map((element) => {
     let str = element.defect_type;
     let [type] = str.split(' ');
@@ -57,8 +59,11 @@ function transformData(data) {
   });
 }
 
+// CUrrently set filter for MVP in future applications this will be dynamic (however currently not enough Image Data to support this)
 const productfilter = "CC RC Roof Panel Rem Lid 3dr";
 
+
+// Create Landing Page
 const LandingPage = () => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({
@@ -72,7 +77,6 @@ const LandingPage = () => {
   const [errorCounts, setErrorCounts] = useState({});
   const [combinedData, setCombinedData] = useState([]);
   const [isNewErrorPopupOpen, setIsNewErrorPopupOpen] = useState(false);
-
   const secondSectionItemsPerPage = 6;
 
 
@@ -85,6 +89,7 @@ const LandingPage = () => {
 
 
   // Combine data to display frequent defects based on error counts
+  // This creates a new array with the error counts added to the data
   useEffect(() => {
     const combineData = () => {
       const combinedData = data
@@ -106,7 +111,7 @@ const LandingPage = () => {
     combineData();
   }, [data, errorCounts]);
 
-  // Fetch initial data
+  // Calling the API to fetch defect list data in order to display it on the landing page and transform it
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -122,7 +127,7 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
-  // Fetch defect data and count error codes
+  // count the errors by error code so we can display the most frequent errors
   useEffect(() => {
     const countErrorCodes = (defectData) => {
       const counts = {};
@@ -134,6 +139,9 @@ const LandingPage = () => {
       return counts;
     };
 
+
+// Calling my Defects that have been created already --> THE last 2 weeks are displayed under frequent events later 
+// WE DO THIS BECAUSE THE DEFECT LIST SHOWS ALL DATA AND WE ONLY WANT THE LAST 2 WEEKS of data from actual defects not from the masterlist
     const fetchDefectData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/home/defects');
@@ -176,7 +184,7 @@ const LandingPage = () => {
     setBool(currentBool);
   };
 
-  // Handle page change
+  // Handle page change when clicking on the arrow component
   const handlePageChange = (page) => {
     let itemsPerPage = pagination.itemsPerPage; // Use the default itemsPerPage value
     if (combinedData.length > 0) {
@@ -194,6 +202,8 @@ const LandingPage = () => {
     }));
   };
 
+  // set the current page data for the first section
+  //  calculate pages and display the data for the first section
   const firstSectionItemsPerPage = 9;
   const firstSectionTotalPages = Math.ceil(data.length / firstSectionItemsPerPage);
   const firstSectionCurrentPageData = data.slice(
@@ -201,6 +211,8 @@ const LandingPage = () => {
     pagination.currentPage * firstSectionItemsPerPage
   );
 
+  // set the current page data for the second section
+  //  calculate pages and display the data for the second section
   const secondSectionTotalPages = Math.ceil(combinedData.length / secondSectionItemsPerPage);
   const secondSectionCurrentPageData = combinedData.slice(
     (pagination.currentPage - 1) * secondSectionItemsPerPage,

@@ -148,8 +148,12 @@ const Heatmap = ({ locationIds }) => {
     };
   }, [locationIds]);  // Depend on the locationIds prop to refetch when it changes
 
-  // Return the svg container
-  return <svg ref={chartRef}></svg>;
+  // Conditionally render the SVG or a message based on locationIds array
+  return locationIds.length > 0 ? (
+    <svg ref={chartRef}></svg>
+  ) : (
+    <p>No issues recorded for this filter setting.</p>
+  );
 };
 
 export default Heatmap;

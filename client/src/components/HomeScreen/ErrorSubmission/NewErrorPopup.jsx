@@ -1,8 +1,10 @@
+// Necessary imports for the component
 import React, { useState } from 'react';
-import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa';
-import './NewErrorPopup.css'; // Import the CSS file
-import { GridView as GridViewIcon } from '@mui/icons-material';
-// Category Options
+import { FaTimes, FaMapMarkerAlt } from 'react-icons/fa'; // Icons used in the component
+import './NewErrorPopup.css'; // Import the CSS file for styling
+import { GridView as GridViewIcon } from '@mui/icons-material'; // Icon used in the component
+
+// Arrays holding constant options for dropdowns
 const categoryOptions = [
   'Dimension & Fit',
   'Material & Documentation',
@@ -12,13 +14,16 @@ const categoryOptions = [
 
 const errorDropdownOptions = ['Dent', 'Bubbles', 'Scratch', 'Crack'];
 
+// The main component starts here
 const NewErrorPopup = ({ onClose }) => {
+  // Local states to hold current state of popup, selected category, selected error, text field input and popup style
   const [currentPopup, setCurrentPopup] = useState('first');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedError, setSelectedError] = useState('');
   const [textField, setTextField] = useState('');
   const [popupStyle, setPopupStyle] = useState("");
 
+  // Function to validate the input fields
   const checkInput = (selectedCategory, selectedError, textField) => {
     if (!selectedCategory || !selectedError || textField.trim() === '') {
       alert('All fields are required!');
@@ -27,8 +32,11 @@ const NewErrorPopup = ({ onClose }) => {
     return true;
   };
 
+  // Function to handle button click
   const buttonClick = async (actionType) => {
+    // Check if the inputs are valid
     if (!checkInput(selectedCategory, selectedError, textField)) return;
+    // Prepare the data to be sent to the server
     const data = {
       serial_num: '123456',
       product_id: 'CC RC Roof Panel Rem Lid 3dr',
@@ -38,6 +46,7 @@ const NewErrorPopup = ({ onClose }) => {
       action_type: actionType,
       error_type: selectedError,
     };
+    // Make the API request
     try {
       const response = await fetch('http://localhost:8080/home/defects', {
         method: 'POST',
@@ -47,8 +56,10 @@ const NewErrorPopup = ({ onClose }) => {
         body: JSON.stringify(data),
       });
 
+      // If the request is successful
       if (response.ok) {
         let actionStyle = "";
+        // Determine the popup style based on the action type
         switch (actionType.toLowerCase()) {
           case "anomaly":
             actionStyle = "popup1";
@@ -63,11 +74,13 @@ const NewErrorPopup = ({ onClose }) => {
             console.log("popup error")
         }
         setPopupStyle(actionStyle);
+        // Show the confirmation popup
         setCurrentPopup('confirmation');
 
+        // After one second, reset the currentPopup state and close the entire popup
         setTimeout(() => {
-          setCurrentPopup(''); // Reset currentPopup state after one second
-          onClose(); // Close the entire popup
+          setCurrentPopup('');
+          onClose();
         }, 1000);
       } else {
         console.error(`Failed to click Button ${actionType}`);
@@ -77,18 +90,20 @@ const NewErrorPopup = ({ onClose }) => {
     }
   };
 
+  // Function to close the popup
   const handleClosePopup = () => {
     setCurrentPopup('');
     onClose();
   };
 
+  // Button component used multiple times in the return statement
   const ButtonComponent = ({ className, onClick, children }) => (
     <button className={className} onClick={onClick}>
       {children}
     </button>
   );
 
-  //Message Popups
+  // Message popup component
   const PopupComponent = ({ className, message }) => (
     <div className={className}>
       <div className={`${className}-content`}>
@@ -100,6 +115,7 @@ const NewErrorPopup = ({ onClose }) => {
     </div>
   );
 
+  // Component render
 
   return (
     <>
