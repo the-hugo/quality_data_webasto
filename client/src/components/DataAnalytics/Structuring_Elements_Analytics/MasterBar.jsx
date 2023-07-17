@@ -34,9 +34,6 @@ const MasterBar = ({ setLocationIds, passFilteredData }) => {
     fetchDefectData();
   }, []);
 
-  console.log("MasterBar filtered Data", filteredData)
-  console.log("MasterBar:", setLocationIds)
-
   useEffect(() => {
     const productNames = [...new Set(allData.map((defect) => defect.product_id))];
     setProductNames(productNames);

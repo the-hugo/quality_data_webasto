@@ -1,36 +1,54 @@
-import { useState, useEffect, useMemo } from 'react';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line } from 'recharts';
+import { useState, useEffect } from 'react';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 import Card from 'antd/es/card/Card';
 
+const BarChartComp = function ({ filteredData }) {
+  const [data, setData] = useState([]);
 
-const BarChartComp = function({ filteredData }) {
+  useEffect(() => {
+    const calculateDailyCounts = () => {
+      const counts = [
+        {
+          name: 'Scrap',
+          Sum: 0, 
+        },
+        {
+          name: 'Anomaly',
+          Sum: 0,
+        },
+        {
+          name: 'Rework',
+          Sum: 0,
+          
+        },
+        {
+          name: 'Total',
+          Sum: 0,
+        }
+      ];
 
+      for (const item of filteredData) {
+        const { action_type } = item;
+        counts.find(count => count.name === action_type).Sum += 1;
+        counts.find(count => count.name === 'Total').Sum += 1;
+      }
+      console.log(counts)
+      setData(counts);
+    };
+
+    calculateDailyCounts();
+  }, [filteredData]);
 
   return (
-    <Card title="Bar Chart 1" bordered={true}>
-      {/* <div className="chart-container">
-        <BarChart width={400} height={280} data={timeseries} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          {keys.map((graph) => (
-            <Bar key={graph} dataKey={graph} fill={colors[graph]} />
-          ))}
-          {trendLine.length > 0 && (
-            <Line
-              key="Trend Line"
-              type="linear"
-              data={trendLine}
-              dataKey="y"
-              stroke="#000000"
-              strokeWidth={2}
-              dot={false}
-            />
-          )}
-        </BarChart>
-      </div> */}
+    <Card title="Defect Action Types" bordered={true}>
+      <BarChart width={650} height={380} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+          <Bar dataKey="Sum" fill='#333399'/>
+      </BarChart>
     </Card>
   );
 };

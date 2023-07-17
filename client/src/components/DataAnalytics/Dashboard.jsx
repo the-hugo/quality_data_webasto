@@ -48,13 +48,9 @@ const Dashboard = () => {
               <Timeseries filteredData={filteredData}></Timeseries>
             </Col>
             <Col>
-              <BarChart></BarChart>
+              <BarChart filteredData={filteredData}></BarChart>
             </Col>
           </Row>
-        </Col>
-
-        <Col>
-
         </Col>
       </Row>
     </Container>
