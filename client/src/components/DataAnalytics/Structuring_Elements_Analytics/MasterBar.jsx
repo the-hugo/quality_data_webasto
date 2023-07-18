@@ -15,7 +15,6 @@ const MasterBar = ({ setLocationIds, passFilteredData }) => {
   const [categories, setCategories] = useState([]);
   const [errorTypes, setErrorTypes] = useState([]);
   const [productNames, setProductNames] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [allData, setAllData] = useState([]); // new state to hold all data
 
   const fetchDefectData = async () => {
@@ -61,12 +60,12 @@ const MasterBar = ({ setLocationIds, passFilteredData }) => {
 
     const locationIds = finalFilteredData.flatMap(defect => defect.spots);
     setLocationIds(locationIds); // Update location IDs here
-    setFilteredData(finalFilteredData);
     passFilteredData(finalFilteredData)
+    // eslint-disable-next-line
   }, [allData, product, category, errorType, startDate, endDate]);
 
   return (
-    <div className="filter-bar">
+    <div className="filter-bar" style={{ position: 'sticky', top: 0, zIndex: 999 }}>
       <RangePicker
         onChange={(dates) => {
           if (dates) {

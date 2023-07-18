@@ -21,12 +21,9 @@ export default function Sidenav({ onChildStateChange }) {
     return (
         <Col
             className={`${open ? 'col-4 ' + styles.sidenav : 'col-2 ' + styles.sidenavClosed} transition-col`}
-            style={{ transition: 'width 0.3s ease-in' }}
-        >
+            style={{ transition: 'width 0.3s ease-in', position: 'sticky', top: 0 }}>
             <Row className="d-flex justify-content-center" style={{ paddingBottom: "40%" }}>
                 <Col className="col d-flex justify-content-center">
-                    {/* <svg onClick={toggleOpen} src={logo} width="100%" height="100%" viewBox="0 0 24 24">
-                    </svg> */}
                     <img onClick={toggleOpen} src={logo} alt="webasto" className={styles.logo} />
                 </Col>
             </Row>
@@ -49,7 +46,7 @@ export default function Sidenav({ onChildStateChange }) {
                     );
                 } else if (item.text === 'Home') {
                     return (
-                        <Row  key={item.id} className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
+                        <Row key={item.id} className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
                             <Link to="/" style={{ backgroundColor: "transparent" }}>
                                 <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
                                     <div className="d-flex align-items-center">
@@ -63,19 +60,7 @@ export default function Sidenav({ onChildStateChange }) {
                         </Row>
                     );
                 } else {
-                    return (
-                        <Row key={item.id}  className={`${styles.sideitem}`} style={{ paddingBottom: "12%", paddingTop: "12%" }}>
-                            <Col className={`d-flex transition-col ${open ? 'justify-content-start' : 'justify-content-center'}`}>
-                                <div className="d-flex align-items-center">
-                                    {item.icon}
-                                    <span className={`${open ? styles.linkText : styles.linkTextClosed} align-self-end`} style={{ paddingLeft: "15%" }}>
-                                        {item.text}
-                                    </span>
-                                </div>
-                            </Col>
-                        </Row>
-
-                    );
+                    return null
                 }
             })}
         </Col>

@@ -20,7 +20,6 @@
 .sideitem {
     cursor: pointer;
     color: #333399;
-    /* color: #d0e4ff7a; */
     text-decoration: none;
 }
 
@@ -54,3 +53,4 @@
 .logo:hover {
     transform: scale(1.1);
 }
+  

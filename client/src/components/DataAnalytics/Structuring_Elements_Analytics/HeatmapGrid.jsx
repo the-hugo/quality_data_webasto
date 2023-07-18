@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { scaleSequential } from 'd3-scale';
 import { interpolateYlOrRd } from 'd3-scale-chromatic';
+import Card from 'antd/es/card/Card';
 
 import roof from '../../../images/roof.png';
 
@@ -42,8 +43,8 @@ const HeatmapGrid = ({ locationIds }) => {
       // Proceed with rendering only if fetchedData is not empty
       if (fetchedData.length > 0) {
         const margin = { top: 10, right: 30, bottom: 30, left: 40 };
-        const containerWidth = 460;
-        const containerHeight = 400;
+        const containerWidth = 620;
+        const containerHeight = 540;
         const width = containerWidth - margin.left - margin.right;
         const height = containerHeight - margin.top - margin.bottom;
 
@@ -171,13 +172,13 @@ const HeatmapGrid = ({ locationIds }) => {
 
   //RETURN HEATMAP GRID if fetchedData is not empty
   return (
-    <div>
+    <Card title="Heatmap Grid Locations" bordered={true}>
       {fetchedData.length > 0 ? (
         <div ref={chartRef}></div>
       ) : (
         <div>No issues recorded for this filter setting.</div>
       )}
-    </div>
+    </Card>
   );
 };
 

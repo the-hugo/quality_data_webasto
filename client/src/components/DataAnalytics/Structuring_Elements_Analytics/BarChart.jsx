@@ -10,7 +10,7 @@ const BarChartComp = function ({ filteredData }) {
       const counts = [
         {
           name: 'Scrap',
-          Sum: 0, 
+          Sum: 0,
         },
         {
           name: 'Anomaly',
@@ -19,7 +19,7 @@ const BarChartComp = function ({ filteredData }) {
         {
           name: 'Rework',
           Sum: 0,
-          
+
         },
         {
           name: 'Total',
@@ -32,7 +32,6 @@ const BarChartComp = function ({ filteredData }) {
         counts.find(count => count.name === action_type).Sum += 1;
         counts.find(count => count.name === 'Total').Sum += 1;
       }
-      console.log(counts)
       setData(counts);
     };
 
@@ -41,13 +40,13 @@ const BarChartComp = function ({ filteredData }) {
 
   return (
     <Card title="Defect Action Types" bordered={true}>
-      <BarChart width={650} height={380} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <BarChart width={620} height={380} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Legend />
-          <Bar dataKey="Sum" fill='#333399'/>
+        <Bar dataKey="Sum" fill='#333399' />
       </BarChart>
     </Card>
   );

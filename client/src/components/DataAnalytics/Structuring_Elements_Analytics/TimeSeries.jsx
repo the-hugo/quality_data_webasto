@@ -1,21 +1,11 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Card from 'antd/es/card/Card';
-import { useMemo } from 'react';
 
-
-const TimeSeries = function Timeseries({ filteredData }) {
-  const [timeseries, setSeries] = useState([]);
+const TimeSeries = ({ filteredData }) => {
   const [keys, setValues] = useState([]);
   const [trendLine, setTrendLine] = useState([]);
+  const [mergedData, setMergedData] = useState([]);
 
   const colors = useMemo(() => {
     const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -52,6 +42,11 @@ const TimeSeries = function Timeseries({ filteredData }) {
         Trend: b0 + b1 * val,
       }));
       setTrendLine(trendLineData);
+      const merged = data.map((item, index) => ({
+        ...item,
+        Trend: trendLineData[index].Trend,
+      }));
+      setMergedData(merged);
     };
 
     const fetchDefectData = async () => {
@@ -66,7 +61,6 @@ const TimeSeries = function Timeseries({ filteredData }) {
         });
 
         const dailyCounts = data.reduce((counts, item) => {
-
           const { date, error_type, category } = item;
 
           if (!counts[date]) {
@@ -110,10 +104,9 @@ const TimeSeries = function Timeseries({ filteredData }) {
           ...counts,
         }));
 
-        setSeries(dailyCountsArray);
         const keys = Object.keys(dailyCountsArray[1]);
         const index = keys.indexOf('date');
-        const x = keys.splice(index, 1);
+        keys.splice(index, 1);
         setValues(keys);
         calculateTrendLine(dailyCountsArray);
       } catch (error) {
@@ -127,29 +120,20 @@ const TimeSeries = function Timeseries({ filteredData }) {
   }, [filteredData]);
 
   return (
-    <Card title="Defects Over Time" bordered={true}>
-      <LineChart width={650} height={380} data={timeseries} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+    <Card title="Defects Over Time" bordered>
+      <LineChart width={620} height={380} data={mergedData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" type="category" />
         <YAxis />
         <Tooltip />
         <Legend />
+        {trendLine.length > 0 && (
+          <Line type="linear" data={mergedData} dataKey="Trend" stroke="#000000" strokeWidth={2} dot={false} />
+        )}
         {keys.map((graph) => (
           <Line key={graph} type="monotone" dataKey={graph} stroke={colors[graph]} />
         ))}
-        {trendLine.length > 0 && (
-          <Line
-            key="Trend Line"
-            type="linear"
-            data={trendLine}
-            dataKey="Trend"
-            stroke="#000000"
-            strokeWidth={2}
-            dot={false}
-          />
-        )}
       </LineChart>
-
     </Card>
   );
 };

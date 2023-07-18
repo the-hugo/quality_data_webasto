@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Card } from 'antd';
 import MasterBar from './Structuring_Elements_Analytics/MasterBar.jsx';
 import Heatmap from './Structuring_Elements_Analytics/Heatmap.jsx';
 import HeatmapGrid from './Structuring_Elements_Analytics/HeatmapGrid.jsx';
@@ -17,38 +16,32 @@ const Dashboard = () => {
   const handleChildStateChange = (currentBool) => {
     setBool(currentBool);
   };
-
   return (
     <Container fluid>
       <Row>
-        <Sidenav onChildStateChange={handleChildStateChange} />
+          <Sidenav onChildStateChange={handleChildStateChange} />
         <Col
           style={{ paddingLeft: 24 }}
-          className={`d-flex flex-column align-items-stretch flex-shrink-2 col-${isOpen ? '22' : '24'} transition-col`}
-        >
-          <Row>
-            <MasterBar setLocationIds={setLocationIds} passFilteredData={setFilteredData} />
-          </Row>
-          <Row>
+          className={`d-flex flex-column align-items-stretch col-${isOpen ? '22' : '24'}`}>
+          <Row style={{ position: 'sticky', top: 0, zIndex: 999 }}>
             <Col>
-              {/* Heatmap */}
-              <Card title="Heatmap Exact Location" bordered={true}>
-                <Heatmap locationIds={locationIds} />
-              </Card>
-            </Col>
-            <Col>
-              {/* Exact Heatmap */}
-              <Card title="Heatmap Grid Locations" bordered={true}>
-                <HeatmapGrid locationIds={locationIds} />
-              </Card>
+              <MasterBar setLocationIds={setLocationIds} passFilteredData={setFilteredData} />
             </Col>
           </Row>
           <Row>
-            <Col>
-              <Timeseries filteredData={filteredData}></Timeseries>
+            <Col className="d-flex align-items-center justify-content-center" style={{ marginBottom: 20 }}>
+              <Heatmap locationIds={locationIds} />
             </Col>
-            <Col>
-              <BarChart filteredData={filteredData}></BarChart>
+            <Col className="d-flex align-items-center justify-content-center" style={{ marginBottom: 20 }}>
+              <HeatmapGrid locationIds={locationIds} />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex align-items-center justify-content-center" style={{ marginBottom: 20 }}>
+              <Timeseries filteredData={filteredData} />
+            </Col>
+            <Col className="d-flex align-items-center justify-content-center">
+              <BarChart filteredData={filteredData} />
             </Col>
           </Row>
         </Col>

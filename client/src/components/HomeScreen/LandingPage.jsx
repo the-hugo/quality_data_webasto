@@ -82,9 +82,7 @@ const LandingPage = () => {
 
   // Open new error popup
   const openNewErrorPopup = () => {
-    console.log(isNewErrorPopupOpen)
     setIsNewErrorPopupOpen(!isNewErrorPopupOpen);
-    console.log(isNewErrorPopupOpen)
   };
 
 
@@ -240,10 +238,10 @@ const LandingPage = () => {
           </Row>
 
           {/* Errors Section */}
-          <Row className="flex-grow-1 justify-content-center">
+          <Row className="flex-grow-1 justify-content-center align-items-stretch">
             <Col className="">
               {/* Section 1 */}
-              <Row style={{ marginTop: '3%' }}>
+              <Row style={{ marginTop: '1%' }}>
                 <Col>
                   <span className="font">Defect List Items</span>
                   <Popover>
@@ -316,7 +314,7 @@ const LandingPage = () => {
               {/* Section 2 */}
               <Row>
                 <Col>
-                  <Row style={{ marginTop: '3%' }}>
+                  <Row>
                     <Col>
                       <span className="font">Frequent Events</span>
                     </Col>

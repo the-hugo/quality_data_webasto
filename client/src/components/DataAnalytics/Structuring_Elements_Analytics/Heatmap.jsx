@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import Card from 'antd/es/card/Card';
 
 import roof from '../../../images/roof.png';
 
@@ -13,8 +14,8 @@ const Heatmap = ({ locationIds }) => {
     const margin = { top: 10, right: 30, bottom: 30, left: 40 };
     
     // Define the dimensions of the container and chart area
-    const containerWidth = 460;
-    const containerHeight = 400;
+    const containerWidth = 620;
+    const containerHeight = 540;
     const width = containerWidth - margin.left - margin.right;
     const height = containerHeight - margin.top - margin.bottom;
 
@@ -150,9 +151,13 @@ const Heatmap = ({ locationIds }) => {
 
   // Conditionally render the SVG or a message based on locationIds array
   return locationIds.length > 0 ? (
+    <Card title="Heatmap Exact Location" bordered={true}>
     <svg ref={chartRef}></svg>
+    </Card>
   ) : (
+    <Card title="Heatmap Exact Location" bordered={true}>
     <p>No issues recorded for this filter setting.</p>
+    </Card>
   );
 };
 
