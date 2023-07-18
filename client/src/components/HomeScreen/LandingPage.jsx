@@ -314,7 +314,7 @@ const LandingPage = () => {
               {/* Section 2 */}
               <Row>
                 <Col>
-                  <Row>
+                <Row style={{ marginTop: '3%' }}>
                     <Col>
                       <span className="font">Frequent Events</span>
                     </Col>
